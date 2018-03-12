@@ -14,7 +14,10 @@ std::string UtilMethods::ToLower(std::string str)
 			c[i] = str[i];
 	}
 	c[str.size()] = 0;
-	return std::string(c);
+	std::string newstring = std::string(c);
+	delete[] c;
+
+	return newstring;
 }
 
 std::string UtilMethods::ToUpper(std::string str)
@@ -31,6 +34,8 @@ std::string UtilMethods::ToUpper(std::string str)
 	}
 
 	c[str.size()] = 0;
-	return std::string(c);
+	std::string newstring = std::string(c);
+	delete[] c;
 
+	return newstring;
 }

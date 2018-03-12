@@ -3,75 +3,160 @@
 
 TestScene::TestScene() : IScene()
 {
-	testMap = IMG_LoadTexture(Globals::Renderer, std::string(Globals::GetResourcePath() + "map.png").c_str());
-	
-	m_entities->emplace_back(new Player(64,64, SDL_Sprite::Load(0, 0, 32, 32, "tank.png")));
-	m_entities->emplace_back(new Player(Globals::ScreenWidth - 64, Globals::ScreenHeight - 64, SDL_Sprite::Load(0, 0, 32, 32, "tank.png")));
-	//m_entities->emplace_back(new PowerUp(Globals::ScreenWidth/2,Globals::ScreenHeight/2, PowerUp::PowerUpType::SpeedUp,  SDL_Sprite::Load(0,0,32, 32, "powerup.png")));
+	matchendTimer = 5;
+	map = new Map(width, height);
+}
+
+TestScene::~TestScene()
+{
+	IScene::~IScene();
+	SDL_DestroyTexture(testMap);
+	SDL_DestroyTexture(gameOverTexture);
+	delete map;
+}
+
+void TestScene::Init()
+{
+
+	Buttons *b = Globals::KeyboardButtons;
+	std::vector<std::string> menu1;
+	menu1.push_back("ok");
+	m_menu1 = new Menu(menu1, false, false, b, "gameover");
+	//m_entities->emplace_back(m_menu1);
+
+
+	m_matchend = false;
+	testMap = IMG_LoadTexture(Globals::Renderer, std::string(Globals::GetResourcePath() + "map2.png").c_str());
+	Buttons *cb = Globals::ControllerButtons;
+	cb->ControllerNumber = 0;
+	m_entities->emplace_back(new TankControlledTank(64, 64, 1, Globals::KeyboardButtons, SDL_Sprite::Load(0, 0, 32, 32, "tank.png")));
+	m_entities->emplace_back(new CpuTank(Globals::ScreenWidth - 64, Globals::ScreenHeight - 64, 2, cb, SDL_Sprite::Load(0, 0, 32, 32, "tank.png"), map));
+	m_entities->emplace_back(new CpuTank( 64, Globals::ScreenHeight - 64, 3, cb, SDL_Sprite::Load(0, 0, 32, 32, "tank.png"), map));
+	m_entities->emplace_back(new CpuTank(Globals::ScreenWidth - 64, 64, 4, cb, SDL_Sprite::Load(0, 0, 32, 32, "tank.png"), map));
 
 	for (int i = 0; i < Globals::ScreenWidth / 32; i++)
 	{
-		m_entities->emplace_back(new Wall(i * 32+16, 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
-		m_entities->emplace_back(new Wall(i * 32+16, Globals::ScreenHeight-16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
+		m_entities->emplace_back(new Wall(i * 32 + 16, 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
+		m_entities->emplace_back(new Wall(i * 32 + 16, Globals::ScreenHeight - 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
 	}
 	for (int i = 1; i < Globals::ScreenHeight / 32 - 1; i++)
 	{
 		m_entities->emplace_back(new Wall(16, i * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
-		m_entities->emplace_back(new Wall( Globals::ScreenWidth- 16, i * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
+		m_entities->emplace_back(new Wall(Globals::ScreenWidth - 16, i * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
 	}
-	
+
 	int countY = Globals::ScreenHeight / 32 - 1;
 	int countX = Globals::ScreenWidth / 32 - 1;
-
+	const int freeroom = 5;
 	for (int i = 1; i < countX; i++)
 		for (int j = 1; j < countY; j++)
 		{
-			if (i < 4 && j < 4 || i < 4 && j > countY - 4 || i > countX - 4 && j < 4 || i > countX - 4 && j > countY -4)
+			if (i < freeroom && j < freeroom || i < freeroom && j > countY - freeroom || i > countX - freeroom && j < freeroom || i > countX - freeroom && j > countY - freeroom)
 				continue;
-			if (i == countX / 2 && j < 3 || i == countX/2 && j > countY -3 || i < 3 && j == countY/2 || i > countX - 3 && j == countY / 2) {
+			if (i == countX / 2 && j < 3 || i == countX / 2 && j > countY - 3 || i < 3 && j == countY / 2 || i > countX - 3 && j == countY / 2) {
 				m_entities->emplace_back(new Wall(i * 32 + 16, j * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
 				continue;
 			}
 			if (rand() % 10 < 8) {
 				if (rand() % 10 < 3) {
-					m_entities->emplace_back(new PowerUp(i * 32 + 16, j * 32 + 16, PowerUp::PowerUpType::SpeedUp, SDL_Sprite::Load(0, 0, 32, 32, "powerup.png")));
+					switch (rand() % 3)
+					{
+					case 0:
+						m_entities->emplace_back(new PowerUp(i * 32 + 16, j * 32 + 16, PowerUp::PowerUpType::SpeedUp, SDL_Sprite::Load(0, 0, 32, 32, "powerup.png")));
+						break;
+					case 1:
+						m_entities->emplace_back(new PowerUp(i * 32 + 16, j * 32 + 16, PowerUp::PowerUpType::ShotUp, SDL_Sprite::Load(0, 0, 32, 32, "shotup.png")));
+						break;
+					case 2:
+						m_entities->emplace_back(new PowerUp(i * 32 + 16, j * 32 + 16, PowerUp::PowerUpType::ShotCountUp, SDL_Sprite::Load(0, 0, 32, 32, "shotcountup.png")));
+						break;
+
+					}
 					m_entities->emplace_back(new DirtWall(i * 32 + 16, j * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "dirtwall.png")));
 				}
-				else if(rand() % 10 < 1)
+				else if (rand() % 10 < 1)
 					m_entities->emplace_back(new Wall(i * 32 + 16, j * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
 				else
 					m_entities->emplace_back(new DirtWall(i * 32 + 16, j * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "dirtwall.png")));
 			}
 		}
+
+	//generate score text
+	SDL_Color color = { 255, 255, 255, 255 };
+	std::stringstream ss;
+	ss << "Game Over";
+
+	gameOverTexture = renderText(ss.str(), Globals::GetResourcePath() + "Bombardment.ttf", color, 80, Globals::Renderer);
+
+
+	std::string message = "Press X To Start!";
+	text = renderText(message, std::string(Globals::GetResourcePath() + "Lato-Black.ttf"), color, 25, Globals::Renderer);
 }
 
-TestScene::~TestScene()
-{
-	SDL_DestroyTexture(testMap);
-
-}
 
 void TestScene::Update()
 {
-	IScene::Update();
+	map->PopulateMap();
+	//map->Print();
+	if (!m_matchend && GetAliveCount() <= 1)
+	{
+		m_matchend = true;
+	}
+
+
+	if (!m_matchend) {
+		IScene::Update();
+	}
+	else
+	{
+		if (matchendTimer > 0) {
+			matchendTimer -= TimeController::instance.DeltaTime;
+		}
+		else {
+			Menu::ChangeActiveMenu(m_menu1);
+		}
+		if ((m_menu1)->GetIsActionSelected())
+		{
+			std::string action = (m_menu1)->GetSelectedAction();
+
+			if (action == "ok")
+			{
+				SceneManager::GetInstance()->LoadScene("test");
+			}
+
+		}
+	}
 }
 
 void TestScene::Draw()
 {
-	IScene::Draw();
 
 	//Draw the Background
 	renderTexture(testMap, Globals::Renderer, 0, 0);
-
 
 	//sort all entites based on y(depth)
 	//m_entities.sort(Entity::EntityCompare);
 
 	//update all entities
-	for (auto &it : *m_entities )
+	for (auto &it : *m_entities)
 	{
 		//update all entites in game world at once
 		(it)->Draw();
+	}
+	
+	IScene::Draw();
+
+	if (m_matchend) {
+		int w, h;
+		SDL_QueryTexture(gameOverTexture, NULL, NULL, &w, &h);
+		renderTexture(gameOverTexture, Globals::Renderer, Globals::ScreenWidth / 2 - w / 2, Globals::ScreenHeight / 2 - h / 2);
+
+		if (matchendTimer <= 0) {
+			int tw, th;
+			SDL_QueryTexture(text, NULL, NULL, &tw, &th);
+
+			renderTexture(text, Globals::Renderer, (Globals::ScreenWidth / 2) + (tw/2), Globals::ScreenHeight / 2 + h / 2 + th);
+		}
 	}
 
 }

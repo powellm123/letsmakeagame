@@ -90,6 +90,7 @@
     <PostBuildEvent>
       <Command>for /R "$(ProjectDir)ThridParty" %%i in (x86\*.dll) do @copy /Y "%%i" "$(OutputPath)"
 @copy "$(projectDir)\ThridParty\SDL2_image-2.0.2\lib\x86\zlib1.dll" "$(OutputPath)"
+if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
 @copy "$(projectDir)\res" "$(OutputPath)res\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -109,6 +110,7 @@
     <PostBuildEvent>
       <Command>for /R "$(ProjectDir)ThridParty" %%i in (x64\*.dll) do @copy /Y "%%i" "$(OutputPath)"
 @copy "$(projectDir)\ThridParty\SDL2_image-2.0.2\lib\x64\zlib1.dll" "$(OutputPath)"
+if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
 @copy "$(projectDir)\res" "$(OutputPath)res\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -121,11 +123,12 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(MSBuildProjectDirectory)\ThridParty\SDL2_image-2.0.2\include;$(MSBuildProjectDirectory)\ThridParty\SDL2_mixer-2.0.2\include;$(MSBuildProjectDirectory)\ThridParty\SDL2_ttf-2.0.14\include;$(MSBuildProjectDirectory)\ThridParty\SDL2-2.0.7\include</AdditionalIncludeDirectories>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
     </ClCompile>
     <PostBuildEvent>
       <Command>for /R "$(ProjectDir)ThridParty" %%i in (x86\*.dll) do @copy /Y "%%i" "$(OutputPath)"
 @copy "$(projectDir)\ThridParty\SDL2_image-2.0.2\lib\x86\zlib1.dll" "$(OutputPath)"
+if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
 @copy "$(projectDir)\res" "$(OutputPath)res\"</Command>
     </PostBuildEvent>
     <Link>
@@ -133,6 +136,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(MSBuildProjectDirectory)\ThridParty\SDL2_mixer-2.0.2\lib\$(PlatformTarget);$(MSBuildProjectDirectory)\ThridParty\SDL2_ttf-2.0.14\lib\$(PlatformTarget);$(MSBuildProjectDirectory)\ThridParty\SDL2-2.0.7\lib\$(PlatformTarget);$(MSBuildProjectDirectory)\ThridParty\SDL2_image-2.0.2\lib\$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -149,15 +153,28 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(MSBuildProjectDirectory)\ThridParty\SDL2_mixer-2.0.2\lib\$(PlatformTarget);$(MSBuildProjectDirectory)\ThridParty\SDL2_ttf-2.0.14\lib\$(PlatformTarget);$(MSBuildProjectDirectory)\ThridParty\SDL2-2.0.7\lib\$(PlatformTarget);$(MSBuildProjectDirectory)\ThridParty\SDL2_image-2.0.2\lib\$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
       <Command>for /R "$(ProjectDir)ThridParty" %%i in (x64\*.dll) do @copy /Y "%%i" "$(OutputPath)"
 @copy "$(projectDir)\ThridParty\SDL2_image-2.0.2\lib\x64\zlib1.dll" "$(OutputPath)"
+if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
 @copy "$(projectDir)\res" "$(OutputPath)res\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\CpuTank.h" />
+    <ClInclude Include="src\DateTime.h" />
+    <ClInclude Include="src\DecisionTree.h" />
+    <ClInclude Include="src\Explosion.h" />
+    <ClInclude Include="src\GridEntity.h" />
+    <ClInclude Include="src\HealthBar.h" />
+    <ClInclude Include="src\Inputtracker.h" />
+    <ClInclude Include="src\Keyboard.h" />
+    <ClInclude Include="src\Lob_Bullet.h" />
+    <ClInclude Include="src\Map.h" />
+    <ClInclude Include="src\MapSpot.h" />
+    <ClInclude Include="src\Menu.h" />
     <ClInclude Include="src\Buttons.h" />
     <ClInclude Include="src\Animation.h" />
     <ClInclude Include="src\AnimationSet.h" />
@@ -179,7 +196,10 @@
     <ClInclude Include="src\MathHelper.h" />
     <ClInclude Include="src\Movable.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\SpriteObjects.h" />
+    <ClInclude Include="src\Tank.h" />
     <ClInclude Include="src\PowerUp.h" />
+    <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\SDL_AudioLibrary.h" />
     <ClInclude Include="src\SDL_GraphicsLibrary.h" />
     <ClInclude Include="src\SDL_ImageLibrary.h" />
@@ -187,8 +207,10 @@
     <ClInclude Include="src\ShotEntity.h" />
     <ClInclude Include="src\Sprite.h" />
     <ClInclude Include="src\SpriteManager.h" />
+    <ClInclude Include="src\TankControlledTank.h" />
     <ClInclude Include="src\TestScene.h" />
     <ClInclude Include="src\TimeController.h" />
+    <ClInclude Include="src\TitleScene.h" />
     <ClInclude Include="src\UtilMethods.h" />
     <ClInclude Include="src\Wall.h" />
   </ItemGroup>
@@ -198,28 +220,40 @@
     <ClCompile Include="src\Buillet.cpp" />
     <ClCompile Include="src\CollisionBox.cpp" />
     <ClCompile Include="src\Controller.cpp" />
+    <ClCompile Include="src\CpuTank.cpp" />
+    <ClCompile Include="src\DecisionTree.cpp" />
     <ClCompile Include="src\DirtWall.cpp" />
     <ClCompile Include="src\Frame.cpp" />
     <ClCompile Include="src\Globals.cpp" />
     <ClCompile Include="src\Health.cpp" />
+    <ClCompile Include="src\HealthBar.cpp" />
     <ClCompile Include="src\Helper_Functions.cpp" />
     <ClCompile Include="src\HitBox.cpp" />
     <ClCompile Include="src\IComponent.cpp" />
+    <ClCompile Include="src\InputTracker.cpp" />
     <ClCompile Include="src\IScene.cpp" />
     <ClCompile Include="src\Enitity.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\KeyboardInput.cpp" />
+    <ClCompile Include="src\Lob_Bullet.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\MathHelper.cpp" />
+    <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Movable.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\ShotEntity.cpp" />
+    <ClCompile Include="src\Tank.cpp" />
+    <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\SDL_AudioLibrary.cpp" />
     <ClCompile Include="src\SDL_GraphicsLibrary.cpp" />
     <ClCompile Include="src\SDL_ImageLibrary.cpp" />
     <ClCompile Include="src\SDL_TextToFontLibrary.cpp" />
     <ClCompile Include="src\SpriteManager.cpp" />
+    <ClCompile Include="src\TankControlledTank.cpp" />
     <ClCompile Include="src\TestScene.cpp" />
     <ClCompile Include="src\TimeController.cpp" />
+    <ClCompile Include="src\TitleScene.cpp" />
     <ClCompile Include="src\UtilMethods.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -15,6 +15,11 @@ void HealthComponent::Damage(int amount)
 	invincibleTimer = 1;
 }
 
+int HealthComponent::GetLifePoints()
+{
+	return Health;
+}
+
 void HealthComponent::Update()
 {
 	if (Health <= 0 && m_status == HealthStatus::Alive)

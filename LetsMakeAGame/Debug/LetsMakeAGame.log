@@ -1,4 +1,26 @@
-﻿  LetsMakeAGame.vcxproj -> C:\Users\Michael\documents\visual studio 2017\Projects\LetsMakeAGame\Debug\LetsMakeAGame.exe
+﻿  CpuTank.cpp
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(32): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(49): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(50): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(51): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(52): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(81): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(82): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(69): warning C4101: 'point': unreferenced local variable
+c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(5): warning C4305: '=': truncation from 'double' to 'float'
+c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(51): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(111): warning C4305: '=': truncation from 'double' to 'float'
+c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(118): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(155): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(156): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(166): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(170): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(179): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(188): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(175): warning C4715: 'CpuTank::TryMove': not all control paths return a value
+  LetsMakeAGame.vcxproj -> C:\sd\letsmakeagame\Debug\LetsMakeAGame.exe
           1 file(s) copied.
           1 file(s) copied.
           1 file(s) copied.
@@ -17,16 +39,28 @@
           1 file(s) copied.
           1 file(s) copied.
           1 file(s) copied.
-  C:\Users\Michael\documents\visual studio 2017\Projects\LetsMakeAGame\LetsMakeAGame\\res\bullet.png
-  C:\Users\Michael\documents\visual studio 2017\Projects\LetsMakeAGame\LetsMakeAGame\\res\controllerdemo.png
-  C:\Users\Michael\documents\visual studio 2017\Projects\LetsMakeAGame\LetsMakeAGame\\res\dirtwall.png
-  C:\Users\Michael\documents\visual studio 2017\Projects\LetsMakeAGame\LetsMakeAGame\\res\map.png
-  C:\Users\Michael\documents\visual studio 2017\Projects\LetsMakeAGame\LetsMakeAGame\\res\powerup.png
-  C:\Users\Michael\documents\visual studio 2017\Projects\LetsMakeAGame\LetsMakeAGame\\res\PressDPad.png
-  C:\Users\Michael\documents\visual studio 2017\Projects\LetsMakeAGame\LetsMakeAGame\\res\PressedButton.png
-  C:\Users\Michael\documents\visual studio 2017\Projects\LetsMakeAGame\LetsMakeAGame\\res\pressedmiddlebutton.png
-  C:\Users\Michael\documents\visual studio 2017\Projects\LetsMakeAGame\LetsMakeAGame\\res\readme.txt
-  C:\Users\Michael\documents\visual studio 2017\Projects\LetsMakeAGame\LetsMakeAGame\\res\tank.bmp
-  C:\Users\Michael\documents\visual studio 2017\Projects\LetsMakeAGame\LetsMakeAGame\\res\tank.png
-  C:\Users\Michael\documents\visual studio 2017\Projects\LetsMakeAGame\LetsMakeAGame\\res\wall.png
-         12 file(s) copied.
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\altbullet1.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\Bombardment.ttf
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\border.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\bullet.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\controllerdemo.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\dirtwall.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\explosion.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\HealthBar.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\Lato-Black.ttf
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\MainBackGround.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\map.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\map2.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\pallet.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\powerup.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\powerup_altbullet1.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\PressDPad.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\PressedButton.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\pressedmiddlebutton.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\readme.txt
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\shotcountup.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\shotup.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\tank.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\Title2.png
+  C:\sd\letsmakeagame\LetsMakeAGame\\res\wall.png
+         24 file(s) copied.

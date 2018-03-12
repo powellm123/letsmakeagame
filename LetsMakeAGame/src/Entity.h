@@ -32,4 +32,5 @@ protected:
 	//AnimationSet *m_animationSet;
 	SDL_Sprite *m_sprite;
 	bool m_isDying;
+	bool m_setActiveToFalse;
 };

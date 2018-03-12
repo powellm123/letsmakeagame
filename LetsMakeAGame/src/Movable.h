@@ -11,7 +11,7 @@ class Movable : public IComponent
 public:
 	//reference constants
 	//static const enum DirectionState { UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4, NONE = 0 };
-	static const enum class MoveState {MOVE, IDEL, DEAD};
+	const enum class MoveState {MOVE, IDEL, DEAD};
 	Movable(Entity* actor, int maxMoveSpeed);
 	void Update() override;
 	void Draw() override;
@@ -20,13 +20,16 @@ public:
 	double GetMoveSpeed();
 	MoveState GetMoveState();
 	void SetIsMoving(bool isMoving);
+	void SetAngle(double angle);
 	double GetAngle();
 	void SetMoveSpeed(int newMoveSpeed);
 	void IncreaseMaxSpeed();
 	float GetUseMoveSpeed();
 	void CollidedWithSolid(double angle);
 	//static DirectionState AngleToDirection(float angle);
-	
+
+	void Rotate(float angle);
+	void Move();
 protected:
 	//DirectionState Direction;
 	MoveState State;

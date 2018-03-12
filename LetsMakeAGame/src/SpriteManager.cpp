@@ -49,4 +49,22 @@ void SpriteManager::Load(std::string filename, std::string textureName)
 	SDL_FreeSurface(spriteSurface);
 
 	cache[textureName] = spriteSheet;
+
+	////
+	//SDL_Surface* surface = loadSurface(std::string(Globals::GetResourcePath() + "title.png"), Globals::Renderer);
+	//SDL_Surface* scaledSurface = SDL_CreateRGBSurface(0, Globals::ScreenWidth, Globals::ScreenHeight, 32, 0xFF, 0xFF00, 0xFF0000, 0XFF000000);
+
+
+	//static SDL_Rect rect;
+	//rect.x = 0;
+	//rect.y = 0;
+	//rect.w = Globals::ScreenWidth;
+	//rect.h = Globals::ScreenHeight;
+	//int error;
+	//if (error = SDL_BlitScaled(surface, NULL, scaledSurface, &rect))
+	//{
+	//	std::cout << "Error Happened" << std::endl;
+	//}
+
+	//testMap = SDL_CreateTextureFromSurface(Globals::Renderer, scaledSurface);
 }

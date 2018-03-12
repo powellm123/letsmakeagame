@@ -43,6 +43,18 @@
     <Filter Include="Source Files\Helper">
       <UniqueIdentifier>{300a294a-2846-4838-b50d-53554e97f7e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entities\bullets">
+      <UniqueIdentifier>{4f1ff841-0f03-47fa-a9eb-3a913e36b109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\bullets">
+      <UniqueIdentifier>{61bc510f-c239-4e1f-b619-df9b6c2d68aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SpriteObjects">
+      <UniqueIdentifier>{882dcee2-5501-44b0-8c5e-dc9e953bb86b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SpriteObjects">
+      <UniqueIdentifier>{5e5ec799-1420-49c4-abea-39b975af93b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GraphicsLibrary.h">
@@ -93,9 +105,6 @@
     <ClInclude Include="src\Helper_Functions.h">
       <Filter>Header Files\Helper</Filter>
     </ClInclude>
-    <ClInclude Include="src\Player.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="src\Movable.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
@@ -142,6 +151,60 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Buttons.h">
+      <Filter>Header Files\Librarys</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TitleScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SceneManager.h">
+      <Filter>Header Files\Librarys</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tank.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Menu.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Inputtracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Keyboard.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CpuTank.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TankControlledTank.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Lob_Bullet.h">
+      <Filter>Header Files\Entities\bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Explosion.h">
+      <Filter>Header Files\Entities\bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HealthBar.h">
+      <Filter>Header Files\SpriteObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SpriteObjects.h">
+      <Filter>Header Files\SpriteObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Map.h">
+      <Filter>Header Files\Librarys</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MapSpot.h">
+      <Filter>Header Files\Librarys</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DateTime.h">
+      <Filter>Header Files\Librarys</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DecisionTree.h">
+      <Filter>Header Files\Librarys</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GridEntity.h">
       <Filter>Header Files\Librarys</Filter>
     </ClInclude>
   </ItemGroup>
@@ -206,9 +269,6 @@
     <ClCompile Include="src\MathHelper.cpp">
       <Filter>Source Files\Helper</Filter>
     </ClCompile>
-    <ClCompile Include="src\Player.cpp">
-      <Filter>Source Files\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="src\Buillet.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
@@ -229,6 +289,45 @@
     </ClCompile>
     <ClCompile Include="src\Controller.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TitleScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneManager.cpp">
+      <Filter>Source Files\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tank.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Menu.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InputTracker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CpuTank.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TankControlledTank.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShotEntity.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Lob_Bullet.cpp">
+      <Filter>Source Files\Entities\bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HealthBar.cpp">
+      <Filter>Source Files\SpriteObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Map.cpp">
+      <Filter>Source Files\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DecisionTree.cpp">
+      <Filter>Source Files\Library</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

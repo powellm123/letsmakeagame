@@ -21,6 +21,7 @@ void TimeController::UpdateTime()
 	else {
 		Uint32 timeDiff = SDL_GetTicks() - LastUpdate;
 		DeltaTime = timeDiff / 1000.0; // move these milliseconds into the decimal place area
+		DeltaTime = DeltaTime > .125 ? .125 : DeltaTime;
 	}
 
 	LastUpdate = SDL_GetTicks();

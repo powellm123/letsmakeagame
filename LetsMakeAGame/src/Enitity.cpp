@@ -7,6 +7,7 @@ Entity::Entity(std::string type, float x, float y) : m_type(type), X(x), Y(y)
 	Active = true;
 	m_id = Globals::GenerateId();
 	m_isDying = false;
+	m_setActiveToFalse = true;
 }
 
 Entity::Entity(std::string type, float x, float y, SDL_Sprite * sprite) : Entity(type, x, y)
@@ -27,7 +28,10 @@ void Entity::Update()
 {
 	if (m_isDying)
 	{
-		Active = false;
+		if (m_setActiveToFalse)
+		{
+			Active = false;
+		}
 	}
 
 	for (auto& component : *m_components)
@@ -68,6 +72,7 @@ bool Entity::GetIsDying()
 	return m_isDying;
 }
 
+
 void Entity::RemoveInactiveEntitiesFromList(std::list<Entity*>* entities, bool deleteEntities)
 {
 	for (auto it = entities->begin(); it != entities->end();)
@@ -86,7 +91,8 @@ void Entity::RemoveInactiveEntitiesFromList(std::list<Entity*>* entities, bool d
 
 void Entity::Draw()
 {
-	m_sprite->Draw(Globals::Renderer, X, Y, 0);
+	if(m_sprite != nullptr)
+		m_sprite->Draw(Globals::Renderer, X, Y, 0);
 	for (auto& component : *m_components)
 	{
 		component->Draw();

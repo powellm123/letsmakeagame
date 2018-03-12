@@ -12,6 +12,7 @@ public:
 
 	void Update() override;
 	void Draw() override;
+	int GetLifePoints();
 private:
 	HealthStatus m_status;
 	int Health, MaxHealth;

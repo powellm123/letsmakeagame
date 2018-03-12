@@ -17,40 +17,42 @@ void KeyboardInput::Update()
 		if (keys[UP])
 		{
 			//upright
-			if (keys[RIGHT])
-			{
-				movableComponent->Move(270 + 45);
-			}
-			else if (keys[LEFT])
-			{
-				movableComponent->Move(270 - 45);
-			}
-			else {
-				movableComponent->Move(270);
-			}
+			//if (keys[RIGHT])
+			//{
+			//	movableComponent->Move(270 + 45);
+			//}
+			//else if (keys[LEFT])
+			//{
+			//	movableComponent->Move(270 - 45);
+			//}
+			//else {
+				movableComponent->Move(); //270
+			//}
 		}
 		else if (keys[DOWN])
 		{
 			//downright
-			if (keys[RIGHT])
-			{
-				movableComponent->Move(90 - 45);
-			}
-			else if (keys[LEFT])
-			{
-				movableComponent->Move(90 + 45);
-			}
-			else {
-				movableComponent->Move(90);
-			}
+			//if (keys[RIGHT])
+			//{
+			//	movableComponent->Move(90 - 45);
+			//}
+			//else if (keys[LEFT])
+			//{
+			//	movableComponent->Move(90 + 45);
+			//}
+			//else {
+				movableComponent->Move(); //90
+			//}
 		}
 		else if (keys[LEFT])
 		{
-			movableComponent->Move(180);
+			movableComponent->Rotate(-5);
+			//movableComponent->Move(180);
 		}
 		else if (keys[RIGHT])
 		{
-			movableComponent->Move(0);
+			movableComponent->Rotate(5);
+			//movableComponent->Move(0);
 		}
 	}
 

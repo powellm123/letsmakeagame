@@ -4,9 +4,9 @@
 #include "SDL_GraphicsLibrary.h"
 #include "IScene.h"
 #include "Entity.h"
-#include "TestScene.h"
 #include "Globals.h"
 #include "Controller.h"
+#include "SceneManager.h"
 
 class Game
 {
@@ -17,7 +17,6 @@ public:
 	void Draw();
 	void Update();
 private:
-	IScene *m_scene;
 	SDL_GraphicsLibrary *m_gl;
 	std::list<Entity*> *m_entity;
 };

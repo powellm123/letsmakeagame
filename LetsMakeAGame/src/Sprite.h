@@ -8,12 +8,16 @@
 
 class SDL_Sprite
 {
-public:
 	SDL_Sprite(SDL_Rect clip, SDL_Point offset, std::string filename) : Clip(clip), Offset(offset), m_textureName(filename)
 	{
 		SpriteManager::Load(Globals::GetResourcePath() + filename, filename);
 	}
 
+	SDL_Sprite(SDL_Rect clip, SDL_Point offset, SDL_Point size, std::string filename) : Clip(clip), Offset(offset), m_textureName(filename), Size(size)
+	{
+		SpriteManager::Load(Globals::GetResourcePath() + filename, filename);
+	}
+public:
 
 	void Draw(SDL_Renderer *renderer, float x, float y, float angle)
 	{
@@ -34,6 +38,51 @@ public:
 		SDL_RenderCopyEx(renderer, spriteSheet, &Clip, &dest, angle, &center, SDL_RendererFlip::SDL_FLIP_NONE);
 	}
 
+	void Draw2(SDL_Renderer *renderer, float x, float y, float angle, float scaleX, float scaleY)
+	{
+		SDL_Point center;
+		center.x = Clip.x + Clip.w / 2;
+		center.y = Clip.y + Clip.h / 2;
+
+
+		SDL_Rect dest; // destination of where we want to draw this frame
+		dest.x = x - Offset.x - center.x;
+		dest.y = y - Offset.y - center.y;
+		dest.w = Size.x * scaleX;
+		dest.h = Size.y * scaleY;
+
+		SDL_Texture* spriteSheet = SpriteManager::GetTexture(m_textureName);
+
+		SDL_RenderCopyEx(renderer, spriteSheet, &Clip, &dest, angle, &center, SDL_RendererFlip::SDL_FLIP_NONE);
+	}
+	void SetClip(SDL_Rect newclip)
+	{
+		Clip = newclip;
+	}
+	void SetOffset(SDL_Point offset)
+	{
+		Offset = offset;
+	}
+	static SDL_Sprite* Load(std::string filename, float scale)
+	{
+		SDL_Rect rect;
+		SDL_Point point;
+
+		SDL_Sprite* sprite = new SDL_Sprite(SDL_Rect(), SDL_Point(), filename);
+		int w, h;
+		SDL_QueryTexture(SpriteManager::GetTexture(sprite->m_textureName), NULL, NULL, &w, &h);
+		rect.x = 0;
+		rect.y = 0;
+		rect.w = w;
+		rect.h = h;
+		sprite->Clip = rect;
+		sprite->Offset.x = 0;
+		sprite->Offset.y = 0;
+		sprite->Size.x = w * scale;
+		sprite->Size.y = h * scale;
+		return sprite;
+	}
+
 	static SDL_Sprite* Load(int posx, int posy, int w, int h, std::string filename)
 	{
 		SDL_Rect dest;
@@ -50,4 +99,5 @@ private:
 	std::string m_textureName;
 	SDL_Rect Clip;
 	SDL_Point Offset;
+	SDL_Point Size;
 };

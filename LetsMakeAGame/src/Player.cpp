@@ -1,79 +1,39 @@
-
 #include "Player.h"
 #include "Controller.h"
 
-
-Player::Player(float x, float y, SDL_Sprite *sprite) : Entity("tank", x, y, sprite)
+Player::Player(std::string type, float x, float y, int playernumber, Buttons *b, SDL_Sprite * sprite) : Entity(type, x, y, sprite), Alive(true)
 {
-	static int playernumber = 1;
-	m_playernumber = (PlayerNumber)playernumber++;
-	//if (playernumber == PlayerNumber::Player1)
-	//	m_components->push_back(new KeyboardInput(this));
-	Buttons *b = new Buttons();
-	b->Fire = '\x1';
-	b->AltFire = '\x0';
-	b->Pause = '\t';
-	m_components->push_back(new Movable(this, 10));
-	m_components->push_back(new HealthComponent(this, 3));
-	m_components->push_back(new ShotEntity(this, SDL_SCANCODE_X, 5));
-	m_components->push_back(new HitBox(this, 32, 32, -16));
-
-	m_components->push_back(new Controller(this, b));
+	m_buttons = b;
+	m_components->push_back(new Controller(this, b->ControllerNumber));
+	m_setActiveToFalse = false;
 }
 
-void Player::PerformAction(Action action)
+Player::Player(std::string type, Buttons *buttons) : Entity(type, 0, 0), Alive(true)
 {
-	m_actions.emplace_back(action);
-}
-
-void Player::PerformMove(float angle, float power)
-{
-	Movable* comp = (Movable*)GetComponent("movable");
-	float modpower = power > 1 ? 1 : power;
-	modpower = power < -1 ? -1 : modpower;
-	comp->Move(angle, modpower * comp->GetUseMoveSpeed());
+	m_buttons = buttons;
+	m_components->push_back(new Controller(this, buttons->ControllerNumber));
+	m_setActiveToFalse = false;
 }
 
 void Player::Update()
 {
-	for (auto& action : m_actions)
-	{
-		switch (action)
-		{
-		case Action::Fire:
-			ShotEntity * comp = (ShotEntity*)GetComponent("shotentity");
-			comp->ShouldPerformFireAction();
-		}
-	}
 
 	while (!m_actions.empty())
 		m_actions.pop_back();
-
-	Entity::Update();
-}
-
-void Player::Draw()
-{
-	Movable *movableComponent = (Movable*) GetComponent("movable");
-	m_sprite->Draw(Globals::Renderer, X, Y, movableComponent->GetAngle()+90);
-	for (auto& component : *m_components)
+	if (Alive)
 	{
-		component->Draw();
+		Entity::Update();
 	}
+	if (GetIsDying())
+		Alive = false;
 }
 
-void Player::AddPowerUp(PowerUp *p)
+Buttons* Player::GetButtons()
 {
-	switch (p->GetPowerUpType())
-	{
-	case PowerUp::PowerUpType::SpeedUp:
-		((Movable*)GetComponent("movable"))->IncreaseMaxSpeed();
-		break;
-	}
+	return m_buttons;
 }
 
-void Player::DoDamage(int amount)
+bool Player::IsAlive()
 {
-	HealthComponent *health = (HealthComponent*)GetComponent("Health");
-	health->Damage(amount);
+	return Alive;
 }
