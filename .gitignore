@@ -1,0 +1,8 @@
+.dll
+bin/
+obj/
+.vs
+Release/
+Debug/
+x64/
+/version
