@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 	SDL_GraphicsLibrary *sdl_gl = new SDL_GraphicsLibrary(std::cout);
 	std::string windowName = std::string("Lets make a game");
 	if (!sdl_gl->Init()
-		|| !sdl_gl->InitWindow(windowName, Globals::ScreenWidth, Globals::ScreenHeight, Globals::ScreenScale,  SDL_WINDOW_SHOWN)
+		|| !sdl_gl->InitWindow(windowName, Globals::ScreenWidth, Globals::ScreenHeight, Globals::ScreenScale,  SDL_WINDOW_SHOWN )
 		|| !sdl_gl->CreateRender()
 		|| !sdl_gl->SetUpLogicalSize(Globals::ScreenWidth, Globals::ScreenHeight)
 		|| !sdl_gl->InitImageGraphics()

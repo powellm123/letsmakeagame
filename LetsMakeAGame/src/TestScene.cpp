@@ -1,5 +1,7 @@
 
 #include "TestScene.h"
+#include "Game.h"
+#include "Boarder.h"
 
 TestScene::TestScene() : IScene()
 {
@@ -17,7 +19,6 @@ TestScene::~TestScene()
 
 void TestScene::Init()
 {
-
 	Buttons *b = Globals::KeyboardButtons;
 	std::vector<std::string> menu1;
 	menu1.push_back("ok");
@@ -34,19 +35,26 @@ void TestScene::Init()
 	m_entities->emplace_back(new CpuTank( 64, Globals::ScreenHeight - 64, 3, cb, SDL_Sprite::Load(0, 0, 32, 32, "tank.png"), map));
 	m_entities->emplace_back(new CpuTank(Globals::ScreenWidth - 64, 64, 4, cb, SDL_Sprite::Load(0, 0, 32, 32, "tank.png"), map));
 
-	for (int i = 0; i < Globals::ScreenWidth / 32; i++)
-	{
-		m_entities->emplace_back(new Wall(i * 32 + 16, 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
-		m_entities->emplace_back(new Wall(i * 32 + 16, Globals::ScreenHeight - 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
-	}
-	for (int i = 1; i < Globals::ScreenHeight / 32 - 1; i++)
-	{
-		m_entities->emplace_back(new Wall(16, i * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
-		m_entities->emplace_back(new Wall(Globals::ScreenWidth - 16, i * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
-	}
+	//for (int i = 0; i < Globals::ScreenWidth / 32; i++)
+	//{
+	//	m_entities->emplace_back(new Wall(i * 32 + 16, 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
+	//	m_entities->emplace_back(new Wall(i * 32 + 16, Globals::ScreenHeight - 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
+	//}
+	//for (int i = 1; i < Globals::ScreenHeight / 32 - 1; i++)
+	//{
+	//	m_entities->emplace_back(new Wall(16, i * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
+	//	m_entities->emplace_back(new Wall(Globals::ScreenWidth - 16, i * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
+	//}
 
-	int countY = Globals::ScreenHeight / 32 - 1;
-	int countX = Globals::ScreenWidth / 32 - 1;
+	m_entities->emplace_back(new Boarder(16, 16, 32, Globals::ScreenHeight));
+	m_entities->emplace_back(new Boarder(Globals::ScreenWidth-16,16, 32, Globals::ScreenHeight));
+	//m_entities->emplace_back(new Boarder(0, 0, Globals::ScreenWidth-64, 32));
+	m_entities->emplace_back(new Boarder(16, Globals::ScreenHeight-16, Globals::ScreenWidth, 32));
+	m_entities->emplace_back(new Boarder(16, 16, Globals::ScreenWidth,32));
+	//m_entities->emplace_back(new Boarder(Globals::ScreenWidth-64, 0, Globals::ScreenWidth-64, 32));
+
+	int countY = Game::Height - 1;
+	int countX = Game::Width - 1;
 	const int freeroom = 5;
 	for (int i = 1; i < countX; i++)
 		for (int j = 1; j < countY; j++)
@@ -57,24 +65,24 @@ void TestScene::Init()
 				m_entities->emplace_back(new Wall(i * 32 + 16, j * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
 				continue;
 			}
-			if (rand() % 10 < 8) {
-				if (rand() % 10 < 3) {
-					switch (rand() % 3)
-					{
-					case 0:
-						m_entities->emplace_back(new PowerUp(i * 32 + 16, j * 32 + 16, PowerUp::PowerUpType::SpeedUp, SDL_Sprite::Load(0, 0, 32, 32, "powerup.png")));
-						break;
-					case 1:
-						m_entities->emplace_back(new PowerUp(i * 32 + 16, j * 32 + 16, PowerUp::PowerUpType::ShotUp, SDL_Sprite::Load(0, 0, 32, 32, "shotup.png")));
-						break;
-					case 2:
-						m_entities->emplace_back(new PowerUp(i * 32 + 16, j * 32 + 16, PowerUp::PowerUpType::ShotCountUp, SDL_Sprite::Load(0, 0, 32, 32, "shotcountup.png")));
-						break;
+			if (rand() % 10 < 5) {
+				//if (rand() % 10 < 3) {
+				//	switch (rand() % 3)
+				//	{
+				//	case 0:
+				//		m_entities->emplace_back(new PowerUp(i * 32 + 16, j * 32 + 16, PowerUp::PowerUpType::SpeedUp, SDL_Sprite::Load(0, 0, 32, 32, "powerup.png")));
+				//		break;
+				//	case 1:
+				//		m_entities->emplace_back(new PowerUp(i * 32 + 16, j * 32 + 16, PowerUp::PowerUpType::ShotUp, SDL_Sprite::Load(0, 0, 32, 32, "shotup.png")));
+				//		break;
+				//	case 2:
+				//		m_entities->emplace_back(new PowerUp(i * 32 + 16, j * 32 + 16, PowerUp::PowerUpType::ShotCountUp, SDL_Sprite::Load(0, 0, 32, 32, "shotcountup.png")));
+				//		break;
 
-					}
-					m_entities->emplace_back(new DirtWall(i * 32 + 16, j * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "dirtwall.png")));
-				}
-				else if (rand() % 10 < 1)
+				//	}
+				//	m_entities->emplace_back(new DirtWall(i * 32 + 16, j * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "dirtwall.png")));
+				//}
+				if (rand() % 10 < 1)
 					m_entities->emplace_back(new Wall(i * 32 + 16, j * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
 				else
 					m_entities->emplace_back(new DirtWall(i * 32 + 16, j * 32 + 16, SDL_Sprite::Load(0, 0, 32, 32, "dirtwall.png")));
@@ -134,9 +142,6 @@ void TestScene::Draw()
 	//Draw the Background
 	renderTexture(testMap, Globals::Renderer, 0, 0);
 
-	//sort all entites based on y(depth)
-	//m_entities.sort(Entity::EntityCompare);
-
 	//update all entities
 	for (auto &it : *m_entities)
 	{
@@ -149,13 +154,13 @@ void TestScene::Draw()
 	if (m_matchend) {
 		int w, h;
 		SDL_QueryTexture(gameOverTexture, NULL, NULL, &w, &h);
-		renderTexture(gameOverTexture, Globals::Renderer, Globals::ScreenWidth / 2 - w / 2, Globals::ScreenHeight / 2 - h / 2);
+		renderTexture(gameOverTexture, Globals::Renderer, Game::WidthHalf - w / 2, Game::HeightHalf - h / 2);
 
 		if (matchendTimer <= 0) {
 			int tw, th;
 			SDL_QueryTexture(text, NULL, NULL, &tw, &th);
 
-			renderTexture(text, Globals::Renderer, (Globals::ScreenWidth / 2) + (tw/2), Globals::ScreenHeight / 2 + h / 2 + th);
+			renderTexture(text, Globals::Renderer, Game::WidthHalf + (tw/2), Game::HeightHalf + h / 2 + th);
 		}
 	}
 

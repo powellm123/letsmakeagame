@@ -5,7 +5,7 @@
 TankControlledTank::TankControlledTank(float x, float y, int playernumber, Buttons * buttons, SDL_Sprite * sprite)
 	: Tank(x, y, playernumber, buttons, sprite)
 {
-	m_rotateLerp = 2;
+	m_rotateLerp = 3;
 	m_relativeAngle = 0;
 }
 
@@ -16,19 +16,24 @@ void TankControlledTank::PerformMove(float angle, float value)
 	float newangle = angle;
 
 	float power = 0;
-	if (newangle >= 180)
+	if (newangle > 180 && newangle <= 360) // 270)
 	{
-		float rotate = newangle - 270;
-		m_relativeAngle += rotate * TimeController::instance.DeltaTime * m_rotateLerp;
-
-		power = 2 * (newangle- 180) / 270.0;
+		power = .9999;
 	}
-	else if (newangle >= 0)
+	if (newangle > 0 && angle < 180) // 90)
 	{
-		float rotate = newangle - 90;
-		m_relativeAngle -= rotate * TimeController::instance.DeltaTime * m_rotateLerp;
+		power = -.9999;
+	}
 
-		power = -2 * newangle/90.0;
+	if (newangle > 90 && newangle < 270)
+	{
+		float rotate = 50;
+		m_relativeAngle -= rotate * TimeController::instance.DeltaTime * m_rotateLerp;
+	}
+	else if(newangle > 270 || newangle < 90)
+	{
+		float rotate = 50;
+		m_relativeAngle += rotate * TimeController::instance.DeltaTime * m_rotateLerp;
 	}
 
 	Tank::PerformMove(m_relativeAngle, power);

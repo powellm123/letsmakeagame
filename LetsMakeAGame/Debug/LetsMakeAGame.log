@@ -1,25 +1,26 @@
-﻿  CpuTank.cpp
-c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(32): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+﻿  HitBox.cpp
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(33): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(34): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(46): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(47): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(48): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(49): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(50): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(51): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(52): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(81): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(82): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(69): warning C4101: 'point': unreferenced local variable
-c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(5): warning C4305: '=': truncation from 'double' to 'float'
-c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(51): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(111): warning C4305: '=': truncation from 'double' to 'float'
-c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(118): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(155): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(156): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(166): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(170): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(179): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(188): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\sd\letsmakeagame\letsmakeagame\src\cputank.cpp(175): warning C4715: 'CpuTank::TryMove': not all control paths return a value
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(83): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\sprite.h(70): warning C4101: 'point': unreferenced local variable
+c:\sd\letsmakeagame\letsmakeagame\src\hitbox.cpp(8): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\hitbox.cpp(34): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\hitbox.cpp(35): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\hitbox.cpp(72): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\hitbox.cpp(74): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\hitbox.cpp(135): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\hitbox.cpp(149): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\hitbox.cpp(232): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\hitbox.cpp(241): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\hitbox.cpp(246): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\hitbox.cpp(247): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\hitbox.cpp(249): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\sd\letsmakeagame\letsmakeagame\src\hitbox.cpp(250): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
   LetsMakeAGame.vcxproj -> C:\sd\letsmakeagame\Debug\LetsMakeAGame.exe
           1 file(s) copied.
           1 file(s) copied.

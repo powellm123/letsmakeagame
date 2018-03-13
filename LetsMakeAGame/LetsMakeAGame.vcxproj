@@ -163,10 +163,12 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Boarder.h" />
     <ClInclude Include="src\CpuTank.h" />
     <ClInclude Include="src\DateTime.h" />
     <ClInclude Include="src\DecisionTree.h" />
     <ClInclude Include="src\Explosion.h" />
+    <ClInclude Include="src\FrameCounterSpriteObject.h" />
     <ClInclude Include="src\GridEntity.h" />
     <ClInclude Include="src\HealthBar.h" />
     <ClInclude Include="src\Inputtracker.h" />
@@ -224,6 +226,7 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClCompile Include="src\DecisionTree.cpp" />
     <ClCompile Include="src\DirtWall.cpp" />
     <ClCompile Include="src\Frame.cpp" />
+    <ClCompile Include="src\FrameCounterSpriteObject.cpp" />
     <ClCompile Include="src\Globals.cpp" />
     <ClCompile Include="src\Health.cpp" />
     <ClCompile Include="src\HealthBar.cpp" />
@@ -242,6 +245,7 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Movable.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\PowerUp.cpp" />
     <ClCompile Include="src\ShotEntity.cpp" />
     <ClCompile Include="src\Tank.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />

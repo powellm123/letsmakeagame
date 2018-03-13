@@ -16,6 +16,10 @@ public:
 	void Run();
 	void Draw();
 	void Update();
+	static int Width;
+	static int Height;
+	static int WidthHalf;
+	static int HeightHalf;
 private:
 	SDL_GraphicsLibrary *m_gl;
 	std::list<Entity*> *m_entity;

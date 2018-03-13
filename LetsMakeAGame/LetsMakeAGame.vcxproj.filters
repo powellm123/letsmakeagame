@@ -207,6 +207,12 @@
     <ClInclude Include="src\GridEntity.h">
       <Filter>Header Files\Librarys</Filter>
     </ClInclude>
+    <ClInclude Include="src\FrameCounterSpriteObject.h">
+      <Filter>Header Files\SpriteObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Boarder.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SDL_GraphicsLibrary.cpp">
@@ -328,6 +334,12 @@
     </ClCompile>
     <ClCompile Include="src\DecisionTree.cpp">
       <Filter>Source Files\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FrameCounterSpriteObject.cpp">
+      <Filter>Source Files\SpriteObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PowerUp.cpp">
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

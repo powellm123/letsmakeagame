@@ -295,6 +295,8 @@ MapSpot Map::AStar(MapSpot item, SDL_Point endLoc)
 
 void Map::SetMap(SDL_Point point, std::string type)
 {
+	if (point.x < 0 || point.x >= m_width || point.y < 0 || point.y >= m_height)
+		return;
 	GridType part;
 	if (type == "wall")
 		part = GridType::wall;

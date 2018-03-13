@@ -8,25 +8,27 @@
 
 class SDL_Sprite
 {
+	SDL_Point center;
+
 	SDL_Sprite(SDL_Rect clip, SDL_Point offset, std::string filename) : Clip(clip), Offset(offset), m_textureName(filename)
 	{
 		SpriteManager::Load(Globals::GetResourcePath() + filename, filename);
+
+		center.x = Clip.x + Clip.w / 2;
+		center.y = Clip.y + Clip.h / 2;
 	}
 
 	SDL_Sprite(SDL_Rect clip, SDL_Point offset, SDL_Point size, std::string filename) : Clip(clip), Offset(offset), m_textureName(filename), Size(size)
 	{
 		SpriteManager::Load(Globals::GetResourcePath() + filename, filename);
+
+		center.x = Clip.x + Clip.w / 2;
+		center.y = Clip.y + Clip.h / 2;
 	}
 public:
 
 	void Draw(SDL_Renderer *renderer, float x, float y, float angle)
 	{
-
-		SDL_Point center;
-		center.x = Clip.x + Clip.w / 2;
-		center.y = Clip.y + Clip.h / 2;
-
-
 		SDL_Rect dest; // destination of where we want to draw this frame
 		dest.x = x - Offset.x - center.x;
 		dest.y = y - Offset.y - center.y;
@@ -40,11 +42,6 @@ public:
 
 	void Draw2(SDL_Renderer *renderer, float x, float y, float angle, float scaleX, float scaleY)
 	{
-		SDL_Point center;
-		center.x = Clip.x + Clip.w / 2;
-		center.y = Clip.y + Clip.h / 2;
-
-
 		SDL_Rect dest; // destination of where we want to draw this frame
 		dest.x = x - Offset.x - center.x;
 		dest.y = y - Offset.y - center.y;
@@ -55,9 +52,13 @@ public:
 
 		SDL_RenderCopyEx(renderer, spriteSheet, &Clip, &dest, angle, &center, SDL_RendererFlip::SDL_FLIP_NONE);
 	}
+
 	void SetClip(SDL_Rect newclip)
 	{
 		Clip = newclip;
+
+		center.x = Clip.x + Clip.w / 2;
+		center.y = Clip.y + Clip.h / 2;
 	}
 	void SetOffset(SDL_Point offset)
 	{
@@ -80,6 +81,8 @@ public:
 		sprite->Offset.y = 0;
 		sprite->Size.x = w * scale;
 		sprite->Size.y = h * scale;
+		sprite->center.x = rect.x + rect.w / 2;
+		sprite->center.y = rect.y + rect.h / 2;
 		return sprite;
 	}
 

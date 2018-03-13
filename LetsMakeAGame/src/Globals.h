@@ -12,6 +12,7 @@ public:
 	static bool Quit;
 	static bool Debugging;
 	static int ScreenWidth, ScreenHeight, ScreenScale;
+	static SDL_Surface* MainSurface;
 	static SDL_Renderer *Renderer;
 	static std::string GetResourcePath();
 	static std::string GenerateId();

@@ -17,7 +17,6 @@ Player::Player(std::string type, Buttons *buttons) : Entity(type, 0, 0), Alive(t
 
 void Player::Update()
 {
-
 	while (!m_actions.empty())
 		m_actions.pop_back();
 	if (Alive)

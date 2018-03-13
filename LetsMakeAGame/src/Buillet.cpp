@@ -6,8 +6,9 @@
 
 Bullet::Bullet(SDL_Sprite *sprite, float x, float y, float angle, float lifespan) : Entity("bullet", 0, 0, sprite)
 {
-	this->X = x + cos(angle*M_PI /180)*30;
-	this->Y = y + sin(angle*M_PI /180)*30;
+	static const float dtr = M_PI / 180;
+	this->X = x + cos(angle*dtr)*30;
+	this->Y = y + sin(angle*dtr)*30;
 	this->Angle = angle;
 	this->Active = true;
 

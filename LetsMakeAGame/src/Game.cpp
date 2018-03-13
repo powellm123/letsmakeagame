@@ -1,5 +1,10 @@
 #include "Game.h"
 
+int Game::Width=0;
+int Game::Height=0;
+int Game::WidthHalf=0;
+int Game::HeightHalf=0;
+
 Game::Game(SDL_GraphicsLibrary *gl)
 {
 	m_gl = gl;
@@ -34,12 +39,26 @@ Game::~Game()
 void Game::Run()
 {
 	SDL_Event e;
-
+	float timer = 1;
+	float frameCount = 0;
+	Width = Globals::ScreenWidth / 32;
+	Height = Globals::ScreenHeight / 32;
+	WidthHalf = Globals::ScreenWidth / 2;
+	HeightHalf = Globals::ScreenHeight / 2;
 	SDL_JoystickEventState(SDL_ENABLE);
 	while (!Globals::Quit)
 	{
 		TimeController::instance.UpdateTime();
-
+		if (Globals::Debugging) {
+			timer -= TimeController::instance.DeltaTime;
+			if (timer <= 0)
+			{
+				std::cout << frameCount;
+				timer = 1;
+				frameCount = 0;
+			}
+			frameCount++;
+		}
 
 		while (SDL_PollEvent(&e))
 		{

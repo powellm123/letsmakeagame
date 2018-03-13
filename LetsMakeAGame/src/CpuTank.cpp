@@ -4,8 +4,6 @@ CpuTank::CpuTank(float x, float y, int playernumber, Buttons *buttons, SDL_Sprit
 {
 	timeInCurrentMode = .51;
 	justfired = 0;
-	int rowcount = Globals::ScreenHeight / 32;
-	int colcount = Globals::ScreenWidth / 32;
 
 	mode = AiMode::Sleep;
 	m_map = map;
@@ -46,6 +44,9 @@ bool CpuTank::ShouldFire()
 			if (entity.gridType == GridType::dirtwall)
 				dirtCount++;
 		}
+		if (dirtCount == 0)
+			return false;
+
 		int whichDirt = rand() % dirtCount;
 
 		SDL_Point myLoc = MathHelper::CreatePoint(X / 32, Y / 32);
