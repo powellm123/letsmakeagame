@@ -3,6 +3,8 @@
 #include "IScene.h"
 #include "Tank.h"
 #include <iostream>
+#include "Wall.h"
+#include "DirtWall.h"
 
 Map::Map(int width, int height) : m_width(width), m_height(height)
 {
@@ -134,7 +136,7 @@ void Map::PopulateMap()
 	{
 		if (!entity->Active)
 			continue;
-		if (entity->GetType() == "tank" && !((Tank*)entity)->IsAlive())
+		if (entity->GetType() == Tank::type && !((Tank*)entity)->IsAlive())
 			continue;
 
 		SDL_Point other;
@@ -293,18 +295,18 @@ MapSpot Map::AStar(MapSpot item, SDL_Point endLoc)
 	return MapSpot();
 }
 
-void Map::SetMap(SDL_Point point, std::string type)
+void Map::SetMap(SDL_Point point, size_t type)
 {
 	if (point.x < 0 || point.x >= m_width || point.y < 0 || point.y >= m_height)
 		return;
 	GridType part;
-	if (type == "wall")
+	if (type == Wall::type) // "wall")
 		part = GridType::wall;
-	else if (type == "dirtwall")
+	else if (type == DirtWall::type) // "dirtwall")
 		part = GridType::dirtwall;
-	else if (type == "tank")
+	else if (type == Tank::type) // "tank")
 		part = GridType::tank;
-	else if (type == "powerup" && data[point.y][point.x].GridType != GridType::dirtwall)
+	else if (type == PowerUp::type && data[point.y][point.x].GridType != GridType::dirtwall)
 		part = GridType::powerup;
 	else
 		part = data[point.y][point.x].GridType;

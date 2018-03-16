@@ -1,22 +1,16 @@
 #include "CpuTank.h"
 
-CpuTank::CpuTank(float x, float y, int playernumber, Buttons *buttons, SDL_Sprite *sprite, Map * map) : Tank(x, y, playernumber, buttons, sprite)
+CpuTank::CpuTank(float x, float y, int playernumber, Buttons *buttons, Sprite *sprite, Map * map) : Tank(x, y, playernumber, buttons, sprite)
 {
 	timeInCurrentMode = .51;
 	justfired = 0;
 
 	mode = AiMode::Sleep;
 	m_map = map;
-
-	//tree = new DecisionTree();
-	//DecisionNode shouldFire([this]() {return ShouldFire(); });
-	//DecisionNode shouldMove([]() {return false; });
-	//DecisionNode shouldWait([]() {return true; });
 }
 
 CpuTank::~CpuTank()
 {
-	delete tree;
 }
 
 bool CpuTank::ShouldFire()
@@ -36,30 +30,28 @@ bool CpuTank::ShouldFire()
 			}
 		}
 	}
-	if (rand() % 10 <= 8)
+
+	int dirtCount = 0;
+	for (auto entity : items)
 	{
-		int dirtCount = 0;
-		for (auto entity : items)
-		{
-			if (entity.gridType == GridType::dirtwall)
-				dirtCount++;
-		}
-		if (dirtCount == 0)
-			return false;
+		if (entity.gridType == GridType::dirtwall)
+			dirtCount++;
+	}
+	if (dirtCount == 0)
+		return false;
 
-		int whichDirt = rand() % dirtCount;
+	int whichDirt = rand() % dirtCount;
 
-		SDL_Point myLoc = MathHelper::CreatePoint(X / 32, Y / 32);
-		int count = 0;
-		//has dirt wall, fire at that
-		for (auto entity : items)
-		{
-			float dist = MathHelper::DistanceBetweenTwoPoints(&entity.loc, &myLoc);
-			if (entity.gridType == GridType::dirtwall &&  dist > 4.1) {
-				if (count++ == whichDirt) {
-					moveDirection = entity.angle;
-					return true;
-				}
+	SDL_Point myLoc = MathHelper::CreatePoint(X / 32, Y / 32);
+	int count = 0;
+	//has dirt wall, fire at that
+	for (auto entity : items)
+	{
+		float dist = MathHelper::DistanceBetweenTwoPoints(&entity.loc, &myLoc);
+		if (entity.gridType == GridType::dirtwall &&  dist > 4.1) {
+			if (count++ == whichDirt) {
+				moveDirection = entity.angle;
+				return true;
 			}
 		}
 	}
@@ -82,15 +74,6 @@ std::list<GridEntity> CpuTank::FindInFrontDirtWalls()
 	return items;
 }
 
-int CpuTank::Round(float number)
-{
-	if (number > .707)
-		return 1;
-	if (number < -.707)
-		return -1;
-
-	return 0;
-}
 
 void CpuTank::Update()
 {
@@ -104,7 +87,7 @@ void CpuTank::Update()
 	Tank::Update();
 
 	if (timeInCurrentMode <= 0) {
-		if (!TryFire() &&  !TryMove())
+		if (!TryFire() && !TryMove())
 		{
 			mode = AiMode::Sleep;
 		}
@@ -191,16 +174,5 @@ void CpuTank::Fire()
 	mode = AiMode::Sleep;
 	justfired = 1.5;
 	timeInCurrentMode = 1;
-}
-
-bool CpuTank::IsNextTo(SDL_Point *point, Entity* object)
-{
-	float dist = MathHelper::DistanceBetweenPointAndEntity(point, object);
-	return dist < 2 && dist > -2;
-}
-
-bool CpuTank::IsLoc(SDL_Point* point, SDL_Point* other)
-{
-	return point->x == other->x && point->y == other->y;
 }
 

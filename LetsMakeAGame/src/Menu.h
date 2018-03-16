@@ -9,6 +9,7 @@
 class Menu : public Player
 {
 public:
+	static constexpr size_t type = UtilMethods::const_hash("menu");
 	Menu(std::vector<std::string> menuActions, bool isActable, bool shouldDrawText, Buttons* buttons, std::string menuName);
 	void PerformAction(Player::Action action) override;
 	void PerformMove(float angle, float value) override;

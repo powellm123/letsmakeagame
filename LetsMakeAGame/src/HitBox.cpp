@@ -3,208 +3,160 @@
 #include "Movable.h"
 #include "PowerUp.h"
 #include "Tank.h"
+#include "DirtWall.h"
+#include "Boarder.h"
+#include "Explosion.h"
+#include "Wall.h"
 
 HitBox::HitBox(Entity * actor, int collisionBoxWidth, int collisionBoxHeight, int collisionBoxYOffset, bool isStaticHitbox)
-	: IComponent(actor, "hitbox"), CollisionBoxWidth(collisionBoxWidth), CollisionBoxHeight(collisionBoxHeight), CollisionBoxYOffset(collisionBoxYOffset), m_isStaticHitBox(isStaticHitbox)
+	: IComponent(actor, "hitbox", type), CollisionBoxWidth(collisionBoxWidth), CollisionBoxHeight(collisionBoxHeight), CollisionBoxYOffset(collisionBoxYOffset), m_isStaticHitBox(isStaticHitbox)
 {
+	UpdateCollisionBox();
 }
 
 void HitBox::Update()
 {
-	UpdateCollisionBox();
-	
-	LastCollisionBox = CollisionBox;
 	UpdateCollisions();
 }
 
 void HitBox::Draw()
 {
-	
-	if ( Globals::Debugging)
+	if (Globals::Debugging)
 	{
 		SDL_SetRenderDrawColor(Globals::Renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderDrawRect(Globals::Renderer, &CollisionBox);
 	}
-
 }
 
 void HitBox::UpdateCollisionBox()
 {
-
 	CollisionBox.x = m_actor->X - CollisionBox.w / 2;
-	CollisionBox.y = m_actor->Y + CollisionBoxYOffset;
+	CollisionBox.y = m_actor->Y - CollisionBox.h / 2;
 	CollisionBox.w = CollisionBoxWidth;
 	CollisionBox.h = CollisionBoxHeight;
 }
 
 void HitBox::UpdateCollisions()
 {
-
+	UpdateCollisionBox();
 	if (!m_actor->Active || m_isStaticHitBox)
 		return;
 
-	if (m_actor->GetType() == "tank" && !((Player*)m_actor)->IsAlive())
+	if (m_actor->GetType() == Tank::type && !((Player*)m_actor)->IsAlive())
 		return;
 
 
 	//list of potential collisions
 	list<Entity*> collisions;
 
-	for (auto it = IScene::m_entities->begin(); it != IScene::m_entities->end(); it++)
+
+	for (auto it : *IScene::m_entities)
 	{
-		HitBox* hitboxcomp = (HitBox*)(*it)->GetComponent("hitbox");
+		HitBox* hitboxcomp = (HitBox*)(it)->GetComponent(HitBox::type);
 		if (hitboxcomp == nullptr)
 			continue;
-		if ((*it)->Active && (*it)->GetId() != m_actor->GetId()
+
+		if ((it)->Active && (it)->GetId() != m_actor->GetId()
 			&& CheckCollision(CollisionBox, hitboxcomp->CollisionBox))
 		{
-			collisions.push_back((*it));
+			collisions.push_back((it));
 		}
 	}
 
 	if (collisions.size() == 0)
 		return;
 
-	UpdateCollisionBox();
 
-	float boxTravelSize = 0;
-	if (CollisionBox.w < CollisionBox.h)
-		boxTravelSize = CollisionBox.w / 4;
-	else
-		boxTravelSize = CollisionBox.h / 4;
-
-	SDL_Rect samplebox = LastCollisionBox;
-	float movementAngle = HitBox::AngleBetweenTwoRects(LastCollisionBox, CollisionBox);
-
-	bool foundCollision = false;
-	
 	SDL_Rect intersection;
 	for (auto collision : collisions)
 	{
 		if (m_actor->GetIsDying())
 			break;
-		if (!collision->Active )
+		if (!collision->Active)
 			continue;
-		SDL_Rect theirCollisionBox = ((HitBox*)collision->GetComponent("hitbox"))->CollisionBox;
+		SDL_Rect theirCollisionBox = ((HitBox*)collision->GetComponent(HitBox::type))->CollisionBox;
 		//Check sample box for collisions where it is now
 		if (SDL_IntersectRect(&CollisionBox, &theirCollisionBox, &intersection))
 		{
-			foundCollision = true;
+			size_t collisionType = collision->GetType();
+			size_t actorType = m_actor->GetType();
 
-			std::string collisionType = collision->GetType();
-			std::string actorType = m_actor->GetType();
-
-			if (collisionType == actorType && actorType == "tank")
+			if (actorType == Tank::type)
 			{
-				if (((Player*)collision)->IsAlive())
+				float angle;
+				int pow;
+				Movable* comp = (Movable*)m_actor->GetComponent(Movable::type);
+				switch (collisionType)
 				{
-					Movable* comp = (Movable*)m_actor->GetComponent("movable");
-					comp->Move(HitBox::AngleBetweenTwoPoints(m_actor->X, m_actor->Y, collision->X, collision->Y) - 180);
+				case Tank::type:
+					if (((Player*)collision)->IsAlive()) {
+						comp->Move(HitBox::AngleBetweenTwoPoints(m_actor->X, m_actor->Y, collision->X, collision->Y) - 180);
+					}
+					break;
+				case Bullet::type:
+					collision->SetIsDying(true);
+					comp->Move(HitBox::AngleBetweenTwoPoints(m_actor->X, m_actor->Y, collision->X, collision->Y), -11);
+					((Tank*)m_actor)->DoDamage(1);
+					break;
+				case Explosion::type:
+					comp->Move(HitBox::AngleBetweenTwoPoints(m_actor->X, m_actor->Y, collision->X, collision->Y) , -11);
+					((Tank*)m_actor)->DoDamage(1);
+					break;
+				case DirtWall::type:
+				case Wall::type:
+					angle = HitBox::AngleBetweenTwoPoints(m_actor->X, m_actor->Y, collision->X, collision->Y);
+					pow = comp->GetMoveSpeed();
+					if (pow >= 0)
+						comp->CollidedWithSolid(angle);
+					else
+						comp->CollidedWithSolid(angle - 180);
+					break;
+				case Boarder::type:
+					angle = 0;
+					if (abs(m_actor->X - collision->X) > abs(m_actor->Y - collision->Y))
+						angle = HitBox::AngleBetweenTwoPoints(m_actor->X, m_actor->Y, m_actor->X, collision->Y);
+					else
+						angle = HitBox::AngleBetweenTwoPoints(m_actor->X, m_actor->Y, collision->X, m_actor->Y);
+					pow = comp->GetMoveSpeed();
+					if (pow >= 0)
+						comp->CollidedWithSolid(angle);
+					else
+						comp->CollidedWithSolid(angle - 180);
+					break;
+				case PowerUp::type:
+					PowerUp * p = (PowerUp*)collision;
+					collision->SetIsDying(true);
+					((Tank*)m_actor)->AddPowerUp(p);
+					break;
 				}
 			}
-
-			else {
-				if (collisionType == actorType && actorType == "bullet")
+			else if (actorType == Bullet::type)
+			{
+				switch (collisionType)
 				{
+				case Bullet::type:
 					m_actor->SetIsDying(true);
+					break;
+				case Wall::type:
+				case Explosion::type:
+				case Boarder::type:
+					m_actor->SetIsDying(true);
+					break;
+				case DirtWall::type:
+					m_actor->SetIsDying(true);
+					HealthComponent* comp = (HealthComponent*)collision->GetComponent(HealthComponent::type);
+					comp->Damage(1);
+					break;
 				}
-
-				else {
-					if (collisionType != actorType && actorType == "tank")
-					{
-						if (collisionType == "bullet")
-						{
-							collision->SetIsDying(true);
-							Movable* comp = (Movable*)m_actor->GetComponent("movable");
-							comp->Move(HitBox::AngleBetweenTwoPoints(m_actor->X, m_actor->Y, collision->X, collision->Y) - 180, 5);
-							((Tank*)m_actor)->DoDamage(1);
-						}
-
-						if (collisionType == "explosion")
-						{
-							Movable* comp = (Movable*)m_actor->GetComponent("movable");
-							comp->Move(HitBox::AngleBetweenTwoPoints(m_actor->X, m_actor->Y, collision->X, collision->Y) - 180, 5);
-							((Tank*)m_actor)->DoDamage(1);
-						}
-
-						if (collisionType == "wall" || collision->GetType() == "dirtwall" )
-						{
-							Movable* comp = (Movable*)m_actor->GetComponent("movable");
-
-							float angle = HitBox::AngleBetweenTwoPoints(m_actor->X, m_actor->Y, collision->X, collision->Y);
-							int pow = comp->GetMoveSpeed();
-							if (pow >= 0)
-								comp->CollidedWithSolid(angle);
-							else
-								comp->CollidedWithSolid(angle - 180);
-						}
-						if ( collision->GetType() == "boarder")
-						{
-							Movable* comp = (Movable*)m_actor->GetComponent("movable");
-							float angle = 0;
-							if(abs(m_actor->X - collision->X) > abs(m_actor->Y - collision->Y))
-								angle = HitBox::AngleBetweenTwoPoints(m_actor->X, m_actor->Y, m_actor->X, collision->Y);
-							else
-								angle = HitBox::AngleBetweenTwoPoints(m_actor->X, m_actor->Y, collision->X, m_actor->Y);
-							int pow = comp->GetMoveSpeed();
-							if (pow >= 0)
-								comp->CollidedWithSolid(angle);
-							else
-								comp->CollidedWithSolid(angle-180);
-
-						}
-						else if (collisionType == "powerup")
-						{
-							PowerUp* p = (PowerUp*)collision;
-							collision->SetIsDying(true);
-							//collision->Active = false;
-							((Tank*)m_actor)->AddPowerUp(p);
-						}
-					}
-
-					else {
-						if (collisionType != actorType && actorType == "bullet")
-						{
-							if (collisionType == "wall" || collisionType == "explosion" || collision->GetType() == "boarder")
-							{
-								m_actor->SetIsDying(true);
-							}
-							if (collisionType == "dirtwall")
-							{
-								m_actor->SetIsDying(true);
-								HealthComponent* comp = (HealthComponent*)collision->GetComponent("health");
-								comp->Damage(1);
-							}
-						}
-						if (collisionType != actorType && actorType == "explosion")
-						{
-							if (collisionType == "dirtwall")
-							{
-								HealthComponent* comp = (HealthComponent*)collision->GetComponent("health");
-								comp->Damage(1);
-							}
-						}
-					}
-				}
+			}
+			else if (actorType == Explosion::type && collisionType == DirtWall::type)
+			{
+				HealthComponent* comp = (HealthComponent*)collision->GetComponent(HealthComponent::type);
+				comp->Damage(1);
 			}
 		}
-
-
-		samplebox = CollisionBox;
 	}
-
-	if (foundCollision)
-	{
-		//move our entity to where the samplebox ended up
-		//SlideAmount = SlideAmount / 2;
-		//m_actor->x += samplebox.x + samplebox.w / 2;
-		//m_actor->y += samplebox.y - CollisionBoxYOffset;
-
-		
-	}
-
 	UpdateCollisionBox();
-
 }
 
 bool HitBox::CheckCollision(SDL_Rect & rect1, SDL_Rect & rect2)

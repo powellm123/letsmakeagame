@@ -3,12 +3,12 @@
 #include "Entity.h"
 #include "Sprite.h"
 #include "HitBox.h"
+#include "UtilMethods.h"
 
 class Wall : public Entity
 {
 public:
-	Wall(float x, float y, SDL_Sprite *sprite) : Entity("wall", x, y, sprite)
-	{
-		m_components->emplace_back(new HitBox(this, 32, 32, -16, true));
-	}
+	static constexpr size_t type = UtilMethods::const_hash("wall");
+	Wall(float x, float y, Sprite *sprite);
 };
+

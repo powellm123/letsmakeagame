@@ -21,7 +21,7 @@ std::string Globals::GetResourcePath()
 	return std::string(buf) + "\\res\\";
 }
 
-std::string Globals::GenerateId()
+size_t Globals::GenerateId()
 {
 	static const int IdLength = 32;
 	char id[IdLength];
@@ -37,7 +37,7 @@ std::string Globals::GenerateId()
 		id[i] = IntToChar(a);
 	}
 	id[IdLength - 1] = '\0';
-	return std::string(id);
+	return std::hash<std::string>{}(std::string(id));
 }
 
 char Globals::IntToChar(int number)

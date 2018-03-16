@@ -7,6 +7,7 @@
 class HitBox : public IComponent
 {
 public:
+	static constexpr size_t type = UtilMethods::const_hash("hitbox");
 	HitBox(Entity *actor, int collisionBoxWidth, int collisionBoxHeight, int collisionBoxYOffset) : HitBox(actor, collisionBoxWidth, collisionBoxHeight, collisionBoxYOffset, false) {}
 	HitBox(Entity *actor, int collisionBoxWidth, int collisionBoxHeight, int collisionBoxYOffset, bool isStaticHitbox);
 	virtual void UpdateCollisionBox();

@@ -1,8 +1,9 @@
 #include "Menu.h"
 #include "Controller.h"
 #include "IScene.h"
+#include "Helper_Functions.h"
 
-Menu::Menu(std::vector<std::string> menuActions, bool isActable, bool shouldDrawText, Buttons* buttons, std::string menuName) : Player("menu", buttons), m_menuActions(menuActions), 
+Menu::Menu(std::vector<std::string> menuActions, bool isActable, bool shouldDrawText, Buttons* buttons, std::string menuName) : Player(type, buttons), m_menuActions(menuActions), 
 		m_index(0), m_isActionSelected(false), m_selectedAction(""), m_menuName(menuName), m_isActable(isActable)
 {
 	m_shouldDrawText = shouldDrawText;
@@ -141,7 +142,7 @@ Menu *Menu::GetActiveMenu()
 {
 	for (auto entity : *IScene::m_entities)
 	{
-		if (entity->GetType() == "menu" && ((Menu*)entity)->GetIsActable())
+		if (entity->GetType() == Menu::type && ((Menu*)entity)->GetIsActable())
 		{
 			return (Menu*)entity;
 		}
@@ -165,7 +166,7 @@ Menu* Menu::FindMenu(std::string menuName)
 {
 	for (auto entity : *IScene::m_entities)
 	{
-		if (entity->GetType() == "menu" && ((Menu*)entity)->m_menuName == menuName)
+		if (entity->GetType() == Menu::type && ((Menu*)entity)->m_menuName == menuName)
 		{
 			return ((Menu*)entity);
 		}
@@ -179,7 +180,7 @@ std::list<Menu*>* Menu::GetAllMenus()
 	std::list<Menu*>* menus = new std::list<Menu*>();
 	for (auto entity : *IScene::m_entities)
 	{
-		if (entity->GetType() == "menu")
+		if (entity->GetType() == Menu::type)
 		{
 			menus->push_back((Menu*)entity);
 		}

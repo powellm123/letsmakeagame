@@ -68,3 +68,28 @@ void SpriteManager::Load(std::string filename, std::string textureName)
 
 	//testMap = SDL_CreateTextureFromSurface(Globals::Renderer, scaledSurface);
 }
+
+SpriteSheet* SpriteManager::LoadTileSet(std::string filename, int width, int height)
+{
+	SDL_Surface* spriteSurface = loadSurface(filename, Globals::Renderer);
+	SDL_Texture* spriteSheet;
+
+	if (spriteSurface != nullptr
+		&& spriteSurface->format != nullptr
+		&& spriteSurface->format->palette != nullptr
+		&& spriteSurface->format->palette->colors != nullptr)
+	{
+		//for transparency, we will grab the [transparentPixelIndex] from the surface we just made
+		SDL_Color* transparentPixel = &spriteSurface->format->palette->colors[0];
+		SDL_SetColorKey(spriteSurface, 1, SDL_MapRGB(spriteSurface->format, transparentPixel->r, transparentPixel->g, transparentPixel->b));
+
+		spriteSheet = convertSurfaceToTexture(spriteSurface, Globals::Renderer, false);
+	}
+	else {
+		spriteSheet = loadTexture(filename, Globals::Renderer);
+	}
+	SDL_FreeSurface(spriteSurface);
+
+	return new SpriteSheet(spriteSheet, width, height);
+
+}

@@ -15,6 +15,6 @@ public:
 	static SDL_Surface* MainSurface;
 	static SDL_Renderer *Renderer;
 	static std::string GetResourcePath();
-	static std::string GenerateId();
+	static size_t GenerateId();
 	static char IntToChar(int number);
 };

@@ -11,9 +11,12 @@
 class ShotEntity : public IComponent
 {
 public:
+	static constexpr size_t type = UtilMethods::const_hash("shotentity");
 	ShotEntity(Entity *actor, SDL_Scancode fireButton, int maxShots);
 	void Update() override;
-	void IncreaseMaxShot();	void IncreaseMaxShotCount();
+	void IncreaseMaxShot();
+	void IncreaseMaxShotCount();
+	void IncreateExplosionSize();
 	void ShouldPerformFireAction();
 	void ShouldPerformAltFireAction();
 	void Draw() override;
@@ -23,6 +26,7 @@ protected:
 	float coolDown;
 	int shotcooldownpucount;
 	int shotdistpowerupcount;
+	int explosionSizeCount;
 	float shotdist;
 	float shotcooldownMax;
 	SDL_Scancode fire;

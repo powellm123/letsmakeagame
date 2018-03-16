@@ -198,6 +198,7 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClInclude Include="src\MathHelper.h" />
     <ClInclude Include="src\Movable.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\SpriteSheet.h" />
     <ClInclude Include="src\SpriteObjects.h" />
     <ClInclude Include="src\Tank.h" />
     <ClInclude Include="src\PowerUp.h" />
@@ -219,12 +220,14 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
   <ItemGroup>
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\AnimationSet.cpp" />
+    <ClCompile Include="src\Boarder.cpp" />
     <ClCompile Include="src\Buillet.cpp" />
     <ClCompile Include="src\CollisionBox.cpp" />
     <ClCompile Include="src\Controller.cpp" />
     <ClCompile Include="src\CpuTank.cpp" />
     <ClCompile Include="src\DecisionTree.cpp" />
     <ClCompile Include="src\DirtWall.cpp" />
+    <ClCompile Include="src\Explosion.cpp" />
     <ClCompile Include="src\Frame.cpp" />
     <ClCompile Include="src\FrameCounterSpriteObject.cpp" />
     <ClCompile Include="src\Globals.cpp" />
@@ -247,6 +250,8 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\PowerUp.cpp" />
     <ClCompile Include="src\ShotEntity.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\SpriteSheet.cpp" />
     <ClCompile Include="src\Tank.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\SDL_AudioLibrary.cpp" />
@@ -259,6 +264,7 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClCompile Include="src\TimeController.cpp" />
     <ClCompile Include="src\TitleScene.cpp" />
     <ClCompile Include="src\UtilMethods.cpp" />
+    <ClCompile Include="src\Wall.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

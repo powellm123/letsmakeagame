@@ -6,8 +6,8 @@
 class Player : public Entity
 {
 public:
-	Player(std::string type, float x, float y, int playernumber, Buttons *buttons, SDL_Sprite *sprite);
-	Player(std::string type, Buttons* buttons);
+	Player(size_t type, float x, float y, int playernumber, Buttons *buttons, Sprite *sprite);
+	Player(size_t type, Buttons* buttons);
 	void Update() override;
 	const enum class Action { Up, Down, Left, Right, Fire, AltFire, Pause };
 

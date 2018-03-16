@@ -8,6 +8,7 @@
 class DirtWall : public Entity
 {
 public:
-	DirtWall(float x, float y, SDL_Sprite *sprite);
+	static constexpr size_t type = UtilMethods::const_hash("dirtwall");
+	DirtWall(float x, float y, Sprite *sprite);
 	void Update() override;
 };

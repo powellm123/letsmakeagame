@@ -6,6 +6,7 @@
 class HealthComponent : public IComponent
 {
 public:
+	static constexpr size_t type = UtilMethods::const_hash("health");
 	const enum class HealthStatus {Alive, Dead};
 	HealthComponent(Entity * actor, int health);
 	void Damage(int amount);

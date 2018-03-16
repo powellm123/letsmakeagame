@@ -6,11 +6,12 @@
 class Keyboard : public IComponent
 {
 public:
+	static constexpr size_t type = UtilMethods::const_hash("keyboard");
 	Keyboard(Player* entity) : IComponent(entity, "keyboard") 
 	{
 		InputTracker::SubscribeToKeyboardInput(entity);
 	}
-	~Keyboard()
+	virtual ~Keyboard()
 	{
 		InputTracker::UnsubscribeActor((Player*)m_actor);
 	}

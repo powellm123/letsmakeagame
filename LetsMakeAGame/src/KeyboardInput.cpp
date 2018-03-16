@@ -5,7 +5,7 @@
 void KeyboardInput::Update()
 {
 	const Uint8* keys = SDL_GetKeyboardState(nullptr);
-	auto movableComponent = (Movable*) m_actor->GetComponent("movable");
+	auto movableComponent = (Movable*) m_actor->GetComponent(Movable::type);
 	//if movableComponent not able to move or no direction buttons are being held down, then stop moving (slide to a halt)
 	if ((movableComponent->GetMoveState() != Movable::MoveState::MOVE && movableComponent->GetMoveState() != Movable::MoveState::IDEL)
 		|| (!keys[UP] && !keys[DOWN] && !keys[LEFT] && !keys[RIGHT]))

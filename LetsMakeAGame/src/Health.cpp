@@ -2,7 +2,7 @@
 #include "Health.h"
 
 
-HealthComponent::HealthComponent(Entity * actor, int health) : IComponent(actor, "health"), Health(health), MaxHealth(health) 
+HealthComponent::HealthComponent(Entity * actor, int health) : IComponent(actor, "health", type), Health(health), MaxHealth(health)
 {
 }
 

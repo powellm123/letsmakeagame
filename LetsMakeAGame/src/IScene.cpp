@@ -1,5 +1,6 @@
 
 #include "IScene.h"
+#include "Tank.h"
 
 std::list<Entity*>* IScene::m_entities = new std::list<Entity*>();
 
@@ -36,7 +37,7 @@ void IScene::Draw()
 
 }
 
-std::list<Entity*> IScene::GetEntiries(std::string type)
+std::list<Entity*> IScene::GetEntiries(size_t type)
 {
 	std::list<Entity*> entities;
 	for (auto& entity : *m_entities)
@@ -50,7 +51,7 @@ std::list<Entity*> IScene::GetEntiries(std::string type)
 
 int IScene::GetAliveCount()
 {
-	std::list<Entity*> entities = GetEntiries("tank");
+	std::list<Entity*> entities = GetEntiries(Tank::type);
 	int count = 0;
 	for (auto& entity : entities)
 	{

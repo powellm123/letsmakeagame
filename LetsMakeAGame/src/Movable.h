@@ -4,11 +4,13 @@
 #include "IComponent.h"
 #include "TimeController.h"
 #include "MathHelper.h"
+#include "UtilMethods.h"
 
 
 class Movable : public IComponent
 {
 public:
+	static constexpr size_t type = UtilMethods::const_hash("movable");
 	//reference constants
 	//static const enum DirectionState { UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4, NONE = 0 };
 	const enum class MoveState {MOVE, IDEL, DEAD};

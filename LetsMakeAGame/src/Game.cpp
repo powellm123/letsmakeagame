@@ -49,7 +49,7 @@ void Game::Run()
 	while (!Globals::Quit)
 	{
 		TimeController::instance.UpdateTime();
-		if (Globals::Debugging) {
+		//if (Globals::Debugging) {
 			timer -= TimeController::instance.DeltaTime;
 			if (timer <= 0)
 			{
@@ -58,7 +58,7 @@ void Game::Run()
 				frameCount = 0;
 			}
 			frameCount++;
-		}
+		//}
 
 		while (SDL_PollEvent(&e))
 		{
@@ -91,6 +91,7 @@ void Game::Run()
 		InputTracker::CleanButtonPress();
 
 		Entity::RemoveInactiveEntitiesFromList(IScene::m_entities, true);
+
 	}
 }
 

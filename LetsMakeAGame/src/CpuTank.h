@@ -17,21 +17,17 @@ class CpuTank : public Tank
 	SDL_Point startloc;
 	std::list<SDL_Point>* moveDirections;
 	Map * m_map;
-	DecisionTree* tree;
 public:
-	CpuTank(float x, float y, int playernumber, Buttons *buttons, SDL_Sprite *sprite, Map *map);
-	~CpuTank();
+	CpuTank(float x, float y, int playernumber, Buttons *buttons, Sprite *sprite, Map *map);
+	virtual ~CpuTank();
 	void Update() override;
 
-	static bool IsNextTo(SDL_Point *point, Entity* object);
-	static bool IsLoc(SDL_Point* point, SDL_Point* other);
 private:
 	bool TryFire();
 	bool TryMove();
 	void Move();
 	void Fire();
 
-	int Round(float number);
 
 	std::list<GridEntity> FindInFrontDirtWalls();
 	bool ShouldFire();

@@ -2,7 +2,7 @@
 #include "TankControlledTank.h"
 
 
-TankControlledTank::TankControlledTank(float x, float y, int playernumber, Buttons * buttons, SDL_Sprite * sprite)
+TankControlledTank::TankControlledTank(float x, float y, int playernumber, Buttons * buttons, Sprite * sprite)
 	: Tank(x, y, playernumber, buttons, sprite)
 {
 	m_rotateLerp = 3;
@@ -11,7 +11,7 @@ TankControlledTank::TankControlledTank(float x, float y, int playernumber, Butto
 
 void TankControlledTank::PerformMove(float angle, float value)
 {
-	Movable* comp = (Movable*)GetComponent("movable");
+	Movable* comp = (Movable*)GetComponent(Movable::type);
 	m_relativeAngle = comp->GetAngle();
 	float newangle = angle;
 

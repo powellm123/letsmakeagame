@@ -1,7 +1,7 @@
 
 #include "Controller.h"
 
-Controller::Controller(Player * actor, int controllerNumber) : IComponent(actor, "controller")
+Controller::Controller(Player * actor, int controllerNumber) : IComponent(actor, "controller", type)
 {
 	InputTracker::SubscribeToControllerInput((Player*)actor, controllerNumber);
 }

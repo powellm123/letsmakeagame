@@ -6,12 +6,15 @@
 class Bullet : public Entity
 {
 public:
-	Bullet(float x, float y, float angle, float lifespan);
-	~Bullet();
+	static constexpr size_t type = UtilMethods::const_hash("bullet");
+	Bullet( float x, float y, float angle, float lifespan, int size);
+	Bullet(float x, float y, float angle, float lifespan, int size, Sprite* sprite);
+	virtual ~Bullet();
 	void Update() override;
 	void Draw() override;
 protected:
-	Bullet(SDL_Sprite *sprite, float x, float y, float angle, float lifespan);
 	float Angle;
 	float LifeSpan;
+	int m_size;
+	static SpriteSheet* bullets;
 };

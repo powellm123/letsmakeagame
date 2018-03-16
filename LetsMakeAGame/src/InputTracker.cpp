@@ -20,7 +20,7 @@ void InputTracker::UpdateKeyboard()
 	for (auto m_actor : keyboardSubscribers) {
 		if (!m_actor->Active)
 			continue;
-		if(m_actor->GetType() == "menu" && !((Menu*)m_actor)->GetIsActable())
+		if(m_actor->GetType() == Menu::type && !((Menu*)m_actor)->GetIsActable())
 			continue;
 		Buttons m_buttons = *m_actor->GetButtons();
 		if (m_buttons.ControllerNumber == -1) {
@@ -204,7 +204,7 @@ void InputTracker::RemoveBadActors()
 	for (auto it = links.begin(); it != links.end();)
 	{
 		try {
-		if ((*it)->first->GetId() == "")
+		if ((*it)->first->GetId() == 0)
 		{
 			it = (links).erase((it));
 		}
@@ -223,7 +223,7 @@ void InputTracker::RemoveBadActors()
 		try {
 			if (*it == NULL || *it == nullptr)
 				continue;
-			if ((*it)->GetId() == "")
+			if ((*it)->GetId() == 0)
 			{
 				it = keyboardSubscribers.erase((it));
 			}

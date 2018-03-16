@@ -5,8 +5,9 @@
 class KeyboardInput : public IComponent
 {
 public:
+	static constexpr size_t type = UtilMethods::const_hash("keyboardinput");
 	SDL_Scancode UP, DOWN, LEFT, RIGHT;
-	KeyboardInput(Entity *actor) : IComponent(actor, "KeyboardInput") {
+	KeyboardInput(Entity *actor) : IComponent(actor, "KeyboardInput", type) {
 		//Hard coded keyboard buttons
 		UP = SDL_SCANCODE_UP;
 		DOWN = SDL_SCANCODE_DOWN;

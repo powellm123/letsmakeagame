@@ -1,7 +1,7 @@
 
 #include "ShotEntity.h"
 
-ShotEntity::ShotEntity(Entity *actor, SDL_Scancode fireButton, int maxShots) : IComponent(actor, "shotentity")
+ShotEntity::ShotEntity(Entity *actor, SDL_Scancode fireButton, int maxShots) : IComponent(actor, "shotentity", type)
 {
 	fire = fireButton;
 	m_maxShots = maxShots;
@@ -9,6 +9,7 @@ ShotEntity::ShotEntity(Entity *actor, SDL_Scancode fireButton, int maxShots) : I
 	shotcooldownMax = .5;
 	shotdistpowerupcount = 0;
 	shotcooldownpucount = 0;
+	explosionSizeCount = 0;
 }
 
 void ShotEntity::Update()
@@ -20,8 +21,8 @@ void ShotEntity::Update()
 		m_performAltAction = false;
 		if (coolDown <= 0)
 		{
-			Movable* moveComponent = (Movable*)this->m_actor->GetComponent("movable");
-			auto bullet = new Bullet( this->m_actor->X, this->m_actor->Y, moveComponent->GetAngle(), shotdist);
+			Movable* moveComponent = (Movable*)this->m_actor->GetComponent(Movable::type);
+			auto bullet = new Bullet((int) this->m_actor->X, (int)this->m_actor->Y, moveComponent->GetAngle(), shotdist, explosionSizeCount);
 			IScene::m_entities->emplace_back(bullet);
 			coolDown = shotcooldownMax;
 		}
@@ -33,7 +34,7 @@ void ShotEntity::Update()
 		m_performAltAction = false;
 		if (coolDown <= 0)
 		{
-			Movable* moveComponent = (Movable*)this->m_actor->GetComponent("movable");
+			Movable* moveComponent = (Movable*)this->m_actor->GetComponent(Movable::type);
 			auto bullet = new Lob_Bullet(this->m_actor->X, this->m_actor->Y, moveComponent->GetAngle());
 			IScene::m_entities->emplace_back(bullet);
 			coolDown = shotcooldownMax;
@@ -63,6 +64,14 @@ void ShotEntity::IncreaseMaxShotCount()
 		shotcooldownpucount++;
 	}
 
+}
+
+void ShotEntity::IncreateExplosionSize()
+{
+	if (explosionSizeCount < 8)
+	{
+		explosionSizeCount++;
+	}
 }
 
 void ShotEntity::ShouldPerformFireAction()

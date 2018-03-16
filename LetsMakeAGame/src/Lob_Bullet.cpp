@@ -1,7 +1,10 @@
 
 #include "Lob_Bullet.h"
+#include "SpriteManager.h"
 
-Lob_Bullet::Lob_Bullet(float x, float y, float angle) : Bullet(SDL_Sprite::Load(0, 0, 32, 32, "altbullet1.png"), x, y, angle, 1000)
+SpriteSheet* Lob_Bullet::lobbullets = SpriteManager::LoadTileSet("altbullet1", 32, 32);
+
+Lob_Bullet::Lob_Bullet(float x, float y, float angle) : Bullet(x, y, angle, 1000, 2, lobbullets->GetSprite(0))
 {
 	Z = 0;
 	Z_volicity = 2;

@@ -10,12 +10,13 @@ class HealthBar : public SpriteObjects
 {
 public:
 	HealthBar(Player* actor, float x, float y);
+	virtual ~HealthBar();
 	void Draw() override;
 
 private:
 	Player * m_actor;
-	SDL_Sprite* healthbarcolor;
-	SDL_Sprite* border;
+	Sprite* healthbarcolor;
+	Sprite* border;
 
 	float posX;
 	float posY;

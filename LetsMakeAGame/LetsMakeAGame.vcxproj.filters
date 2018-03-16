@@ -213,6 +213,9 @@
     <ClInclude Include="src\Boarder.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="src\SpriteSheet.h">
+      <Filter>Header Files\Helper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SDL_GraphicsLibrary.cpp">
@@ -340,6 +343,21 @@
     </ClCompile>
     <ClCompile Include="src\PowerUp.cpp">
       <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Boarder.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Wall.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Explosion.cpp">
+      <Filter>Source Files\Entities\bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sprite.cpp">
+      <Filter>Source Files\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteSheet.cpp">
+      <Filter>Source Files\Helper</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

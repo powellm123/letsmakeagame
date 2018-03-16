@@ -15,4 +15,6 @@ protected:
 	float Z;
 	float Z_volicity;
 	float Z_acc;
+
+	static SpriteSheet* lobbullets;
 };

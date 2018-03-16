@@ -1,7 +1,7 @@
 
 #include "Entity.h"
 
-Entity::Entity(std::string type, float x, float y) : m_type(type), X(x), Y(y)
+Entity::Entity(size_t type, float x, float y) : m_type(type), X(x), Y(y)
 {
 	m_components = new std::list < IComponent*>();
 	Active = true;
@@ -10,18 +10,18 @@ Entity::Entity(std::string type, float x, float y) : m_type(type), X(x), Y(y)
 	m_setActiveToFalse = true;
 }
 
-Entity::Entity(std::string type, float x, float y, SDL_Sprite * sprite) : Entity(type, x, y)
+Entity::Entity(size_t type, float x, float y, Sprite * sprite) : Entity(type, x, y)
 {
 	m_sprite = sprite;
 }
 
 Entity::~Entity()
 {
-	for (auto it = m_components->begin(); it != m_components->end();)
+	for (auto it : *m_components)
 	{
-		delete *it;
-		it = m_components->erase(it);
+		delete it;
 	}
+	m_components->clear();
 }
 
 void Entity::Update()
@@ -40,24 +40,23 @@ void Entity::Update()
 	}
 }
 
-std::string Entity::GetType()
+size_t Entity::GetType()
 {
 	return m_type;
 }
 
-IComponent* Entity::GetComponent(std::string name)
+IComponent* Entity::GetComponent(size_t type)
 {
-	std::string lowerName = UtilMethods::ToLower(name);
 	for (auto& it : *m_components)
 	{
-		if (it->GetName() == lowerName)
+		if (it->GetType() == type)
 			return it;
 	}
 
 	return nullptr;
 }
 
-std::string Entity::GetId()
+size_t Entity::GetId()
 {
 	return m_id;
 }
@@ -92,7 +91,7 @@ void Entity::RemoveInactiveEntitiesFromList(std::list<Entity*>* entities, bool d
 void Entity::Draw()
 {
 	if(m_sprite != nullptr)
-		m_sprite->Draw(Globals::Renderer, X, Y, 0);
+		m_sprite->Draw(MathHelper::CreatePoint(X, Y), MathHelper::CreatePoint(1,1));
 	for (auto& component : *m_components)
 	{
 		component->Draw();
@@ -101,7 +100,7 @@ void Entity::Draw()
 }
 
 
-void Entity::RemoveAllFromList(list<Entity*> *entities, bool deleteEntities)
+void Entity::RemoveAllFromList(std::list<Entity*> *entities, bool deleteEntities)
 {
 	for (auto it = entities->begin(); it != entities->end();)
 	{
