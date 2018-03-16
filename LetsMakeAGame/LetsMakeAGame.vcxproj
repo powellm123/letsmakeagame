@@ -168,7 +168,6 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClInclude Include="src\DateTime.h" />
     <ClInclude Include="src\DecisionTree.h" />
     <ClInclude Include="src\Explosion.h" />
-    <ClInclude Include="src\FrameCounterSpriteObject.h" />
     <ClInclude Include="src\GridEntity.h" />
     <ClInclude Include="src\HealthBar.h" />
     <ClInclude Include="src\Inputtracker.h" />
@@ -226,7 +225,6 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClCompile Include="src\DecisionTree.cpp" />
     <ClCompile Include="src\DirtWall.cpp" />
     <ClCompile Include="src\Frame.cpp" />
-    <ClCompile Include="src\FrameCounterSpriteObject.cpp" />
     <ClCompile Include="src\Globals.cpp" />
     <ClCompile Include="src\Health.cpp" />
     <ClCompile Include="src\HealthBar.cpp" />
