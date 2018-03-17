@@ -12,13 +12,10 @@ TestScene::TestScene() : IScene()
 TestScene::~TestScene()
 {
 	IScene::~IScene();
-	//SDL_DestroyTexture(TileSet);
 	
 	SDL_DestroyTexture(testMap);
 	SDL_DestroyTexture(gameOverTexture);
 	delete map;
-	delete TileSet;
-	delete Tanks;
 }
 
 void TestScene::Init()
@@ -31,20 +28,25 @@ void TestScene::Init()
 
 	m_matchend = false;
 	testMap = IMG_LoadTexture(Globals::Renderer, std::string(Globals::GetResourcePath() + "map2.png").c_str());
-	TileSet = SpriteManager::LoadTileSet("DessertTileSet.png", 128, 128);
-	Tanks = SpriteManager::LoadTileSet("tank.png", 128, 128);
+
+	SpriteFactory::AddSpriteSheet("DessertTileSet.png", "tile");
+	SpriteFactory::AddSpriteSheet("poweruptileset.png", "powerup");
+	SpriteFactory::AddSpriteSheet("tank.png", "tank");
+	SpriteFactory::AddSpriteSheet("bullets.png", "bullet");
+	SpriteFactory::AddSpriteSheet("border.png", "border", 32, 32);
+	SpriteFactory::AddSpriteSheet("healthbar.png", "healthbar", 32,32);
 
 	Buttons *cb = Globals::ControllerButtons;
 	cb->ControllerNumber = 0;
-	m_entities->emplace_back(new TankControlledTank(64, 64, 1, Globals::KeyboardButtons, Tanks->GetSprite(0))); // SDL_Sprite::Load(0, 0, 32, 32, "tank.png")));
-	m_entities->emplace_back(new CpuTank(Globals::ScreenWidth - 64, Globals::ScreenHeight - 64, 2, cb, Tanks->GetSprite(0), map)); //SDL_Sprite::Load(0, 0, 32, 32, "tank.png"), map));
-	m_entities->emplace_back(new CpuTank( 64, Globals::ScreenHeight - 64, 3, cb, Tanks->GetSprite(0), map)); // SDL_Sprite::Load(0, 0, 32, 32, "tank.png"), map));
-	m_entities->emplace_back(new CpuTank(Globals::ScreenWidth - 64, 64, 4, cb, Tanks->GetSprite(0), map)); // SDL_Sprite::Load(0, 0, 32, 32, "tank.png"), map));
+	m_entities->emplace_back(new TankControlledTank(64, 64, 1, Globals::KeyboardButtons));
+	m_entities->emplace_back(new CpuTank(Globals::ScreenWidth - 64, Globals::ScreenHeight - 64, 2, cb, map));
+	m_entities->emplace_back(new CpuTank( 64, Globals::ScreenHeight - 64, 3, cb, map));
+	m_entities->emplace_back(new CpuTank(Globals::ScreenWidth - 64, 64, 4, cb,  map));
 
-	m_entities->emplace_back(new Boarder(16, Globals::ScreenHeight / 2, 32, Globals::ScreenHeight, TileSet->GetSprite(2)));
-	m_entities->emplace_back(new Boarder(Globals::ScreenWidth-16, Globals::ScreenHeight / 2, 32, Globals::ScreenHeight, TileSet->GetSprite(2)));
-	m_entities->emplace_back(new Boarder(Globals::ScreenWidth/2, 16, Globals::ScreenWidth,32, TileSet->GetSprite(2)));
-	m_entities->emplace_back(new Boarder(Globals::ScreenWidth / 2, Globals::ScreenHeight-16, Globals::ScreenWidth, 32, TileSet->GetSprite(2)));
+	m_entities->emplace_back(new Boarder(0, 0, 32, Globals::ScreenHeight));
+	m_entities->emplace_back(new Boarder(Globals::ScreenWidth-32, 16, 32, Globals::ScreenHeight));
+	m_entities->emplace_back(new Boarder(0, 0, Globals::ScreenWidth,32));
+	m_entities->emplace_back(new Boarder(0, Globals::ScreenHeight-32, Globals::ScreenWidth, 32));
 
 	int countY = Game::Height - 1;
 	int countX = Game::Width - 1;
@@ -55,14 +57,14 @@ void TestScene::Init()
 			if (i < freeroom && j < freeroom || i < freeroom && j > countY - freeroom || i > countX - freeroom && j < freeroom || i > countX - freeroom && j > countY - freeroom)
 				continue;
 			if (i == countX / 2 && j < 3 || i == countX / 2 && j > countY - 3 || i < 3 && j == countY / 2 || i > countX - 3 && j == countY / 2) {
-				m_entities->emplace_back(new Wall(i * 32 + 16, j * 32 + 16, TileSet->GetSprite(1))); // SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
+				m_entities->emplace_back(new Wall(i * 32, j * 32)); // SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
 				continue;
 			}
 			if (rand() % 10 < 7) {
 				if (rand() % 10 < 1)
-					m_entities->emplace_back(new Wall(i * 32 + 16, j * 32 + 16, TileSet->GetSprite(1))); //SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
+					m_entities->emplace_back(new Wall(i * 32 , j * 32 )); //SDL_Sprite::Load(0, 0, 32, 32, "wall.png")));
 				else
-					m_entities->emplace_back(new DirtWall(i * 32 + 16, j * 32 + 16, TileSet->GetSprite(0))); //SDL_Sprite::Load(0, 0, 32, 32, "dirtwall.png")));
+					m_entities->emplace_back(new DirtWall(i * 32 , j * 32 )); //SDL_Sprite::Load(0, 0, 32, 32, "dirtwall.png")));
 			}
 		}
 

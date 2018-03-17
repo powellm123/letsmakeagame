@@ -216,6 +216,9 @@
     <ClInclude Include="src\SpriteSheet.h">
       <Filter>Header Files\Helper</Filter>
     </ClInclude>
+    <ClInclude Include="src\SpriteFactory.h">
+      <Filter>Header Files\Librarys</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SDL_GraphicsLibrary.cpp">
@@ -358,6 +361,9 @@
     </ClCompile>
     <ClCompile Include="src\SpriteSheet.cpp">
       <Filter>Source Files\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpriteFactory.cpp">
+      <Filter>Source Files\Library</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

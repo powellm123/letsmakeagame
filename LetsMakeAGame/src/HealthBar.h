@@ -16,7 +16,7 @@ public:
 private:
 	Player * m_actor;
 	Sprite* healthbarcolor;
-	Sprite* border;
+	Sprite* border[9];
 
 	float posX;
 	float posY;

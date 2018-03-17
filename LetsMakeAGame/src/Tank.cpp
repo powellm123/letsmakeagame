@@ -1,8 +1,9 @@
 
 #include "Tank.h"
 #include "Controller.h"
+#include "SpriteFactory.h"
 
-Tank::Tank(float x, float y, int playernumber, Buttons *buttons, Sprite *sprite) : Player(type, x, y, playernumber, buttons, sprite)
+Tank::Tank(float x, float y, int playernumber, Buttons *buttons) : Player(type, x, y, playernumber, buttons, SpriteFactory::GetSprite("tank", 0))
 {
 	//static int playernumber = 1;
 	m_playernumber = (PlayerNumber)playernumber;
@@ -12,7 +13,7 @@ Tank::Tank(float x, float y, int playernumber, Buttons *buttons, Sprite *sprite)
 	m_components->push_back(new ShotEntity(this, SDL_SCANCODE_X, 5));
 	m_components->push_back(new HitBox(this, 32, 32, -16));
 
-	IScene::m_spriteobjects->push_back(new HealthBar(this, 10 + playernumber * 125, 20));
+	IScene::m_spriteobjects->push_back(new HealthBar(this, 10 + playernumber * 110, 5));
 
 }
 
@@ -58,7 +59,7 @@ void Tank::Draw()
 	if (!Alive)
 		return;
 	Movable *movableComponent = (Movable*) GetComponent(Movable::type);
-	m_sprite->Draw(MathHelper::CreatePoint( X, Y), movableComponent->GetAngle()+90, MathHelper::CreatePoint(1, 1));
+	m_sprite->Draw(MathHelper::CreatePoint( X, Y), movableComponent->GetAngle()+90, 1, 1);
 	for (auto& component : *m_components)
 	{
 		component->Draw();

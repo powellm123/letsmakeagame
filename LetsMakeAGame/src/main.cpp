@@ -10,10 +10,12 @@ int main(int argc, char **argv)
 	//set the random seed for the random number sequence
 	srand(time(0));
 
-	Globals::Debugging = true;
+	Globals::Debugging = false;
 	Globals::ScreenWidth = 640;
 	Globals::ScreenHeight = 512;
 	Globals::ScreenScale = 2;
+	Globals::TileWidth = 32;
+	Globals::TileHeight = 32;
 	   
 	SDL_GraphicsLibrary *sdl_gl = new SDL_GraphicsLibrary(std::cout);
 	std::string windowName = std::string("Lets make a game");

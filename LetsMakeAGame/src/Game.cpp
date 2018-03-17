@@ -110,6 +110,7 @@ void Game::Draw()
 	SDL_SetRenderDrawColor(Globals::Renderer, 100, 149, 237, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(Globals::Renderer);
 
+	IScene::m_entities->sort(Entity::EntityCompare);
 //	if (m_scene != nullptr)
 //		m_scene->Draw();
 	SceneManager::GetInstance()->Draw();

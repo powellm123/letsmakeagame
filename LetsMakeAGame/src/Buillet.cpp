@@ -3,14 +3,17 @@
 #include "HitBox.h"
 #include "Explosion.h"
 #include "SpriteManager.h"
+#include "SpriteFactory.h"
 
-SpriteSheet *Bullet::bullets = SpriteManager::LoadTileSet("bullet.png", 32, 32);
+Bullet::Bullet(float x, float y, float angle, float lifespan, int size) : Bullet(x, y, angle, lifespan, size,SpriteFactory::GetSprite("bullet", 1))
+{
+}
 
-Bullet::Bullet(float x, float y, float angle, float lifespan, int size) : Entity(type, 0, 0, bullets->GetSprite(0)), m_size(size)
+Bullet::Bullet(float x, float y, float angle, float lifespan, int size, Sprite * sprite) : Entity(type, 0, 0, sprite), m_size(size)
 {
 	static const float dtr = M_PI / 180;
-	this->X = x + cos(angle*dtr)*32;
-	this->Y = y + sin(angle*dtr)*32;
+	this->X = x + cos(angle*dtr) * 45;
+	this->Y = y + sin(angle*dtr) * 45;
 	this->Angle = angle;
 	this->Active = true;
 
@@ -18,11 +21,6 @@ Bullet::Bullet(float x, float y, float angle, float lifespan, int size) : Entity
 
 	m_components->emplace_back(new Movable(this, 80));
 	m_components->emplace_back(new HitBox(this, 15, 8, -4));
-}
-
-Bullet::Bullet(float x, float y, float angle, float lifespan, int size, Sprite * sprite) : Bullet(x, y, angle, lifespan, size)
-{
-	this->m_sprite = sprite;
 }
 
 
@@ -53,7 +51,7 @@ void Bullet::Update()
 
 void Bullet::Draw()
 {
-	m_sprite->Draw(MathHelper::CreatePoint( X, Y), Angle+90, SDL_Point());
+	m_sprite->Draw(MathHelper::CreatePoint( X, Y), Angle+90, 1,1);
 	for (auto& component : *m_components)
 	{
 		component->Draw();

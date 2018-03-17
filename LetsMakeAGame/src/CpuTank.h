@@ -18,7 +18,7 @@ class CpuTank : public Tank
 	std::list<SDL_Point>* moveDirections;
 	Map * m_map;
 public:
-	CpuTank(float x, float y, int playernumber, Buttons *buttons, Sprite *sprite, Map *map);
+	CpuTank(float x, float y, int playernumber, Buttons *buttons, Map *map);
 	virtual ~CpuTank();
 	void Update() override;
 

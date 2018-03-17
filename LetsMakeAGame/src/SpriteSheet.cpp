@@ -1,7 +1,8 @@
 
 #include "SpriteSheet.h"
+#include "MathHelper.h"
 
-Sprite::Sprite(SDL_Rect spriteCord, SDL_Texture * texture) : m_spriteCord(spriteCord), m_texture(texture)
+Sprite::Sprite(SDL_Rect spriteCord, SDL_Texture * texture) : m_spriteCord(spriteCord), m_texture(texture), m_scaleToSize(Globals::TileWidth/(float)spriteCord.w)
 {
 }
 
@@ -9,21 +10,21 @@ Sprite::~Sprite()
 {
 }
 
-void Sprite::Draw(SDL_Point loc, SDL_Point size)
+void Sprite::Draw(SDL_Point loc, float sizeX, float sizeY)
 {
-	Draw(loc, 0, size);
+	Draw(loc, 0, sizeX, sizeY);
 }
 
-void Sprite::Draw(SDL_Point loc, float angle, SDL_Point size)
+void Sprite::Draw(SDL_Point loc, float angle, float sizeX, float sizeY)
 {
 	SDL_Point center;
-	center.x = m_spriteCord.x / 2;
-	center.y = m_spriteCord.y / 2;
+	center.x = m_scaleToSize * m_spriteCord.w / 2;
+	center.y = m_scaleToSize * m_spriteCord.h / 2;
 	SDL_Rect dest; // destination of where we want to draw this frame
-	dest.x = loc.x;// -Offset.x - (center.x * scaleX);
-	dest.y = loc.y;// -Offset.y - (center.y * scaleY);
-	dest.w = m_spriteCord.w * size.x;
-	dest.h = m_spriteCord.h * size.y;
+	dest.x = loc.x;// -center.x; // m_scaleToSize * m_spriteCord.w / 2;
+	dest.y = loc.y;// -center.y; // m_scaleToSize * m_spriteCord.h / 2;
+	dest.w = m_scaleToSize * m_spriteCord.w * sizeX;
+	dest.h = m_scaleToSize * m_spriteCord.h * sizeY;
 
 
 	SDL_RenderCopyEx(Globals::Renderer, m_texture, &m_spriteCord, &dest, angle, &center, SDL_RendererFlip::SDL_FLIP_NONE);
@@ -60,12 +61,12 @@ SpriteSheet::~SpriteSheet()
 		SDL_DestroyTexture(m_texture);
 }
 
-void SpriteSheet::Draw(SDL_Point loc, SDL_Point size, int index)
+void SpriteSheet::Draw(SDL_Point loc, float sizeX, float sizeY, int index)
 {
 	if (index >= sprites.size())
 		return;
 
-	sprites[index]->Draw(loc, size);
+	sprites[index]->Draw(loc, sizeX, sizeY);
 
 }
 

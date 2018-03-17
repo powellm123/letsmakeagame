@@ -12,6 +12,7 @@
 #include "DirtWall.h"
 #include "SceneManager.h"
 #include "Map.h"
+#include "SpriteFactory.h"
 
 class TestScene : public IScene
 {
@@ -27,9 +28,6 @@ public:
 private:
 	Map *map;
 	Menu * m_menu1;
-	SpriteSheet* TileSet;
-	SpriteSheet* PowerUps;
-	SpriteSheet* Tanks;
 	SDL_Texture * testMap;
 	SDL_Texture * gameOverTexture;
 	SDL_Texture * text;

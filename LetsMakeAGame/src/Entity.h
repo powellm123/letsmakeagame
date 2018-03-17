@@ -24,6 +24,7 @@ public:
 	bool Active;
 	void SetIsDying(bool);
 	bool GetIsDying();
+	static bool EntityCompare(const Entity* const &a, const Entity* const &b);
 //static
 	static void RemoveInactiveEntitiesFromList(std::list<Entity*>*entities, bool deleteEntities);
 	static void RemoveAllFromList(std::list<Entity*> *entities, bool deleteEntities);

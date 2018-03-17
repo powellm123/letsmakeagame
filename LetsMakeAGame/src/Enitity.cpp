@@ -71,6 +71,14 @@ bool Entity::GetIsDying()
 	return m_isDying;
 }
 
+bool Entity::EntityCompare(const Entity * const & a, const Entity * const & b)
+{
+	if (a != 0 && b != 0)
+		return a->m_type > b->m_type;
+
+	return false;
+}
+
 
 void Entity::RemoveInactiveEntitiesFromList(std::list<Entity*>* entities, bool deleteEntities)
 {
@@ -91,7 +99,7 @@ void Entity::RemoveInactiveEntitiesFromList(std::list<Entity*>* entities, bool d
 void Entity::Draw()
 {
 	if(m_sprite != nullptr)
-		m_sprite->Draw(MathHelper::CreatePoint(X, Y), MathHelper::CreatePoint(1,1));
+		m_sprite->Draw(MathHelper::CreatePoint(X, Y), 1,1);
 	for (auto& component : *m_components)
 	{
 		component->Draw();

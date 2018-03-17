@@ -16,7 +16,7 @@ public:
 	static constexpr size_t type = UtilMethods::const_hash("tank");
 	const enum PlayerNumber{ Player1 = 1, Player2 = 2, Player3 = 3, Player4 = 4};
 
-	Tank(float x, float y, int playernumber, Buttons *buttons, Sprite *sprite);
+	Tank(float x, float y, int playernumber, Buttons *buttons);
 	
 	void PerformAction(Player::Action action) override;
 	void PerformMove(float angle, float value) override;

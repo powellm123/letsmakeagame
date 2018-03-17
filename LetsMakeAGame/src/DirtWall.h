@@ -9,6 +9,6 @@ class DirtWall : public Entity
 {
 public:
 	static constexpr size_t type = UtilMethods::const_hash("dirtwall");
-	DirtWall(float x, float y, Sprite *sprite);
+	DirtWall(float x, float y);
 	void Update() override;
 };

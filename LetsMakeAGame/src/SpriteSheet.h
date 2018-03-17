@@ -9,11 +9,12 @@ class Sprite
 public:
 	Sprite(SDL_Rect spriteCord, SDL_Texture* texture);
 	~Sprite();
-	void Draw(SDL_Point loc, SDL_Point size);
-	void Draw(SDL_Point loc, float angle, SDL_Point size);
+	void Draw(SDL_Point loc, float sizeX, float sizeY);
+	void Draw(SDL_Point loc, float angle, float sizeX, float sizeY);
 private:
 	SDL_Rect m_spriteCord;
 	SDL_Texture* m_texture;
+	float m_scaleToSize;
 };
 
 class SpriteSheet
@@ -21,7 +22,7 @@ class SpriteSheet
 public:
 	SpriteSheet(SDL_Texture* texture, int width, int height);
 	~SpriteSheet();
-	void Draw(SDL_Point loc, SDL_Point size, int index);
+	void Draw(SDL_Point loc, float sizeX, float sizeY, int index);
 	Sprite* GetSprite(int index);
 private:
 	std::vector<Sprite*> sprites;

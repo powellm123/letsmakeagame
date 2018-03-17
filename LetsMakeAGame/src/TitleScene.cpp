@@ -13,9 +13,7 @@ TitleScene::~TitleScene()
 {
 	IScene::~IScene();
 	SDL_DestroyTexture(testMap);
-	SDL_DestroyTexture(text);
-
-	
+	SDL_DestroyTexture(text);	
 }
 
 void TitleScene::Update()

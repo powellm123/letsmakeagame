@@ -198,6 +198,7 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClInclude Include="src\MathHelper.h" />
     <ClInclude Include="src\Movable.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\SpriteFactory.h" />
     <ClInclude Include="src\SpriteSheet.h" />
     <ClInclude Include="src\SpriteObjects.h" />
     <ClInclude Include="src\Tank.h" />
@@ -251,6 +252,7 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClCompile Include="src\PowerUp.cpp" />
     <ClCompile Include="src\ShotEntity.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\SpriteFactory.cpp" />
     <ClCompile Include="src\SpriteSheet.cpp" />
     <ClCompile Include="src\Tank.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />

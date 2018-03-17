@@ -1,5 +1,4 @@
 #include "Globals.h"
-
 #include "DateTime.h"
 
 Buttons *Globals::ControllerButtons = new Buttons();
@@ -9,6 +8,11 @@ bool Globals::Quit = false;
 int Globals::ScreenWidth;
 int Globals::ScreenHeight;
 int Globals::ScreenScale;
+
+
+int Globals::TileWidth;
+int Globals::TileHeight;
+
 
 bool Globals::Debugging = true;
 

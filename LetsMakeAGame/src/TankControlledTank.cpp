@@ -2,8 +2,8 @@
 #include "TankControlledTank.h"
 
 
-TankControlledTank::TankControlledTank(float x, float y, int playernumber, Buttons * buttons, Sprite * sprite)
-	: Tank(x, y, playernumber, buttons, sprite)
+TankControlledTank::TankControlledTank(float x, float y, int playernumber, Buttons * buttons)
+	: Tank(x, y, playernumber, buttons)
 {
 	m_rotateLerp = 3;
 	m_relativeAngle = 0;

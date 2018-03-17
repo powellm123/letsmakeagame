@@ -1,13 +1,13 @@
 
 #include "Explosion.h"
 #include "SpriteManager.h"
+#include "SpriteFactory.h"
 
-SpriteSheet* Explosion::explosions = SpriteManager::LoadTileSet("explosion.png", 32, 32);
 
-Explosion::Explosion(float x, float y, int size) : Entity(type, x, y, explosions->GetSprite(0)), m_size(1+(size/3.0))
+Explosion::Explosion(float x, float y, int size) : Entity(type, x - size/2, y+size/2, SpriteFactory::GetSprite("bullet", 2)), m_size(1+(size/3.0))
 {
 	LifeSpan = 1;
-	m_components->emplace_back(new HitBox(this, 32 * m_size, 32 * m_size, -16));
+	m_components->emplace_back(new HitBox(this, Globals::TileWidth * m_size, Globals::TileHeight * m_size, -16));
 }
 void Explosion::Update()
 {
@@ -24,7 +24,7 @@ void Explosion::Update()
 void Explosion::Draw() 
 {
 	//m_sprite->Draw2(Globals::Renderer, X, Y, 0, m_size, m_size);
-	m_sprite->Draw(MathHelper::CreatePoint(X, Y), MathHelper::CreatePoint(m_size, m_size));
+	m_sprite->Draw(MathHelper::CreatePoint(X, Y), m_size, m_size);
 	for (auto& component : *m_components)
 	{
 		component->Draw();

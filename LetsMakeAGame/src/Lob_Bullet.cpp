@@ -1,10 +1,9 @@
 
 #include "Lob_Bullet.h"
 #include "SpriteManager.h"
+#include "SpriteFactory.h"
 
-SpriteSheet* Lob_Bullet::lobbullets = SpriteManager::LoadTileSet("altbullet1", 32, 32);
-
-Lob_Bullet::Lob_Bullet(float x, float y, float angle) : Bullet(x, y, angle, 1000, 2, lobbullets->GetSprite(0))
+Lob_Bullet::Lob_Bullet(float x, float y, float angle) : Bullet(x, y, angle, 1000, 2, SpriteFactory::GetSprite("bullet", 0))
 {
 	Z = 0;
 	Z_volicity = 2;

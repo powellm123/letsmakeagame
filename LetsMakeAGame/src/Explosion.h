@@ -14,5 +14,4 @@ public:
 private:
 	float LifeSpan;
 	float m_size;
-	static SpriteSheet* explosions;
 };

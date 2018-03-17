@@ -30,8 +30,8 @@ void HitBox::Draw()
 
 void HitBox::UpdateCollisionBox()
 {
-	CollisionBox.x = m_actor->X - CollisionBox.w / 2;
-	CollisionBox.y = m_actor->Y - CollisionBox.h / 2;
+	CollisionBox.x = m_actor->X;// -CollisionBox.w / 2;
+	CollisionBox.y = m_actor->Y;// -CollisionBox.h / 2;
 	CollisionBox.w = CollisionBoxWidth;
 	CollisionBox.h = CollisionBoxHeight;
 }

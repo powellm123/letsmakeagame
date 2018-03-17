@@ -9,6 +9,6 @@ class Wall : public Entity
 {
 public:
 	static constexpr size_t type = UtilMethods::const_hash("wall");
-	Wall(float x, float y, Sprite *sprite);
+	Wall(float x, float y);
 };
 
