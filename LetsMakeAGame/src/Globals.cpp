@@ -1,7 +1,6 @@
 #include "Globals.h"
 #include "DateTime.h"
 
-Buttons *Globals::ControllerButtons = new Buttons();
 Buttons *Globals::KeyboardButtons = new Buttons();
 
 bool Globals::Quit = false;
@@ -52,4 +51,17 @@ char Globals::IntToChar(int number)
 		return char(number + 48);
 	else
 		return char(number + 87);
+}
+
+void Globals::InitKeyboardKeys()
+{
+	KeyboardButtons->ControllerNumber = -1;
+	KeyboardButtons->Up = SDL_SCANCODE_UP;
+	KeyboardButtons->Down = SDL_SCANCODE_DOWN;
+	KeyboardButtons->Left = SDL_SCANCODE_LEFT;
+	KeyboardButtons->Right = SDL_SCANCODE_RIGHT;
+
+	KeyboardButtons->Fire = SDL_SCANCODE_X;
+	KeyboardButtons->AltFire = SDL_SCANCODE_Z;
+	KeyboardButtons->Pause = SDL_SCANCODE_SPACE;
 }

@@ -9,6 +9,13 @@ TankControlledTank::TankControlledTank(float x, float y, int playernumber, Butto
 	m_relativeAngle = 0;
 }
 
+TankControlledTank::TankControlledTank(float x, float y, int playernumber, SDL_JoystickID joystickId)
+	: Tank(x, y, playernumber, joystickId)
+{
+	m_rotateLerp = 3;
+	m_relativeAngle = 0;
+}
+
 void TankControlledTank::PerformMove(float angle, float value)
 {
 	Movable* comp = (Movable*)GetComponent(Movable::type);

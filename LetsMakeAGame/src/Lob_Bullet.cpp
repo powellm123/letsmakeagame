@@ -1,6 +1,5 @@
 
 #include "Lob_Bullet.h"
-#include "SpriteManager.h"
 #include "SpriteFactory.h"
 
 Lob_Bullet::Lob_Bullet(float x, float y, float angle) : Bullet(x, y, angle, 1000, 2, SpriteFactory::GetSprite("bullet", 0))

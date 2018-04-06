@@ -19,6 +19,7 @@ class TestScene : public IScene
 	const int width = Globals::ScreenWidth / 32;
 	const int height = Globals::ScreenHeight / 32;
 public:
+	static constexpr size_t SCENE = UtilMethods::const_hash("testscene");
 	TestScene();
 	~TestScene();
 	void Init() override;
@@ -27,7 +28,6 @@ public:
 
 private:
 	Map *map;
-	Menu * m_menu1;
 	SDL_Texture * testMap;
 	SDL_Texture * gameOverTexture;
 	SDL_Texture * text;

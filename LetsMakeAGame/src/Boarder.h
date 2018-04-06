@@ -2,7 +2,6 @@
 
 #include "Entity.h"
 #include "HitBox.h"
-#include "Sprite.h"
 
 class Boarder : public Entity
 {

@@ -7,6 +7,7 @@ class TankControlledTank : public Tank
 {
 public:
 	TankControlledTank(float x, float y, int playernumber, Buttons *buttons);
+	TankControlledTank(float x, float y, int playernumber, SDL_JoystickID joysticId);
 	void PerformMove(float angle, float value) override;
 
 private:

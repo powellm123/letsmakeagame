@@ -7,7 +7,6 @@
 class Globals
 {
 public:
-	static Buttons *ControllerButtons;
 	static Buttons *KeyboardButtons;
 	static bool Quit;
 	static bool Debugging;
@@ -18,4 +17,5 @@ public:
 	static std::string GetResourcePath();
 	static size_t GenerateId();
 	static char IntToChar(int number);
+	static void InitKeyboardKeys();
 };

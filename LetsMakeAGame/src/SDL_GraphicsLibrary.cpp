@@ -84,17 +84,17 @@ void SDL_GraphicsLibrary::Quit()
 
 bool SDL_GraphicsLibrary::InitTextToFontLibrary()
 {
-	ITextToFontLibrary* sdl_ttf = new SDL_TextToFontLibrary(*m_output);
+	SDL_TextToFontLibrary* sdl_ttf = new SDL_TextToFontLibrary(*m_output);
 	return sdl_ttf->Init();
 }
 bool SDL_GraphicsLibrary::InitAudioLibrary()
 {
-	IAudioLibrary *sdl_al = new SDL_AudioLibrary(*m_output);
+	SDL_AudioLibrary *sdl_al = new SDL_AudioLibrary(*m_output);
 	return sdl_al->Init();
 }
 bool SDL_GraphicsLibrary::InitImageGraphics()
 {
-	IImageGraphics<SDL_Renderer, SDL_Texture>* sdl_il = new SDL_ImageLibrary(*m_output);
+	SDL_ImageLibrary* sdl_il = new SDL_ImageLibrary(*m_output);
 	return sdl_il->Init();
 }
 

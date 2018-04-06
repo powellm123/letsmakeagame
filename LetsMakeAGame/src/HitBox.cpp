@@ -8,10 +8,10 @@
 #include "Explosion.h"
 #include "Wall.h"
 
-HitBox::HitBox(Entity * actor, int collisionBoxWidth, int collisionBoxHeight, int collisionBoxYOffset, bool isStaticHitbox)
-	: IComponent(actor, "hitbox", type), CollisionBoxWidth(collisionBoxWidth), CollisionBoxHeight(collisionBoxHeight), CollisionBoxYOffset(collisionBoxYOffset), m_isStaticHitBox(isStaticHitbox)
+HitBox::HitBox(Entity * actor, int collisionBoxWidth, int collisionBoxHeight,  bool isStaticHitbox, float offsetx, float offsety)
+	: IComponent(actor, "hitbox", type), CollisionBoxWidth(collisionBoxWidth), CollisionBoxHeight(collisionBoxHeight),
+	CollisionBoxXOffset(offsetx), CollisionBoxYOffset(offsety), m_isStaticHitBox(isStaticHitbox)
 {
-	UpdateCollisionBox();
 }
 
 void HitBox::Update()
@@ -30,8 +30,8 @@ void HitBox::Draw()
 
 void HitBox::UpdateCollisionBox()
 {
-	CollisionBox.x = m_actor->X;// -CollisionBox.w / 2;
-	CollisionBox.y = m_actor->Y;// -CollisionBox.h / 2;
+	CollisionBox.x = m_actor->X - CollisionBoxXOffset;
+	CollisionBox.y = m_actor->Y - CollisionBoxYOffset;
 	CollisionBox.w = CollisionBoxWidth;
 	CollisionBox.h = CollisionBoxHeight;
 }
@@ -47,7 +47,7 @@ void HitBox::UpdateCollisions()
 
 
 	//list of potential collisions
-	list<Entity*> collisions;
+	std::list<Entity*> collisions;
 
 
 	for (auto it : *IScene::m_entities)

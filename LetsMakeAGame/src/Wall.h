@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Entity.h"
-#include "Sprite.h"
 #include "HitBox.h"
 #include "UtilMethods.h"
 

@@ -39,8 +39,3 @@ std::string UtilMethods::ToUpper(std::string str)
 
 	return newstring;
 }
-
-//size_t constexpr UtilMethods::const_hash(char const *input)
-//{
-//	return *input ? static_cast<size_t>(*input) + 33 * const_hash(input + 1) : 5381;
-//}

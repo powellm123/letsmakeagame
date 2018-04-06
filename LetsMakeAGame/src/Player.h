@@ -1,22 +1,23 @@
 #pragma once
 
-#include "Entity.h"
+#include "IPlayer.h"
 #include "Buttons.h"
 
-class Player : public Entity
+class Player : public IPlayer
 {
 public:
-	Player(size_t type, float x, float y, int playernumber, Buttons *buttons, Sprite *sprite);
+	Player(size_t type, float x, float y, Buttons *buttons, Sprite *sprite);
+	Player(size_t type, float x, float y, SDL_JoystickID joystickId, Sprite *sprite);
+	Player(size_t type, float x, float y, Sprite *sprite);
 	Player(size_t type, Buttons* buttons);
+	Player(size_t type, SDL_JoystickID joystickId);
+	Buttons* GetButtons();
 	void Update() override;
-	const enum class Action { Up, Down, Left, Right, Fire, AltFire, Pause };
+	bool IsAlive();
 
 	virtual void PerformAction(Action action) = 0;
 	virtual void PerformMove(float angle, float value) = 0;
-	Buttons* GetButtons();
-	bool IsAlive();
 protected:
 	bool Alive;
-	std::list<Action> m_actions;
-	Buttons *m_buttons;
+	Buttons m_buttons;
 };

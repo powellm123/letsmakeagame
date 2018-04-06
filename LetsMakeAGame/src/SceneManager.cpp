@@ -1,11 +1,32 @@
 
 #include "SceneManager.h"
+#include "PlayerSelectScene.h"
+#include "BattleScene.h"
 
-SceneManager::~SceneManager()
+SceneManager SceneManager::Instance;
+
+SceneManager::SceneManager()
 {
 }
 
-void SceneManager::LoadScene(std::string name)
+void SceneManager::Init()
+{
+	LoadScene(TitleScene::SCENE);
+}
+
+SceneManager::~SceneManager()
+{
+	Entity::RemoveAllFromList(IScene::m_entities, true);
+	delete currentScene;
+	currentScene = nullptr;
+}
+
+void SceneManager::StartLoadingScene(size_t scene)
+{
+	prepScene = scene;
+}
+
+void SceneManager::LoadScene(size_t scene)
 {
 	if (currentScene != nullptr)
 	{
@@ -14,16 +35,23 @@ void SceneManager::LoadScene(std::string name)
 		Entity::RemoveAllFromList(IScene::m_entities, true);
 	}
 
-	switch (scenes[UtilMethods::ToLower(name)])
+	switch (scene)
 	{
-	case 0: //test scene
+	case TestScene::SCENE:
 		currentScene = new TestScene();
 		break;
 
-	case 1: //title scene
+	case TitleScene::SCENE:
 		currentScene = new TitleScene();
 		break;
 
+	case PlayerSelectScene::SCENE:
+		currentScene = new PlayerSelectScene();
+		break;
+
+	case BattleScene::SCENE:
+		currentScene = new BattleScene();
+		break;
 	default:
 		throw "Scene Doesn't exists";
 	}
@@ -33,24 +61,17 @@ void SceneManager::LoadScene(std::string name)
 
  void SceneManager::Update()
  {
+	 if (prepScene != 0)
+	 {
+		 LoadScene(prepScene);
+		 prepScene = 0;
+	 }
 	 currentScene->Update();
  }
 
  void SceneManager::Draw()
  {
+	 IScene::m_entities->sort(Entity::EntityCompare);
 	 currentScene->Draw();
  }
 
- SceneManager* SceneManager::GetInstance()
-{
-	static SceneManager* instance = new SceneManager();
-	return instance;
-}
-
-SceneManager::SceneManager()
-{
-	scenes["test"] = 0;
-	scenes["title"] = 1;
-
-	LoadScene("title");
-}

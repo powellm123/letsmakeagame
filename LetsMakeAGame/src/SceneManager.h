@@ -9,19 +9,18 @@
 
 class SceneManager
 {
+	SceneManager();
+	void LoadScene(size_t scene);
 public:
 	~SceneManager();
-	void LoadScene(std::string name);
-
+	void StartLoadingScene(size_t scene);
+	void Init();
 	void Update();
 	void Draw();
 	
-	static SceneManager* GetInstance();
-
-
+	static SceneManager Instance;
 private:
-	SceneManager();
-	std::map<std::string, int> scenes;
+	size_t prepScene = 0;
 	IScene *currentScene;
 };
 

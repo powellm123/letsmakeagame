@@ -11,6 +11,8 @@ public:
 	~Sprite();
 	void Draw(SDL_Point loc, float sizeX, float sizeY);
 	void Draw(SDL_Point loc, float angle, float sizeX, float sizeY);
+	SDL_Rect GetSpritCord() const;
+	float GetScale();
 private:
 	SDL_Rect m_spriteCord;
 	SDL_Texture* m_texture;

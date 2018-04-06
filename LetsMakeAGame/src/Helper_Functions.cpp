@@ -80,8 +80,7 @@ SDL_Texture *convertSurfaceToTexture(SDL_Surface* surface, SDL_Renderer *ren, bo
 * @param clip The sub-section of the texture to draw (clipping rect)
 *		default of nullptr draws the entire texture
 */
-void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst,
-	SDL_Rect *clip)
+void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst, SDL_Rect *clip)
 {
 	SDL_RenderCopy(ren, tex, clip, &dst);
 }
@@ -97,8 +96,7 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst,
 * @param clip The sub-section of the texture to draw (clipping rect)
 *		default of nullptr draws the entire texture
 */
-void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y,
-	SDL_Rect *clip)
+void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, SDL_Rect *clip)
 {
 	SDL_Rect dst;
 	dst.x = x;

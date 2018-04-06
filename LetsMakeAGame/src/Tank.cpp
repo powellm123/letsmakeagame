@@ -3,7 +3,7 @@
 #include "Controller.h"
 #include "SpriteFactory.h"
 
-Tank::Tank(float x, float y, int playernumber, Buttons *buttons) : Player(type, x, y, playernumber, buttons, SpriteFactory::GetSprite("tank", 0))
+Tank::Tank(float x, float y, int playernumber, Buttons *buttons) : Player(type, x, y, buttons, SpriteFactory::GetSprite("tank", 0))
 {
 	//static int playernumber = 1;
 	m_playernumber = (PlayerNumber)playernumber;
@@ -11,10 +11,38 @@ Tank::Tank(float x, float y, int playernumber, Buttons *buttons) : Player(type, 
 	m_components->push_back(new Movable(this, 12));
 	m_components->push_back(new HealthComponent(this, 3));
 	m_components->push_back(new ShotEntity(this, SDL_SCANCODE_X, 5));
-	m_components->push_back(new HitBox(this, 32, 32, -16));
+	m_components->push_back(new HitBox(this, 32, 32));
+	m_components->push_back(new FlameShooter(this));
 
 	IScene::m_spriteobjects->push_back(new HealthBar(this, 10 + playernumber * 110, 5));
 
+}
+
+Tank::Tank(float x, float y, int playernumber) : Player(type, x, y, SpriteFactory::GetSprite("tank", 0))
+{
+	//static int playernumber = 1;
+	m_playernumber = (PlayerNumber)playernumber;
+
+	m_components->push_back(new Movable(this, 12));
+	m_components->push_back(new HealthComponent(this, 3));
+	m_components->push_back(new ShotEntity(this, SDL_SCANCODE_X, 5));
+	m_components->push_back(new HitBox(this, 32, 32));
+
+	IScene::m_spriteobjects->push_back(new HealthBar(this, 10 + playernumber * 110, 5));
+}
+
+Tank::Tank(float x, float y, int playernumber, SDL_JoystickID joystickId)
+	: Player(type, x, y, joystickId, SpriteFactory::GetSprite("tank", 0))
+{
+	//static int playernumber = 1;
+	m_playernumber = (PlayerNumber)playernumber;
+
+	m_components->push_back(new Movable(this, 12));
+	m_components->push_back(new HealthComponent(this, 3));
+	m_components->push_back(new ShotEntity(this, SDL_SCANCODE_X, 5));
+	m_components->push_back(new HitBox(this, 32, 32));
+
+	IScene::m_spriteobjects->push_back(new HealthBar(this, 10 + playernumber * 110, 5));
 }
 
 void Tank::PerformAction(Action action)
@@ -82,6 +110,10 @@ void Tank::AddPowerUp(PowerUp *p)
 		break;
 	case PowerUp::PowerUpType::ExplosionUp:
 		((ShotEntity*)GetComponent(ShotEntity::type))->IncreateExplosionSize();
+		break;
+	case PowerUp::PowerUpType::CannonBall:
+	case PowerUp::PowerUpType::FlameThrower:
+		((ShotEntity*)GetComponent(ShotEntity::type))->AddAltShot(p->GetPowerUpType());
 		break;
 	}
 }

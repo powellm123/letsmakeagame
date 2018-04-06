@@ -2,7 +2,6 @@
 
 #include "Tank.h"
 #include "Map.h"
-#include "DecisionTree.h"
 
 enum class AiMode { Move, Fire, RandomMove, Locate_Object, Locate_Player, MoveDirection, Sleep };
 enum FaceDirection { Up, Left, Down, Right };
@@ -18,7 +17,7 @@ class CpuTank : public Tank
 	std::list<SDL_Point>* moveDirections;
 	Map * m_map;
 public:
-	CpuTank(float x, float y, int playernumber, Buttons *buttons, Map *map);
+	CpuTank(float x, float y, int playernumber, Map *map);
 	virtual ~CpuTank();
 	void Update() override;
 

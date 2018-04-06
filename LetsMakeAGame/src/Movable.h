@@ -14,7 +14,7 @@ public:
 	//reference constants
 	//static const enum DirectionState { UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4, NONE = 0 };
 	const enum class MoveState {MOVE, IDEL, DEAD};
-	Movable(Entity* actor, int maxMoveSpeed);
+	Movable(Entity* actor, int maxMoveSpeed, int moveLerp=4);
 	void Update() override;
 	void Draw() override;
 	void Move(float angle);

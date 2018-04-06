@@ -17,6 +17,8 @@ public:
 	const enum PlayerNumber{ Player1 = 1, Player2 = 2, Player3 = 3, Player4 = 4};
 
 	Tank(float x, float y, int playernumber, Buttons *buttons);
+	Tank(float x, float y, int playernumber);
+	Tank(float x, float y, int playernumber, SDL_JoystickID joystickId);
 	
 	void PerformAction(Player::Action action) override;
 	void PerformMove(float angle, float value) override;

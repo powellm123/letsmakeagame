@@ -163,27 +163,34 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\AwaitKeyPressMenu.h" />
+    <ClInclude Include="src\BattleOptionsMenu.h" />
+    <ClInclude Include="src\BattleScene.h" />
     <ClInclude Include="src\Boarder.h" />
+    <ClInclude Include="src\ControllerGather.h" />
     <ClInclude Include="src\CpuTank.h" />
     <ClInclude Include="src\DateTime.h" />
-    <ClInclude Include="src\DecisionTree.h" />
     <ClInclude Include="src\Explosion.h" />
-    <ClInclude Include="src\FrameCounterSpriteObject.h" />
+    <ClInclude Include="src\FlameShooter.h" />
+    <ClInclude Include="src\FlameThrower.h" />
+    <ClInclude Include="src\GameOverMenu.h" />
     <ClInclude Include="src\GridEntity.h" />
+    <ClInclude Include="src\IPlayer.h" />
+    <ClInclude Include="src\LevelCreator.h" />
+    <ClInclude Include="src\LevelSelectMenu.h" />
+    <ClInclude Include="src\PlayerSelect.h" />
+    <ClInclude Include="src\IMenu.h" />
+    <ClInclude Include="src\MainMenu.h" />
+    <ClInclude Include="src\MusicPlayer.h" />
     <ClInclude Include="src\HealthBar.h" />
     <ClInclude Include="src\Inputtracker.h" />
     <ClInclude Include="src\Keyboard.h" />
     <ClInclude Include="src\Lob_Bullet.h" />
     <ClInclude Include="src\Map.h" />
     <ClInclude Include="src\MapSpot.h" />
-    <ClInclude Include="src\Menu.h" />
     <ClInclude Include="src\Buttons.h" />
-    <ClInclude Include="src\Animation.h" />
-    <ClInclude Include="src\AnimationSet.h" />
-    <ClInclude Include="src\CollisionBox.h" />
     <ClInclude Include="src\Controller.h" />
     <ClInclude Include="src\DirtWall.h" />
-    <ClInclude Include="src\Frame.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\Health.h" />
@@ -192,12 +199,16 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClInclude Include="src\IComponent.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Game.h" />
-    <ClInclude Include="src\GraphicsLibrary.h" />
     <ClInclude Include="src\IScene.h" />
     <ClInclude Include="src\KeyboardInput.h" />
     <ClInclude Include="src\MathHelper.h" />
     <ClInclude Include="src\Movable.h" />
+    <ClInclude Include="src\OptionsMenu.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\PlayerSelectBoarder.h" />
+    <ClInclude Include="src\PlayerSelectEntity.h" />
+    <ClInclude Include="src\PlayerSelectScene.h" />
+    <ClInclude Include="src\SoundManager.h" />
     <ClInclude Include="src\SpriteFactory.h" />
     <ClInclude Include="src\SpriteSheet.h" />
     <ClInclude Include="src\SpriteObjects.h" />
@@ -209,8 +220,6 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClInclude Include="src\SDL_ImageLibrary.h" />
     <ClInclude Include="src\SDL_TextToFont.h" />
     <ClInclude Include="src\ShotEntity.h" />
-    <ClInclude Include="src\Sprite.h" />
-    <ClInclude Include="src\SpriteManager.h" />
     <ClInclude Include="src\TankControlledTank.h" />
     <ClInclude Include="src\TestScene.h" />
     <ClInclude Include="src\TimeController.h" />
@@ -219,39 +228,45 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClInclude Include="src\Wall.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Animation.cpp" />
-    <ClCompile Include="src\AnimationSet.cpp" />
+    <ClCompile Include="src\BattleOptionsMenu.cpp" />
+    <ClCompile Include="src\BattleScene.cpp" />
     <ClCompile Include="src\Boarder.cpp" />
     <ClCompile Include="src\Buillet.cpp" />
-    <ClCompile Include="src\CollisionBox.cpp" />
     <ClCompile Include="src\Controller.cpp" />
+    <ClCompile Include="src\ControllerGather.cpp" />
     <ClCompile Include="src\CpuTank.cpp" />
-    <ClCompile Include="src\DecisionTree.cpp" />
     <ClCompile Include="src\DirtWall.cpp" />
     <ClCompile Include="src\Explosion.cpp" />
-    <ClCompile Include="src\Frame.cpp" />
-    <ClCompile Include="src\FrameCounterSpriteObject.cpp" />
+    <ClCompile Include="src\FlameShooter.cpp" />
+    <ClCompile Include="src\FlameThrower.cpp" />
     <ClCompile Include="src\Globals.cpp" />
     <ClCompile Include="src\Health.cpp" />
     <ClCompile Include="src\HealthBar.cpp" />
     <ClCompile Include="src\Helper_Functions.cpp" />
     <ClCompile Include="src\HitBox.cpp" />
     <ClCompile Include="src\IComponent.cpp" />
+    <ClCompile Include="src\IMenu.cpp" />
     <ClCompile Include="src\InputTracker.cpp" />
     <ClCompile Include="src\IScene.cpp" />
     <ClCompile Include="src\Enitity.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\KeyboardInput.cpp" />
+    <ClCompile Include="src\LevelCreator.cpp" />
+    <ClCompile Include="src\LevelSelectMenu.cpp" />
     <ClCompile Include="src\Lob_Bullet.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\MathHelper.cpp" />
-    <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Movable.cpp" />
+    <ClCompile Include="src\MusicPlayer.cpp" />
+    <ClCompile Include="src\OptionsMenu.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\PlayerSelectBoarder.cpp" />
+    <ClCompile Include="src\PlayerSelectEntity.cpp" />
+    <ClCompile Include="src\PlayerSelectScene.cpp" />
     <ClCompile Include="src\PowerUp.cpp" />
     <ClCompile Include="src\ShotEntity.cpp" />
-    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\SpriteFactory.cpp" />
     <ClCompile Include="src\SpriteSheet.cpp" />
     <ClCompile Include="src\Tank.cpp" />
@@ -260,13 +275,17 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClCompile Include="src\SDL_GraphicsLibrary.cpp" />
     <ClCompile Include="src\SDL_ImageLibrary.cpp" />
     <ClCompile Include="src\SDL_TextToFontLibrary.cpp" />
-    <ClCompile Include="src\SpriteManager.cpp" />
     <ClCompile Include="src\TankControlledTank.cpp" />
     <ClCompile Include="src\TestScene.cpp" />
     <ClCompile Include="src\TimeController.cpp" />
     <ClCompile Include="src\TitleScene.cpp" />
     <ClCompile Include="src\UtilMethods.cpp" />
     <ClCompile Include="src\Wall.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="SDL_GameControllerDB.txt">
+      <DeploymentContent>true</DeploymentContent>
+    </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

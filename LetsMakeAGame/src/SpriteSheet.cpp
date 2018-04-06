@@ -30,6 +30,16 @@ void Sprite::Draw(SDL_Point loc, float angle, float sizeX, float sizeY)
 	SDL_RenderCopyEx(Globals::Renderer, m_texture, &m_spriteCord, &dest, angle, &center, SDL_RendererFlip::SDL_FLIP_NONE);
 }
 
+SDL_Rect Sprite::GetSpritCord() const
+{
+	return m_spriteCord;
+}
+
+float Sprite::GetScale()
+{
+	return m_scaleToSize;
+}
+
 SpriteSheet::SpriteSheet(SDL_Texture * texture, int width, int height)
 {
 	int w, h;

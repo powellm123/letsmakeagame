@@ -6,6 +6,11 @@ Controller::Controller(Player * actor, int controllerNumber) : IComponent(actor,
 	InputTracker::SubscribeToControllerInput((Player*)actor, controllerNumber);
 }
 
+Controller::Controller(Player * actor, int controllerNumber, SDL_JoystickID joystickId) : IComponent(actor, "controller", type)
+{
+	InputTracker::SubscribeToControllerInput((Player*)actor, controllerNumber, joystickId);
+}
+
 Controller::~Controller()
 {
 	InputTracker::UnsubscribeActor((Player*)m_actor);

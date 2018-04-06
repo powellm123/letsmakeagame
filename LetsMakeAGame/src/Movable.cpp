@@ -3,10 +3,10 @@
 #include "Entity.h"
 
 
-Movable::Movable(Entity* actor, int maxMoveSpeed) : IComponent(actor, "movable", type)
+Movable::Movable(Entity* actor, int maxMoveSpeed, int moveLerp) : IComponent(actor, "movable", type)
 {
 	MaxMoveSpeed = UseMoveSpeed = maxMoveSpeed;
-	MoveLerp = 4;
+	MoveLerp = moveLerp;
 }
 
 void Movable::Update()

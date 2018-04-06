@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 	//set the random seed for the random number sequence
 	srand(time(0));
 
-	Globals::Debugging = false;
+	Globals::Debugging = true;
 	Globals::ScreenWidth = 640;
 	Globals::ScreenHeight = 512;
 	Globals::ScreenScale = 2;
@@ -22,9 +22,10 @@ int main(int argc, char **argv)
 	if (!sdl_gl->Init()
 		|| !sdl_gl->InitWindow(windowName, Globals::ScreenWidth, Globals::ScreenHeight, Globals::ScreenScale,  SDL_WINDOW_SHOWN )
 		|| !sdl_gl->CreateRender()
+		
 		|| !sdl_gl->SetUpLogicalSize(Globals::ScreenWidth, Globals::ScreenHeight)
 		|| !sdl_gl->InitImageGraphics()
-	//	|| !sdl_gl->InitAudioLibrary()
+		|| !sdl_gl->InitAudioLibrary()
 		|| !sdl_gl->InitTextToFontLibrary())
 	{
 		sdl_gl->Quit();

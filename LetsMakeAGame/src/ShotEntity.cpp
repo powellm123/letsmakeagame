@@ -34,9 +34,26 @@ void ShotEntity::Update()
 		m_performAltAction = false;
 		if (coolDown <= 0)
 		{
-			Movable* moveComponent = (Movable*)this->m_actor->GetComponent(Movable::type);
-			auto bullet = new Lob_Bullet(this->m_actor->X, this->m_actor->Y, moveComponent->GetAngle());
-			IScene::m_entities->emplace_back(bullet);
+			if (m_altfirebullets.size() == 0) {
+				SoundManager::Instance.PlayASound(SoundManager::Erk);
+			}
+			else {
+				Entity* bullet = nullptr;
+				Movable* moveComponent = (Movable*)this->m_actor->GetComponent(Movable::type);
+				switch (m_altfirebullets.front())
+				{
+				case PowerUp::PowerUpType::CannonBall:
+					bullet = new Lob_Bullet(this->m_actor->X, this->m_actor->Y, moveComponent->GetAngle());
+					IScene::m_entities->emplace_back(bullet);
+					break;
+				case PowerUp::PowerUpType::FlameThrower:
+					FlameShooter * flameshooterComponent = (FlameShooter*)this->m_actor->GetComponent(FlameShooter::type);
+					flameshooterComponent->ShotFire();
+					//m_actor.AddComponent( new FlameThrower(this->m_actor->X, this->m_actor->Y, moveComponent->GetAngle()));
+					break;
+				}
+				m_altfirebullets.pop_front();
+			}
 			coolDown = shotcooldownMax;
 		}
 	}
@@ -45,6 +62,11 @@ void ShotEntity::Update()
 		coolDown -= TimeController::instance.DeltaTime;
 
 
+}
+
+void ShotEntity::AddAltShot(PowerUp::PowerUpType powerupType)
+{
+	m_altfirebullets.push_back(powerupType);
 }
 
 void ShotEntity::IncreaseMaxShot()

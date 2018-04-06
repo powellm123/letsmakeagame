@@ -1,11 +1,20 @@
 
 #include "TitleScene.h"
 #include "SceneManager.h"
+#include "OptionsMenu.h"
+#include "AwaitKeyPressMenu.h"
 
-TitleScene::TitleScene() : m_showTitle(true)
+bool TitleScene::m_showTitle = true;
+
+TitleScene::TitleScene()
 {
 	m_toggleText = 1;
 	m_showtext = true;
+	m_menus->push_back(new AwaitKeyPressMenu([]()
+	{
+		IScene::m_menus->push_back(new MainMenu());
+		TitleScene::m_showTitle = false;
+	}));
 }
 
 
@@ -13,60 +22,28 @@ TitleScene::~TitleScene()
 {
 	IScene::~IScene();
 	SDL_DestroyTexture(testMap);
-	SDL_DestroyTexture(text);	
+	SDL_DestroyTexture(text);
 }
 
 void TitleScene::Update()
 {
 	IScene::Update();
 
-	Menu *activeMenu = Menu::GetActiveMenu();
-
-	if (activeMenu != nullptr && activeMenu->GetIsActionSelected())
+	if (m_toggleText <= 0)
 	{
-		std::string action = (activeMenu)->GetSelectedAction();
-
-		if (action == "ok")
-		{
-			Menu* menu2 = Menu::FindMenu("main");
-			Menu::ChangeActiveMenu(menu2);
-			m_showTitle = false;
-		}
-		/*if (action == "cancel")
-		{
-			(*m_activeMenu)->SetIsVisable(false);
-			m_activeMenu = &m_menu1;
-			(*m_activeMenu)->SetIsVisable(true);
-		}*/
-		if (action == "playgame")
-		{
-			SceneManager::GetInstance()->LoadScene("test");
-		}
-		if (action == "quit")
-		{
-			Globals::Quit = true;
-		}
+		m_showtext = !m_showtext;
+		m_toggleText = .61 + .4* m_showtext;
 	}
-
-	else if ( activeMenu != nullptr && activeMenu->GetMenuName() == "title")
-	{
-		if (m_toggleText <= 0)
-		{
-			m_showtext = !m_showtext;
-			m_toggleText = .61 + .4 * m_showtext;
-		}
-		m_toggleText -= TimeController::instance.DeltaTime;
-		
-	}
+	m_toggleText -= TimeController::instance.DeltaTime;
 }
 
 void TitleScene::Draw()
 {
 	IScene::Draw();
-	Menu *activeMenu = Menu::GetActiveMenu();
-	if (activeMenu != nullptr && activeMenu->GetMenuName() == "title") //  m_menu1->GetIsVisable())
+
+	//Draw the Background.
+	if (m_menus->back()->GetMenuId() == AwaitKeyPressMenu::MenuId)
 	{
-		//Draw the Background.
 		renderTexture(testMap, Globals::Renderer, 0, 0);
 
 		if (m_showtext)
@@ -74,9 +51,10 @@ void TitleScene::Draw()
 			renderTexture(text, Globals::Renderer, Globals::ScreenWidth / 2 - textTextureWidth / 2, Globals::ScreenHeight - textTextureHeight - 32);
 		}
 	}
-
-	//sort all entites based on y(depth)
-	//m_entities.sort(Entity::EntityCompare);
+	else
+	{
+		std::cout << "";
+	}
 
 	//update all entities
 	for (auto &it : *m_entities)
@@ -88,24 +66,15 @@ void TitleScene::Draw()
 
 void TitleScene::Init()
 {
-	Buttons *b = Globals::KeyboardButtons;
-
 	testMap = GetTitle();
-	std::vector<std::string> menu1;
-	menu1.push_back("ok");
-	std::vector<std::string> menu2;
-	menu2.push_back("playgame");
-	menu2.push_back("options");
-	menu2.push_back("quit");
-
-	m_entities->emplace_back(new Menu(menu1, true, false, b, "title"));
-	m_entities->emplace_back(new Menu(menu2, false, true, b, "main"));
 
 	std::string message = "Press X To Start!";
 	SDL_Color color = { 255,255,255,255 };
-	text = renderText(message, std::string( Globals::GetResourcePath() + "Lato-Black.ttf"), color, 25, Globals::Renderer);
+	text = renderText(message, std::string(Globals::GetResourcePath() + "Lato-Black.ttf"), color, 25, Globals::Renderer);
 	SDL_QueryTexture(text, NULL, NULL, &textTextureWidth, &textTextureHeight);
 
+	auto id = MusicPlayer::Instance.LoadSong("Steamtech-Mayhem.mp3");
+	MusicPlayer::Instance.PlaySong(id);
 }
 
 SDL_Texture* TitleScene::GetTitle()

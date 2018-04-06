@@ -2,14 +2,14 @@
 #include "Movable.h"
 #include "HitBox.h"
 #include "Explosion.h"
-#include "SpriteManager.h"
 #include "SpriteFactory.h"
+#include "SoundManager.h"
 
-Bullet::Bullet(float x, float y, float angle, float lifespan, int size) : Bullet(x, y, angle, lifespan, size,SpriteFactory::GetSprite("bullet", 1))
+Bullet::Bullet(float x, float y, float angle, float lifespan, int size, int moveSpeed, int moveLerp) : Bullet(x, y, angle, lifespan, size,SpriteFactory::GetSprite("bullet", 1), moveSpeed, moveLerp)
 {
 }
 
-Bullet::Bullet(float x, float y, float angle, float lifespan, int size, Sprite * sprite) : Entity(type, 0, 0, sprite), m_size(size)
+Bullet::Bullet(float x, float y, float angle, float lifespan, int size, Sprite * sprite, int moveSpeed, int moveLerp) : Entity(type, 0, 0, sprite), m_size(size)
 {
 	static const float dtr = M_PI / 180;
 	this->X = x + cos(angle*dtr) * 45;
@@ -19,8 +19,10 @@ Bullet::Bullet(float x, float y, float angle, float lifespan, int size, Sprite *
 
 	LifeSpan = lifespan;
 
-	m_components->emplace_back(new Movable(this, 80));
-	m_components->emplace_back(new HitBox(this, 15, 8, -4));
+	m_components->emplace_back(new Movable(this, moveSpeed, moveLerp));
+	m_components->emplace_back(new HitBox(this, 15, 8, false, -8, -12));
+
+	SoundManager::Instance.PlayASound(1001);
 }
 
 
@@ -33,6 +35,7 @@ void Bullet::Update()
 {
 	if (!Active)
 		return;
+
 	Entity::Update();
 	Movable* moveComponent = (Movable*)GetComponent(Movable::type);
 	moveComponent->Move(Angle);
@@ -42,18 +45,23 @@ void Bullet::Update()
 	if (LifeSpan <= 0)
 		SetIsDying(true);
 
-	if (GetIsDying())
-	{
-		IScene::m_entities->push_back(new Explosion(this->X, this->Y, m_size));
-		Active = false;
-	}
+	DyingAction();
 }
 
 void Bullet::Draw()
 {
-	m_sprite->Draw(MathHelper::CreatePoint( X, Y), Angle+90, 1,1);
+	m_sprite->Draw(MathHelper::CreatePoint(X, Y), Angle+90, 1,1);
 	for (auto& component : *m_components)
 	{
 		component->Draw();
+	}
+}
+
+void Bullet::DyingAction()
+{
+	if (GetIsDying())
+	{
+		IScene::m_entities->push_back(new Explosion(this->X, this->Y, m_size));
+		Active = false;
 	}
 }

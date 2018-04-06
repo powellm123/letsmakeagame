@@ -8,32 +8,25 @@ int Game::HeightHalf=0;
 Game::Game(SDL_GraphicsLibrary *gl)
 {
 	m_gl = gl;
-	m_entity = new std::list<Entity*>();
-	//m_scene = new TestScene();
 	Globals::Quit = false;
+	Globals::InitKeyboardKeys();
 
+	SoundManager::Instance.Init();
+	InputTracker::Init();
 
-	Globals::ControllerButtons->Fire = '\x1';
-	Globals::ControllerButtons->AltFire = '\x0';
-	Globals::ControllerButtons->Pause = '\t';
+	Width = Globals::ScreenWidth / 32;
+	Height = Globals::ScreenHeight / 32;
+	WidthHalf = Globals::ScreenWidth / 2;
+	HeightHalf = Globals::ScreenHeight / 2;
 
-	Globals::KeyboardButtons->ControllerNumber = -1;
-	Globals::KeyboardButtons->Up = SDL_SCANCODE_UP;
-	Globals::KeyboardButtons->Down = SDL_SCANCODE_DOWN;
-	Globals::KeyboardButtons->Left = SDL_SCANCODE_LEFT;
-	Globals::KeyboardButtons->Right = SDL_SCANCODE_RIGHT;
-
-	Globals::KeyboardButtons->Fire = SDL_SCANCODE_X;
-	Globals::KeyboardButtons->AltFire = SDL_SCANCODE_Z;
-	Globals::KeyboardButtons->Pause = SDL_SCANCODE_SPACE;
+	SceneManager::Instance.Init();
 }
 
 Game::~Game()
 {
 	//delete m_scene;
-	Entity::RemoveAllFromList(m_entity, true);
 	Entity::RemoveAllFromList(IScene::m_entities, true);
-	SceneManager::GetInstance()->~SceneManager();
+	SceneManager::Instance.~SceneManager();
 }
 
 void Game::Run()
@@ -41,11 +34,6 @@ void Game::Run()
 	SDL_Event e;
 	float timer = 1;
 	float frameCount = 0;
-	Width = Globals::ScreenWidth / 32;
-	Height = Globals::ScreenHeight / 32;
-	WidthHalf = Globals::ScreenWidth / 2;
-	HeightHalf = Globals::ScreenHeight / 2;
-	SDL_JoystickEventState(SDL_ENABLE);
 	while (!Globals::Quit)
 	{
 		TimeController::instance.UpdateTime();
@@ -79,8 +67,11 @@ void Game::Run()
 				}
 				break;
 
-			case SDL_JOYBUTTONDOWN:
-				InputTracker::AddButtonPress(e.jbutton.which, e.jbutton.button);
+			case SDL_CONTROLLERBUTTONDOWN:
+				InputTracker::AddButtonPress(e.cbutton.which, e.cbutton.button);
+				break;
+			case SDL_CONTROLLERAXISMOTION:
+				InputTracker::AddAxisMovement(e.caxis.which, e.caxis.axis, e.caxis.value);
 				break;
 			}
 		}
@@ -91,15 +82,13 @@ void Game::Run()
 		InputTracker::CleanButtonPress();
 
 		Entity::RemoveInactiveEntitiesFromList(IScene::m_entities, true);
-
+		IScene::RemoveInactiveSpriteObjects();
 	}
 }
 
 void Game::Update()
 {
-//	if(m_scene != nullptr)
-//		m_scene->Update();
-	SceneManager::GetInstance()->Update();
+	SceneManager::Instance.Update();
 
 	InputTracker::Update();
 }
@@ -110,11 +99,7 @@ void Game::Draw()
 	SDL_SetRenderDrawColor(Globals::Renderer, 100, 149, 237, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(Globals::Renderer);
 
-	IScene::m_entities->sort(Entity::EntityCompare);
-//	if (m_scene != nullptr)
-//		m_scene->Draw();
-	SceneManager::GetInstance()->Draw();
-
+	SceneManager::Instance.Draw();
 
 	//after finished rendering draw it to the screen
 	SDL_RenderPresent(Globals::Renderer);

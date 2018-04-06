@@ -56,6 +56,7 @@ IComponent* Entity::GetComponent(size_t type)
 	return nullptr;
 }
 
+
 size_t Entity::GetId()
 {
 	return m_id;
@@ -113,7 +114,10 @@ void Entity::RemoveAllFromList(std::list<Entity*> *entities, bool deleteEntities
 	for (auto it = entities->begin(); it != entities->end();)
 	{
 		if (deleteEntities)
+		{
 			delete *it;
+			*it = NULL;
+		}
 		it = entities->erase((it));
 	}
 }
