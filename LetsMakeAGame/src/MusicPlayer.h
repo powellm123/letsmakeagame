@@ -17,6 +17,7 @@ public:
 	void DecreaseVolume();
 	unsigned LoadSong( std::string filename);
 	void PlaySong(unsigned id);
+	void StopPlaying();
 	void UnloadSong(unsigned id);
 	int GetVolumeNumber();
 

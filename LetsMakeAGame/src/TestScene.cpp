@@ -35,7 +35,7 @@ void TestScene::Init()
 	SpriteFactory::AddSpriteSheet("border.png", "border", 32, 32);
 	SpriteFactory::AddSpriteSheet("healthbar.png", "healthbar", 32, 32);
 
-	m_entities->emplace_back(new TankControlledTank(64, 64, 1, Globals::KeyboardButtons));
+	m_entities->emplace_back(new TankControlledTank(64, 64, 1, 0, Globals::KeyboardButtons));
 	//m_entities->emplace_back(new CpuTank(Globals::ScreenWidth - 64, Globals::ScreenHeight - 64, 2, cb, map));
 	m_entities->emplace_back(new CpuTank(64, Globals::ScreenHeight - 64, 3, map));
 	//m_entities->emplace_back(new CpuTank(Globals::ScreenWidth - 64, 64, 4, cb,  map));

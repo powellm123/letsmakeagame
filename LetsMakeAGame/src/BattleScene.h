@@ -11,6 +11,8 @@ class BattleScene : public IScene
 	const int height = Globals::ScreenHeight / Globals::TileHeight;
 	float m_timebeforestart;
 	Level m_level;
+	unsigned songid;
+	bool isplaying;
 public:
 	static constexpr size_t SCENE = UtilMethods::const_hash("battlescene");
 	BattleScene();

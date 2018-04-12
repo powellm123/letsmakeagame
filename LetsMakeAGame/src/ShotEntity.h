@@ -11,6 +11,7 @@
 #include "SoundManager.h"
 #include "PowerUp.h"
 #include "FlameShooter.h"
+#include "Mine.h"
 
 class ShotEntity : public IComponent
 {

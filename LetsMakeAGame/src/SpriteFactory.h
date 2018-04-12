@@ -10,4 +10,6 @@ class SpriteFactory
 public:
 	static void AddSpriteSheet(std::string filename, std::string name, int width = 128, int height = 128);
 	static Sprite* GetSprite(std::string name, int index);
+	static Animation* GetAnimation(std::string name, int index, int frames);
 };
+

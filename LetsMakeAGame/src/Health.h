@@ -10,6 +10,7 @@ public:
 	const enum class HealthStatus {Alive, Dead};
 	HealthComponent(Entity * actor, int health);
 	void Damage(int amount);
+	bool IsInvincible();
 
 	void Update() override;
 	void Draw() override;

@@ -2,15 +2,15 @@
 #include "TankControlledTank.h"
 
 
-TankControlledTank::TankControlledTank(float x, float y, int playernumber, Buttons * buttons)
-	: Tank(x, y, playernumber, buttons)
+TankControlledTank::TankControlledTank(float x, float y, int playernumber, int color, Buttons * buttons)
+	: Tank(x, y, playernumber, playernumber-1, buttons)
 {
 	m_rotateLerp = 3;
 	m_relativeAngle = 0;
 }
 
-TankControlledTank::TankControlledTank(float x, float y, int playernumber, SDL_JoystickID joystickId)
-	: Tank(x, y, playernumber, joystickId)
+TankControlledTank::TankControlledTank(float x, float y, int playernumber, int color, SDL_JoystickID joystickId)
+	: Tank(x, y, playernumber, playernumber - 1, joystickId)
 {
 	m_rotateLerp = 3;
 	m_relativeAngle = 0;

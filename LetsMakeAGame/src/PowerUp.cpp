@@ -22,7 +22,7 @@ void PowerUp::Update()
 
 void PowerUp::CreatePowerUp(float x, float y)
 {
-	switch (rand() % 6) {
+	switch (rand() % 7) {
 	case 0:
 		IScene::m_entities->emplace_back(new PowerUp(x, y, PowerUp::PowerUpType::ShotUp, SpriteFactory::GetSprite("powerup", 0)));
 		break;
@@ -40,6 +40,9 @@ void PowerUp::CreatePowerUp(float x, float y)
 		break;
 	case 5:
 		IScene::m_entities->emplace_back(new PowerUp(x, y, PowerUp::PowerUpType::FlameThrower, SpriteFactory::GetSprite("powerup", 5)));
+		break;
+	case 6:
+		IScene::m_entities->emplace_back(new PowerUp(x, y, PowerUp::PowerUpType::Mine, SpriteFactory::GetSprite("powerup", 6)));
 		break;
 	}
 }

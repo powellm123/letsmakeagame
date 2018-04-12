@@ -88,3 +88,59 @@ Sprite* SpriteSheet::GetSprite(int index)
 
 	return sprites[index];
 }
+
+Animation* SpriteSheet::GetAnimation(int index, int frames)
+{
+	if (index + frames > sprites.size())
+	{
+		return nullptr;
+	}
+
+	std::vector<Sprite*> sprite;
+	for (int i = index; i < index + frames; i++)
+	{
+		sprite.push_back(sprites[i]);
+	}
+
+	return new Animation(sprite);
+}
+
+
+Animation::Animation(std::vector<Sprite*> sprites) : m_sprites(sprites)
+{
+	m_frames = 0;
+	m_maxFrames = sprites.size();
+	m_framelength = m_lengthFrameMax = .12;
+}
+
+Animation::~Animation()
+{
+	m_sprites.clear();
+}
+
+void Animation::Update()
+{
+	if (m_framelength < 0)
+	{
+		m_frames++;
+		m_frames %= m_maxFrames;
+		m_framelength = m_lengthFrameMax;
+	}
+
+	m_framelength -= TimeController::instance.DeltaTime;
+}
+
+void Animation::Draw(SDL_Point loc, float sizeX, float sizeY)
+{
+	m_sprites[m_frames]->Draw(loc, sizeX, sizeY);
+}
+
+SDL_Rect Animation::GetSpritCord() const
+{
+	return m_sprites[m_frames]->GetSpritCord();
+}
+
+float Animation::GetScale()
+{
+	return m_sprites[m_frames]->GetScale();
+}

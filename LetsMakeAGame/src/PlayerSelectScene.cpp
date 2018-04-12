@@ -14,7 +14,7 @@ PlayerSelectScene::~PlayerSelectScene()
 
 void PlayerSelectScene::Init()
 {
-	SpriteFactory::AddSpriteSheet("border.png", "border", 32, 32);
+	SpriteFactory::AddSpriteSheet("border2.png", "border", 32, 32);
 	SpriteFactory::AddSpriteSheet("tank.png", "tank");
 	IScene::m_entities->push_back(new ControllerGather());
 

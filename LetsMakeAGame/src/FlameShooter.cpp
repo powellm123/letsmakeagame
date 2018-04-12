@@ -3,7 +3,7 @@
 
 FlameShooter::FlameShooter(Entity* actor) : IComponent(actor, "FlameShooter", type)
 {
-	m_maxshottimes = .3;
+	m_maxshottimes = .1;
 }
 
 void FlameShooter::ShotFire()

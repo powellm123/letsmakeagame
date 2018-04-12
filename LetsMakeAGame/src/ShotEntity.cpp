@@ -46,11 +46,16 @@ void ShotEntity::Update()
 					bullet = new Lob_Bullet(this->m_actor->X, this->m_actor->Y, moveComponent->GetAngle());
 					IScene::m_entities->emplace_back(bullet);
 					break;
+				case PowerUp::PowerUpType::Mine:
+					bullet = new Mine(this->m_actor->X, this->m_actor->Y, moveComponent->GetAngle());
+					IScene::m_entities->emplace_back(bullet);
+					break;
 				case PowerUp::PowerUpType::FlameThrower:
 					FlameShooter * flameshooterComponent = (FlameShooter*)this->m_actor->GetComponent(FlameShooter::type);
 					flameshooterComponent->ShotFire();
 					//m_actor.AddComponent( new FlameThrower(this->m_actor->X, this->m_actor->Y, moveComponent->GetAngle()));
 					break;
+				
 				}
 				m_altfirebullets.pop_front();
 			}

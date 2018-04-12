@@ -27,7 +27,8 @@ void SpriteFactory::AddSpriteSheet(std::string filename, std::string name, int w
 
 		spriteSheet = convertSurfaceToTexture(spriteSurface, Globals::Renderer, false);
 	}
-	else {
+	else 
+	{
 		spriteSheet = loadTexture(Globals::GetResourcePath() + filename, Globals::Renderer);
 	}
 	SDL_FreeSurface(spriteSurface);
@@ -40,6 +41,15 @@ Sprite* SpriteFactory::GetSprite(std::string name, int index)
 	unsigned hash = std::hash<std::string>{}(name);
 	if(_cache.count(hash))
 		return _cache[hash]->GetSprite(index);
+
+	return nullptr;
+}
+
+Animation * SpriteFactory::GetAnimation(std::string name, int index, int frames)
+{
+	unsigned hash = std::hash<std::string>{}(name);
+	if (_cache.count(hash))
+		return _cache[hash]->GetAnimation(index, frames);
 
 	return nullptr;
 }

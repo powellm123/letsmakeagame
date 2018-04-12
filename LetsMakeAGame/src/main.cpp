@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 	//set the random seed for the random number sequence
 	srand(time(0));
 
-	Globals::Debugging = true;
+	Globals::Debugging = false;
 	Globals::ScreenWidth = 640;
 	Globals::ScreenHeight = 512;
 	Globals::ScreenScale = 2;

@@ -10,7 +10,7 @@ PlayerSelectBoarder::PlayerSelectBoarder(float x, float y) : X(x), Y(y)
 void PlayerSelectBoarder::Draw()
 {
 	static const int widthSize = 7;
-	static const int heightSize = Globals::ScreenHeight/Globals::TileHeight *2;
+	static const int heightSize = Globals::ScreenHeight/Globals::TileHeight*1.5;
 
 	for (int i = 0, k = 0; i < heightSize; i++)
 	{

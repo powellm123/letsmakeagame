@@ -27,6 +27,7 @@ public:
 	bool IsSelected();
 	void ResetReady();
 	bool Ready();
+	int GetCurrentSpirte();
 	void PerformAction(Player::Action action) override;
 	void PerformMove(float angle, float value) override;
 	void Update(bool isReady);

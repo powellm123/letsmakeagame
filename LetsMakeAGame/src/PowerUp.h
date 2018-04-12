@@ -7,7 +7,7 @@ class PowerUp : public Entity
 {
 public:
 	static constexpr size_t type = UtilMethods::const_hash("powerup");
-	const enum PowerUpType {SpeedUp, ShotUp, ShotCountUp, ExplosionUp, CannonBall, FlameThrower};
+	const enum PowerUpType {SpeedUp, ShotUp, ShotCountUp, ExplosionUp, CannonBall, FlameThrower, Mine};
 
 	static void CreatePowerUp(float x, float y);
 	PowerUpType GetPowerUpType() { return m_powerupType; }

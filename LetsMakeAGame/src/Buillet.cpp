@@ -5,11 +5,13 @@
 #include "SpriteFactory.h"
 #include "SoundManager.h"
 
-Bullet::Bullet(float x, float y, float angle, float lifespan, int size, int moveSpeed, int moveLerp) : Bullet(x, y, angle, lifespan, size,SpriteFactory::GetSprite("bullet", 1), moveSpeed, moveLerp)
+Bullet::Bullet(float x, float y, float angle, float lifespan, int size, int moveSpeed, int moveLerp) 
+	: Bullet(x, y, angle, lifespan, size,SpriteFactory::GetSprite("bullet", 1), moveSpeed, moveLerp)
 {
 }
 
-Bullet::Bullet(float x, float y, float angle, float lifespan, int size, Sprite * sprite, int moveSpeed, int moveLerp) : Entity(type, 0, 0, sprite), m_size(size)
+Bullet::Bullet(float x, float y, float angle, float lifespan, int size, Sprite * sprite, int moveSpeed, int moveLerp)
+	: Entity(type, 0, 0, sprite), m_size(size)
 {
 	static const float dtr = M_PI / 180;
 	this->X = x + cos(angle*dtr) * 45;

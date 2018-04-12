@@ -1,6 +1,6 @@
 #include "CpuTank.h"
 
-CpuTank::CpuTank(float x, float y, int playernumber,  Map * map) : Tank(x, y, playernumber)
+CpuTank::CpuTank(float x, float y, int playernumber,  Map * map) : Tank(x, y, playernumber, playernumber-1)
 {
 	timeInCurrentMode = .51;
 	justfired = 0;

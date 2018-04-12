@@ -15,6 +15,12 @@ Entity::Entity(size_t type, float x, float y, Sprite * sprite) : Entity(type, x,
 	m_sprite = sprite;
 }
 
+
+Entity::Entity(size_t type, float x, float y, Animation * animation) : Entity(type, x, y)
+{
+	m_animation = animation;
+}
+
 Entity::~Entity()
 {
 	for (auto it : *m_components)
@@ -99,8 +105,10 @@ void Entity::RemoveInactiveEntitiesFromList(std::list<Entity*>* entities, bool d
 
 void Entity::Draw()
 {
-	if(m_sprite != nullptr)
-		m_sprite->Draw(MathHelper::CreatePoint(X, Y), 1,1);
+	if (m_sprite != nullptr)
+		m_sprite->Draw(MathHelper::CreatePoint(X, Y), 1, 1);
+	else if (m_animation != nullptr)
+		m_animation->Draw(MathHelper::CreatePoint(X, Y), 1, 1);
 	for (auto& component : *m_components)
 	{
 		component->Draw();

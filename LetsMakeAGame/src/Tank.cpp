@@ -3,9 +3,8 @@
 #include "Controller.h"
 #include "SpriteFactory.h"
 
-Tank::Tank(float x, float y, int playernumber, Buttons *buttons) : Player(type, x, y, buttons, SpriteFactory::GetSprite("tank", 0))
+Tank::Tank(float x, float y, int playernumber, int color, Buttons *buttons) : Player(type, x, y, buttons, SpriteFactory::GetSprite("tank", color))
 {
-	//static int playernumber = 1;
 	m_playernumber = (PlayerNumber)playernumber;
 	
 	m_components->push_back(new Movable(this, 12));
@@ -16,11 +15,11 @@ Tank::Tank(float x, float y, int playernumber, Buttons *buttons) : Player(type, 
 
 	IScene::m_spriteobjects->push_back(new HealthBar(this, 10 + playernumber * 110, 5));
 
+	m_whiteSprite = SpriteFactory::GetSprite("tank", 4);
 }
 
-Tank::Tank(float x, float y, int playernumber) : Player(type, x, y, SpriteFactory::GetSprite("tank", 0))
+Tank::Tank(float x, float y, int playernumber, int color) : Player(type, x, y, SpriteFactory::GetSprite("tank", color))
 {
-	//static int playernumber = 1;
 	m_playernumber = (PlayerNumber)playernumber;
 
 	m_components->push_back(new Movable(this, 12));
@@ -29,12 +28,13 @@ Tank::Tank(float x, float y, int playernumber) : Player(type, x, y, SpriteFactor
 	m_components->push_back(new HitBox(this, 32, 32));
 
 	IScene::m_spriteobjects->push_back(new HealthBar(this, 10 + playernumber * 110, 5));
+
+	m_whiteSprite = SpriteFactory::GetSprite("tank", 4);
 }
 
-Tank::Tank(float x, float y, int playernumber, SDL_JoystickID joystickId)
-	: Player(type, x, y, joystickId, SpriteFactory::GetSprite("tank", 0))
+Tank::Tank(float x, float y, int playernumber, int color, SDL_JoystickID joystickId)
+	: Player(type, x, y, joystickId, SpriteFactory::GetSprite("tank", color))
 {
-	//static int playernumber = 1;
 	m_playernumber = (PlayerNumber)playernumber;
 
 	m_components->push_back(new Movable(this, 12));
@@ -43,6 +43,8 @@ Tank::Tank(float x, float y, int playernumber, SDL_JoystickID joystickId)
 	m_components->push_back(new HitBox(this, 32, 32));
 
 	IScene::m_spriteobjects->push_back(new HealthBar(this, 10 + playernumber * 110, 5));
+
+	m_whiteSprite = SpriteFactory::GetSprite("tank", 4);
 }
 
 void Tank::PerformAction(Action action)
@@ -87,7 +89,12 @@ void Tank::Draw()
 	if (!Alive)
 		return;
 	Movable *movableComponent = (Movable*) GetComponent(Movable::type);
-	m_sprite->Draw(MathHelper::CreatePoint( X, Y), movableComponent->GetAngle()+90, 1, 1);
+
+	HealthComponent *health = (HealthComponent*)GetComponent(HealthComponent::type);
+	if (!health->IsInvincible())
+		m_sprite->Draw(MathHelper::CreatePoint(X, Y), movableComponent->GetAngle() + 90, 1, 1);
+	else
+		m_whiteSprite->Draw(MathHelper::CreatePoint(X, Y), movableComponent->GetAngle() + 90, 1, 1);
 	for (auto& component : *m_components)
 	{
 		component->Draw();
@@ -112,6 +119,7 @@ void Tank::AddPowerUp(PowerUp *p)
 		((ShotEntity*)GetComponent(ShotEntity::type))->IncreateExplosionSize();
 		break;
 	case PowerUp::PowerUpType::CannonBall:
+	case PowerUp::PowerUpType::Mine:
 	case PowerUp::PowerUpType::FlameThrower:
 		((ShotEntity*)GetComponent(ShotEntity::type))->AddAltShot(p->GetPowerUpType());
 		break;

@@ -31,12 +31,15 @@ BattleScene::~BattleScene()
 
 void BattleScene::Init()
 {
+	MusicPlayer::Instance.StopPlaying();
+	isplaying = false;
+	
 	std::vector<std::string> menu1;
 	menu1.push_back("ok");
 
-	loading = GetTexture("loading.png");  //IMG_LoadTexture(Globals::Renderer, std::string(Globals::GetResourcePath() + "/loading.png").c_str());
+	loading = GetTexture("loading.png");
 	m_matchend = false;
-	testMap = GetTexture(m_level.mapname); // IMG_LoadTexture(Globals::Renderer, std::string(Globals::GetResourcePath() + m_level.mapname).c_str());
+	testMap = GetTexture(m_level.mapname);
 
 	SpriteFactory::AddSpriteSheet("DessertTileSet.png", "tile");
 	SpriteFactory::AddSpriteSheet("poweruptileset.png", "powerup");
@@ -44,14 +47,15 @@ void BattleScene::Init()
 	SpriteFactory::AddSpriteSheet("bullets.png", "bullet");
 	SpriteFactory::AddSpriteSheet("border.png", "border", 32, 32);
 	SpriteFactory::AddSpriteSheet("healthbar.png", "healthbar", 32, 32);
+ 	SpriteFactory::AddSpriteSheet("exp-pixel-art.png", "explosion", 325, 433);
 
 	for (int i = 0; i < m_level.humanPlayers; i++)
 	{
 		std::pair<int, int> loc = startlocations[i];
 		if(m_level.joysticks[i] >= 0)
-			m_entities->emplace_back(new Tank(loc.first, loc.second, i + 1, m_level.joysticks[i]));
+			m_entities->emplace_back(new Tank(loc.first, loc.second, i + 1, i, m_level.joysticks[i]));
 		else
-			m_entities->emplace_back(new TankControlledTank(loc.first, loc.second, i + 1, Globals::KeyboardButtons)); // m_level.joysticks[i]));
+			m_entities->emplace_back(new TankControlledTank(loc.first, loc.second, i + 1, i, Globals::KeyboardButtons));
 	}
 
 	for (int i = 0; i < m_level.cpuPlayers; i++)
@@ -99,8 +103,7 @@ void BattleScene::Init()
 	 message = "Start!";
 	start = renderText(message, std::string(Globals::GetResourcePath() + "Bombardment.ttf"), color, 100, Globals::Renderer);
 
-	auto id = MusicPlayer::Instance.LoadSong("GrungeStreet.mp3");
-	MusicPlayer::Instance.PlaySong(id);
+	songid = MusicPlayer::Instance.LoadSong("GrungeStreet.mp3");
 }
 
 void BattleScene::Update()
@@ -109,6 +112,12 @@ void BattleScene::Update()
 	{
 		m_timebeforestart -= TimeController::instance.DeltaTime;
 		return;
+	}
+
+	if (!isplaying)
+	{
+		MusicPlayer::Instance.PlaySong(songid);
+		isplaying = true;
 	}
 
 	static bool pushedOnce = false;

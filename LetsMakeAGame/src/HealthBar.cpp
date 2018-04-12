@@ -52,5 +52,4 @@ void HealthBar::Draw()
 	{
 		healthbarcolor->Draw(MathHelper::CreatePoint(posX + i * 10 + 35, posY + 5), 0, .3, .6);
 	}
-	
 }

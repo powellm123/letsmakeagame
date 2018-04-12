@@ -126,5 +126,3 @@ float Movable::GetUseMoveSpeed()
 {
 	return UseMoveSpeed;
 }
-
-

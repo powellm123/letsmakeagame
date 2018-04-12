@@ -15,12 +15,11 @@ PlayerSelectEntity::PlayerSelectEntity(ControllerGather* cg, Buttons *buttons, i
 	Y = Globals::ScreenHeight / 2;
 	int posX = (Globals::ScreenWidth - 200) / 4;
 	X = 100 + posX * playerNumber;
-	boarder = new PlayerSelectBoarder(X, 0);
+	boarder = new PlayerSelectBoarder(X, 50);
+	X += 35;
 	IScene::m_spriteobjects->push_back(boarder);
 	m_selected = false;
 	m_justChanged = .1;
-
-	//LevelCreator::Instance.AddPlayer(this);
 
 	//generate score text
 	SDL_Color color = { 255, 255, 255, 255 };
@@ -38,13 +37,12 @@ PlayerSelectEntity::PlayerSelectEntity(ControllerGather* cg, SDL_JoystickID joys
 	Y = Globals::ScreenHeight / 2;
 	int posX = (Globals::ScreenWidth - 200) / 4;
 	X = 100 + posX * playerNumber;
-	boarder = new PlayerSelectBoarder(X, 0);
+	boarder = new PlayerSelectBoarder(X, 50);
+	X += 35;
 	IScene::m_spriteobjects->push_back(boarder);
 	m_joystickId = joystickId;
 	m_selected = false;
 	m_justChanged = .1;
-
-	//LevelCreator::Instance.AddPlayer(this);
 
 	//generate score text
 	SDL_Color color = { 255, 255, 255, 255 };
@@ -56,7 +54,6 @@ PlayerSelectEntity::PlayerSelectEntity(ControllerGather* cg, SDL_JoystickID joys
 
 PlayerSelectEntity::~PlayerSelectEntity()
 {
-	//LevelCreator::Instance.RemovePlayer(this);
 	boarder->SetActive(false);
 	if(m_cg != nullptr)
 		(m_cg)->RemoveInput(m_joystickId);
@@ -75,6 +72,11 @@ void PlayerSelectEntity::ResetReady()
 bool PlayerSelectEntity::Ready()
 {
 	return m_ready;
+}
+
+int PlayerSelectEntity::GetCurrentSpirte()
+{
+	return m_currentSprite;
 }
 
 void PlayerSelectEntity::PerformAction(Player::Action action) 
@@ -96,9 +98,6 @@ void PlayerSelectEntity::PerformAction(Player::Action action)
 			m_selected = false;
 		else {
 			Alive = false;
-
-			//IScene::m_entities->remove(this);
-			//delete this;
 		}
 		break;
 	}
@@ -132,5 +131,5 @@ void PlayerSelectEntity::Draw(bool drawReady)
 {
 	Entity::Draw();
 	if(m_selected && drawReady)
-		renderTexture(readyText, Globals::Renderer, X, Y);
+		renderTexture(readyText, Globals::Renderer, X-35, Y);
 }

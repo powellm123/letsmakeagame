@@ -2,8 +2,6 @@
 #include "IComponent.h"
 #include "MathHelper.h"
 #include <list>
-//#include "AnimationSet.h"
-//#include "Sprite.h"
 #include "SpriteSheet.h"
 #include "SDL.h"
 #include "UtilMethods.h"
@@ -12,7 +10,8 @@ class Entity
 {
 public:
 	Entity( size_t type, float x, float y);
-	Entity( size_t type, float x, float y, Sprite *sprite);
+	Entity(size_t type, float x, float y, Sprite *sprite);
+	Entity( size_t type, float x, float y, Animation *animation);
 	virtual ~Entity();
 	virtual void Draw();
 	virtual void Update();
@@ -33,6 +32,7 @@ protected:
 	size_t m_type;
 	std::list<IComponent*> *m_components;
 	Sprite *m_sprite;
+	Animation* m_animation;
 	bool m_isDying;
 	bool m_setActiveToFalse;
 };

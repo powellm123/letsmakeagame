@@ -57,6 +57,11 @@ void MusicPlayer::PlaySong(unsigned id)
 		Mix_PlayMusic(m_musicTracks[id], -1);
 }
 
+void MusicPlayer::StopPlaying()
+{
+	Mix_PauseMusic();
+}
+
 void MusicPlayer::UnloadSong(unsigned id)
 {
 	for (auto track : m_musicTracks)

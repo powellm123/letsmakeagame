@@ -270,6 +270,9 @@
     <ClInclude Include="src\FlameShooter.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mine.h">
+      <Filter>Header Files\Entities\bullets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SDL_TextToFontLibrary.cpp">

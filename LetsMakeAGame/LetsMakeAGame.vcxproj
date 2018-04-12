@@ -178,6 +178,7 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClInclude Include="src\IPlayer.h" />
     <ClInclude Include="src\LevelCreator.h" />
     <ClInclude Include="src\LevelSelectMenu.h" />
+    <ClInclude Include="src\Mine.h" />
     <ClInclude Include="src\PlayerSelect.h" />
     <ClInclude Include="src\IMenu.h" />
     <ClInclude Include="src\MainMenu.h" />
