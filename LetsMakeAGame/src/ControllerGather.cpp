@@ -31,6 +31,20 @@ std::list<PlayerInput> ControllerGather::GetControllers()
 	return playerInputs;
 }
 
+
+std::vector<PlayerTankChoose> ControllerGather::GetTankChoose()
+{
+	std::vector<PlayerTankChoose> choose;
+	for (auto player : players)
+	{
+		PlayerTankChoose ptc;
+		ptc.playerSpot = player->GetPlayerNumber();
+		ptc.tank = player->GetCurrentSpirte();
+		choose.push_back(ptc);
+	}
+	return choose;
+}
+
 void ControllerGather::Update()
 {
 	bool x = players.size() > 0;

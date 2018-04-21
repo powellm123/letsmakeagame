@@ -3,14 +3,14 @@
 
 
 TankControlledTank::TankControlledTank(float x, float y, int playernumber, int color, Buttons * buttons)
-	: Tank(x, y, playernumber, playernumber-1, buttons)
+	: Tank(x, y, playernumber, color, buttons)
 {
 	m_rotateLerp = 3;
 	m_relativeAngle = 0;
 }
 
 TankControlledTank::TankControlledTank(float x, float y, int playernumber, int color, SDL_JoystickID joystickId)
-	: Tank(x, y, playernumber, playernumber - 1, joystickId)
+	: Tank(x, y, playernumber, color, joystickId)
 {
 	m_rotateLerp = 3;
 	m_relativeAngle = 0;

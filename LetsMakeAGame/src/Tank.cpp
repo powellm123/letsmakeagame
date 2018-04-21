@@ -3,7 +3,7 @@
 #include "Controller.h"
 #include "SpriteFactory.h"
 
-Tank::Tank(float x, float y, int playernumber, int color, Buttons *buttons) : Player(type, x, y, buttons, SpriteFactory::GetSprite("tank", color))
+Tank::Tank(float x, float y, int playernumber, int color, Buttons *buttons) : Player(type, x, y, buttons, SpriteFactory::GetSprite("tank", (playernumber -1)* 6 + color))
 {
 	m_playernumber = (PlayerNumber)playernumber;
 	
@@ -15,10 +15,10 @@ Tank::Tank(float x, float y, int playernumber, int color, Buttons *buttons) : Pl
 
 	IScene::m_spriteobjects->push_back(new HealthBar(this, 10 + playernumber * 110, 5));
 
-	m_whiteSprite = SpriteFactory::GetSprite("tank", 4);
+	m_whiteSprite = SpriteFactory::GetSprite("tank", (4) * 6 + color);
 }
 
-Tank::Tank(float x, float y, int playernumber, int color) : Player(type, x, y, SpriteFactory::GetSprite("tank", color))
+Tank::Tank(float x, float y, int playernumber, int color) : Player(type, x, y, SpriteFactory::GetSprite("tank", (playernumber - 1) * 6 + color))
 {
 	m_playernumber = (PlayerNumber)playernumber;
 
@@ -29,11 +29,11 @@ Tank::Tank(float x, float y, int playernumber, int color) : Player(type, x, y, S
 
 	IScene::m_spriteobjects->push_back(new HealthBar(this, 10 + playernumber * 110, 5));
 
-	m_whiteSprite = SpriteFactory::GetSprite("tank", 4);
+	m_whiteSprite = SpriteFactory::GetSprite("tank", 4 * 6 + color);
 }
 
 Tank::Tank(float x, float y, int playernumber, int color, SDL_JoystickID joystickId)
-	: Player(type, x, y, joystickId, SpriteFactory::GetSprite("tank", color))
+	: Player(type, x, y, joystickId, SpriteFactory::GetSprite("tank", (playernumber - 1) * 6 + color))
 {
 	m_playernumber = (PlayerNumber)playernumber;
 
@@ -44,7 +44,7 @@ Tank::Tank(float x, float y, int playernumber, int color, SDL_JoystickID joystic
 
 	IScene::m_spriteobjects->push_back(new HealthBar(this, 10 + playernumber * 110, 5));
 
-	m_whiteSprite = SpriteFactory::GetSprite("tank", 4);
+	m_whiteSprite = SpriteFactory::GetSprite("tank", 4 * 6 + color);
 }
 
 void Tank::PerformAction(Action action)

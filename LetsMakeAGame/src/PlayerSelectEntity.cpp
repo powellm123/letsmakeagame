@@ -8,10 +8,11 @@
 #include "Helper_Functions.h"
 #include "LevelCreator.h"
 
-PlayerSelectEntity::PlayerSelectEntity(ControllerGather* cg, Buttons *buttons, int playerNumber) : Player(type, buttons)
+PlayerSelectEntity::PlayerSelectEntity(ControllerGather* cg, Buttons *buttons, int playerNumber) : Player(type, buttons), m_playerNumber(playerNumber)
 {
-	m_cg = cg;
-	m_sprite = SpriteFactory::GetSprite("tank", 0);
+	m_cg = cg; 
+	m_currentSprite = (playerNumber) * 6;
+	m_sprite = SpriteFactory::GetSprite("tank", m_currentSprite);
 	Y = Globals::ScreenHeight / 2;
 	int posX = (Globals::ScreenWidth - 200) / 4;
 	X = 100 + posX * playerNumber;
@@ -29,11 +30,12 @@ PlayerSelectEntity::PlayerSelectEntity(ControllerGather* cg, Buttons *buttons, i
 	readyText = renderText(ss.str(), Globals::GetResourcePath() + "Bombardment.ttf", color, 30, Globals::Renderer);
 }
 
-PlayerSelectEntity::PlayerSelectEntity(ControllerGather* cg, SDL_JoystickID joystickId, int playerNumber) : Player(type, joystickId)
+PlayerSelectEntity::PlayerSelectEntity(ControllerGather* cg, SDL_JoystickID joystickId, int playerNumber) : Player(type, joystickId), m_playerNumber(playerNumber)
 {
 	m_buttons = *Globals::KeyboardButtons;
 	m_cg = cg;
-	m_sprite = SpriteFactory::GetSprite("tank", 0);
+	m_currentSprite = (playerNumber - 1) * 6;
+	m_sprite = SpriteFactory::GetSprite("tank", m_currentSprite);
 	Y = Globals::ScreenHeight / 2;
 	int posX = (Globals::ScreenWidth - 200) / 4;
 	X = 100 + posX * playerNumber;
@@ -79,6 +81,11 @@ int PlayerSelectEntity::GetCurrentSpirte()
 	return m_currentSprite;
 }
 
+int PlayerSelectEntity::GetPlayerNumber()
+{
+	return m_playerNumber;
+}
+
 void PlayerSelectEntity::PerformAction(Player::Action action) 
 {
 	if (m_justChanged > 0)
@@ -111,9 +118,9 @@ void PlayerSelectEntity::PerformMove(float angle, float value)
 		return;
 	}
 	if (angle > -90 && angle < 90)
-		m_currentSprite = min(m_currentSprite + 1, 3);
+		m_currentSprite = min(m_currentSprite + 1, (m_playerNumber) * 6 +3);
 	else
-		m_currentSprite = max(m_currentSprite - 1, 0);
+		m_currentSprite = max(m_currentSprite - 1, (m_playerNumber) * 6+ 0);
 
 	m_sprite = SpriteFactory::GetSprite("tank", m_currentSprite);
 	m_justChanged = .1;

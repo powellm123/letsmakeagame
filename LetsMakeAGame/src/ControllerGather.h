@@ -10,6 +10,11 @@ struct PlayerInput
 	int playerSpot;
 	bool taken;
 };
+struct PlayerTankChoose
+{
+	int playerSpot;
+	int tank;
+};
 
 class ControllerGather : public IPlayer
 {
@@ -25,6 +30,7 @@ public:
 	ControllerGather();
 	~ControllerGather();
 	std::list<PlayerInput> GetControllers();
+	std::vector<PlayerTankChoose> GetTankChoose();
 	void Update() override;
 	void Draw() override;
 	void RemoveInput(SDL_JoystickID m_joystickId);

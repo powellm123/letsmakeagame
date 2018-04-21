@@ -8,7 +8,7 @@ LevelSelectMenu::LevelSelectMenu() : IMenu(MenuId)
 	action1.action = []() {};
 	m_menuActions.push_back(action1);
 
-	levels[0] = std::pair<std::string, std::string>("dirt", "dirtmap2.png");
+	levels[0] = std::pair<std::string, std::string>("dirt", "dirtmap3.png");
 	levels[1] = std::pair<std::string, std::string>("ice", "icemap2.png");
 
 

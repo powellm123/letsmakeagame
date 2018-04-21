@@ -15,7 +15,7 @@ PlayerSelectScene::~PlayerSelectScene()
 void PlayerSelectScene::Init()
 {
 	SpriteFactory::AddSpriteSheet("border2.png", "border", 32, 32);
-	SpriteFactory::AddSpriteSheet("tank.png", "tank");
+	SpriteFactory::AddSpriteSheet("tanks.png", "tank");
 	IScene::m_entities->push_back(new ControllerGather());
 
 	backgroundTexture = GetBackGround();

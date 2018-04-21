@@ -105,7 +105,10 @@ void BattleOptionsMenu::Update()
 		if (keypress == SDL_CONTROLLER_BUTTON_START || keypress == Globals::KeyboardButtons->Pause)
 		{
 			auto gc = IScene::GetEntiries(ControllerGather::type);
-			LevelCreator::Instance.AddHumanPlayer(m_playerCount)->AddCpuPlayer(m_cpus)->AddControllers(((ControllerGather*)gc.front())->GetControllers());
+			LevelCreator::Instance.AddHumanPlayer(m_playerCount)->
+				AddCpuPlayer(m_cpus)->
+				AddControllers(((ControllerGather*)gc.front())->GetControllers())->
+				AddTankChoose(((ControllerGather*)gc.front())->GetTankChoose());
 			IScene::m_menus->push_back(new LevelSelectMenu());
 		}
 

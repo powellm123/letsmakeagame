@@ -18,6 +18,12 @@ LevelCreator * LevelCreator::AddHumanPlayer(int count)
 	return this;
 }
 
+LevelCreator * LevelCreator::AddTankChoose(std::vector<PlayerTankChoose> ptc)
+{
+	m_level.playerTankChoose = ptc;
+	return this;
+}
+
 LevelCreator * LevelCreator::AddCpuPlayer(int count)
 {
 	m_level.cpuPlayers = count;

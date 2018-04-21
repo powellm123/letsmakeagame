@@ -12,6 +12,7 @@ struct Level
 	int cpuPlayers;
 	std::map<int, SDL_JoystickID> joysticks;
 	std::vector<int> color;
+	std::vector<PlayerTankChoose> playerTankChoose;
 };
 
 class LevelCreator
@@ -25,6 +26,7 @@ public:
 	LevelCreator * RemovePlayer(Player* player);
 	LevelCreator * SetLevelSkin(std::string mapname);
 	LevelCreator * AddControllers(std::list<PlayerInput> playerinputs);
+	LevelCreator * AddTankChoose(std::vector<PlayerTankChoose> ptc);
 	
 	Level BuildLevel();
 

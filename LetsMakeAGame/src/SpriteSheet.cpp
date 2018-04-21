@@ -48,10 +48,10 @@ SpriteSheet::SpriteSheet(SDL_Texture * texture, int width, int height)
 	SDL_Rect rect;
 	rect.w = width;
 	rect.h = height;
-	for (int i = 0; i < h; i += height)
+	for (int i = 0; i+1 < h; i += height)
 	{
 		rect.y = i;
-		for (int j = 0; j < w; j += width)
+		for (int j = 0; j+1 < w; j += width)
 		{
 			rect.x = j;			
 			sprites.push_back(new Sprite(rect, texture));

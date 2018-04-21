@@ -43,7 +43,7 @@ void BattleScene::Init()
 
 	SpriteFactory::AddSpriteSheet("DessertTileSet.png", "tile");
 	SpriteFactory::AddSpriteSheet("poweruptileset.png", "powerup");
-	SpriteFactory::AddSpriteSheet("tank.png", "tank");
+	SpriteFactory::AddSpriteSheet("tank.png", "tank", 128, 128);
 	SpriteFactory::AddSpriteSheet("bullets.png", "bullet");
 	SpriteFactory::AddSpriteSheet("border.png", "border", 32, 32);
 	SpriteFactory::AddSpriteSheet("healthbar.png", "healthbar", 32, 32);
@@ -52,10 +52,11 @@ void BattleScene::Init()
 	for (int i = 0; i < m_level.humanPlayers; i++)
 	{
 		std::pair<int, int> loc = startlocations[i];
+		
 		if(m_level.joysticks[i] >= 0)
-			m_entities->emplace_back(new Tank(loc.first, loc.second, i + 1, i, m_level.joysticks[i]));
+			m_entities->emplace_back(new Tank(loc.first, loc.second, i + 1, m_level.playerTankChoose[i].tank, m_level.joysticks[i]));
 		else
-			m_entities->emplace_back(new TankControlledTank(loc.first, loc.second, i + 1, i, Globals::KeyboardButtons));
+			m_entities->emplace_back(new TankControlledTank(loc.first, loc.second, i + 1, m_level.playerTankChoose[i].tank, Globals::KeyboardButtons));
 	}
 
 	for (int i = 0; i < m_level.cpuPlayers; i++)

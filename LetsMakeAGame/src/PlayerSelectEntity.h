@@ -19,11 +19,13 @@ private:
 	SDL_Texture *readyText;
 	bool m_isReady = false;
 	bool m_ready = false;
+	int m_playerNumber;
 public:
 	static constexpr size_t type = UtilMethods::const_hash("PlayerSelectEntity");
 	PlayerSelectEntity(ControllerGather* cg, Buttons *buttons, int playerNumber);
 	PlayerSelectEntity(ControllerGather* cg, SDL_JoystickID joystickId, int playerNumber);
 	~PlayerSelectEntity();
+	int GetPlayerNumber();
 	bool IsSelected();
 	void ResetReady();
 	bool Ready();
