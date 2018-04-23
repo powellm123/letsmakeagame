@@ -115,3 +115,10 @@ void ShotEntity::Draw()
 {
 }
 
+PowerUp::PowerUpType ShotEntity::GetTopAltFirebulletType()
+{
+	if (m_altfirebullets.empty())
+		return PowerUp::PowerUpType::None;
+	return m_altfirebullets.front();
+}
+

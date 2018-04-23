@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "IScene.h"
 #include "LevelCreator.h"
+#include "ScoreBoardMenu.h"
 
 class BattleScene : public IScene
 {
@@ -13,6 +14,7 @@ class BattleScene : public IScene
 	Level m_level;
 	unsigned songid;
 	bool isplaying;
+	ScoreBoard m_scoreboard;
 public:
 	static constexpr size_t SCENE = UtilMethods::const_hash("battlescene");
 	BattleScene();
@@ -21,6 +23,7 @@ public:
 	void Update() override;
 	void Draw() override;
 
+	int GetAlivePlayerNumber();
 private:
 	Map * map;
 	SDL_Texture * loading;

@@ -26,6 +26,7 @@ public:
 	void ShouldPerformFireAction();
 	void ShouldPerformAltFireAction();
 	void Draw() override;
+	PowerUp::PowerUpType GetTopAltFirebulletType();
 protected:
 	bool m_performFireAction;
 	bool m_performAltAction;

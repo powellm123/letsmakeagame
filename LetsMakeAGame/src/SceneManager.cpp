@@ -26,6 +26,11 @@ void SceneManager::StartLoadingScene(size_t scene)
 	prepScene = scene;
 }
 
+void SceneManager::ReinitScene()
+{
+	reinitScene = true;
+}
+
 void SceneManager::LoadScene(size_t scene)
 {
 	if (currentScene != nullptr)
@@ -66,6 +71,13 @@ void SceneManager::LoadScene(size_t scene)
 		 LoadScene(prepScene);
 		 prepScene = 0;
 	 }
+	 if (reinitScene)
+	 {
+		 Entity::RemoveAllFromList(IScene::m_entities, true);
+		 IScene::m_spriteobjects->clear();
+		 currentScene->Init();
+		 reinitScene = false;
+	 }
 	 currentScene->Update();
  }
 
@@ -74,4 +86,3 @@ void SceneManager::LoadScene(size_t scene)
 	 IScene::m_entities->sort(Entity::EntityCompare);
 	 currentScene->Draw();
  }
-

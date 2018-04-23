@@ -26,7 +26,7 @@ public:
 	void Draw() override;
 	void AddPowerUp(PowerUp *p);
 	void DoDamage(int amount);
-
+	int GetPlayerNumber() { return m_playernumber; }
 private:
 	Sprite * m_whiteSprite;
 	PlayerNumber m_playernumber;

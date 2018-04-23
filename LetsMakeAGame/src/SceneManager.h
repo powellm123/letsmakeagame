@@ -14,6 +14,7 @@ class SceneManager
 public:
 	~SceneManager();
 	void StartLoadingScene(size_t scene);
+	void ReinitScene();
 	void Init();
 	void Update();
 	void Draw();
@@ -21,6 +22,7 @@ public:
 	static SceneManager Instance;
 private:
 	size_t prepScene = 0;
+	bool reinitScene = false;
 	IScene *currentScene;
 };
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -163,6 +163,7 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ParticalGenerator.h" />
     <ClInclude Include="src\AwaitKeyPressMenu.h" />
     <ClInclude Include="src\BattleOptionsMenu.h" />
     <ClInclude Include="src\BattleScene.h" />
@@ -209,6 +210,7 @@ if not exist "$(OutputPath)res" mkdir "$(OutputPath)res"
     <ClInclude Include="src\PlayerSelectBoarder.h" />
     <ClInclude Include="src\PlayerSelectEntity.h" />
     <ClInclude Include="src\PlayerSelectScene.h" />
+    <ClInclude Include="src\ScoreBoardMenu.h" />
     <ClInclude Include="src\SoundManager.h" />
     <ClInclude Include="src\SpriteFactory.h" />
     <ClInclude Include="src\SpriteSheet.h" />

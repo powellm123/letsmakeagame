@@ -6,6 +6,8 @@
 
 class HealthBar : public SpriteObjects
 {
+	float posX;
+	float posY;
 public:
 	HealthBar(Player* actor, float x, float y);
 	virtual ~HealthBar();
@@ -15,7 +17,6 @@ private:
 	Player * m_actor;
 	Sprite* healthbarcolor;
 	Sprite* border[9];
+	Sprite* itemPickups[3];
 
-	float posX;
-	float posY;
 };

@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "Boarder.h"
 #include "GameOverMenu.h"
+#include "ScoreBoardMenu.h"
 
 BattleScene::BattleScene()
 {
@@ -15,11 +16,40 @@ BattleScene::BattleScene()
 	startlocations[2] = std::pair<int, int>(64, Globals::ScreenHeight - 64);
 	startlocations[3] = std::pair<int, int>(Globals::ScreenWidth - 64, Globals::ScreenHeight - 64);
 	
-	m_timebeforestart = 8;
 	m_level = LevelCreator::Instance.BuildLevel();
 
-	matchendTimer = 1;
 	map = new Map(width, height);
+
+	m_scoreboard.playerCount = m_level.humanPlayers + m_level.cpuPlayers;
+
+	loading = GetTexture("loading.png");
+	testMap = GetTexture(m_level.mapname);
+
+	SpriteFactory::AddSpriteSheet("DessertTileSet.png", "tile");
+	SpriteFactory::AddSpriteSheet("poweruptileset.png", "powerup");
+	SpriteFactory::AddSpriteSheet("tank.png", "tank", 128, 128);
+	SpriteFactory::AddSpriteSheet("bullets.png", "bullet");
+	SpriteFactory::AddSpriteSheet("border.png", "border", 32, 32);
+	SpriteFactory::AddSpriteSheet("healthbar.png", "healthbar", 32, 32);
+	SpriteFactory::AddSpriteSheet("exp-pixel-art.png", "explosion", 325, 433);
+	SpriteFactory::AddSpriteSheet("endbattle.png", "trophy", 100, 128);
+
+
+	//generate score text
+	SDL_Color color = { 255, 255, 255, 255 };
+	std::stringstream ss;
+	ss << "Game Over";
+
+	gameOverTexture = renderText(ss.str(), Globals::GetResourcePath() + "Bombardment.ttf", color, 80, Globals::Renderer);
+
+
+	std::string message = "Get Ready!";
+	getReady = renderText(message, std::string(Globals::GetResourcePath() + "Bombardment.ttf"), color, 100, Globals::Renderer);
+
+	message = "Start!";
+	start = renderText(message, std::string(Globals::GetResourcePath() + "Bombardment.ttf"), color, 100, Globals::Renderer);
+
+	songid = MusicPlayer::Instance.LoadSong("GrungeStreet.mp3");
 }
 
 BattleScene::~BattleScene()
@@ -33,36 +63,41 @@ void BattleScene::Init()
 {
 	MusicPlayer::Instance.StopPlaying();
 	isplaying = false;
-	
-	std::vector<std::string> menu1;
-	menu1.push_back("ok");
 
-	loading = GetTexture("loading.png");
+	m_timebeforestart = 6;
+	matchendTimer = 1;
 	m_matchend = false;
-	testMap = GetTexture(m_level.mapname);
 
-	SpriteFactory::AddSpriteSheet("DessertTileSet.png", "tile");
-	SpriteFactory::AddSpriteSheet("poweruptileset.png", "powerup");
-	SpriteFactory::AddSpriteSheet("tank.png", "tank", 128, 128);
-	SpriteFactory::AddSpriteSheet("bullets.png", "bullet");
-	SpriteFactory::AddSpriteSheet("border.png", "border", 32, 32);
-	SpriteFactory::AddSpriteSheet("healthbar.png", "healthbar", 32, 32);
- 	SpriteFactory::AddSpriteSheet("exp-pixel-art.png", "explosion", 325, 433);
+	for (auto m : *m_menus)
+	{
+		delete m;
+	}
+	m_menus->clear();
 
 	for (int i = 0; i < m_level.humanPlayers; i++)
 	{
 		std::pair<int, int> loc = startlocations[i];
 		
-		if(m_level.joysticks[i] >= 0)
-			m_entities->emplace_back(new Tank(loc.first, loc.second, i + 1, m_level.playerTankChoose[i].tank, m_level.joysticks[i]));
+		if (m_level.joysticks[i] >= 0)
+		{
+			Tank* p = new Tank(loc.first, loc.second, i + 1, m_level.playerTankChoose[i].tank, m_level.joysticks[i]);
+			m_entities->emplace_back(p);
+			m_scoreboard.playerSprites[i] = p->GetSprite();
+		}
 		else
-			m_entities->emplace_back(new TankControlledTank(loc.first, loc.second, i + 1, m_level.playerTankChoose[i].tank, Globals::KeyboardButtons));
+		{
+			Tank* tt = new TankControlledTank(loc.first, loc.second, i + 1, m_level.playerTankChoose[i].tank, Globals::KeyboardButtons);
+			m_entities->emplace_back(tt);
+			m_scoreboard.playerSprites[i] = tt->GetSprite();
+		}
 	}
 
 	for (int i = 0; i < m_level.cpuPlayers; i++)
 	{
 		std::pair<int, int> loc = startlocations[i + m_level.humanPlayers];
-		m_entities->emplace_back(new CpuTank(loc.first, loc.second, i + m_level.humanPlayers+1, map));
+		Tank* cput = new CpuTank(loc.first, loc.second, i + m_level.humanPlayers + 1, map);
+		m_entities->emplace_back(cput);
+		m_scoreboard.playerSprites[i + m_level.humanPlayers] = cput->GetSprite();
 	}
 
 	m_entities->emplace_back(new Boarder(0, 0, 32, Globals::ScreenHeight));
@@ -89,22 +124,6 @@ void BattleScene::Init()
 					m_entities->emplace_back(new DirtWall(i * 32, j * 32));
 			}
 		}
-
-	//generate score text
-	SDL_Color color = { 255, 255, 255, 255 };
-	std::stringstream ss;
-	ss << "Game Over";
-
-	gameOverTexture = renderText(ss.str(), Globals::GetResourcePath() + "Bombardment.ttf", color, 80, Globals::Renderer);
-
-
-	std::string message = "Get Ready!";
-	getReady = renderText(message, std::string(Globals::GetResourcePath() + "Bombardment.ttf"), color, 100, Globals::Renderer);
-
-	 message = "Start!";
-	start = renderText(message, std::string(Globals::GetResourcePath() + "Bombardment.ttf"), color, 100, Globals::Renderer);
-
-	songid = MusicPlayer::Instance.LoadSong("GrungeStreet.mp3");
 }
 
 void BattleScene::Update()
@@ -138,11 +157,30 @@ void BattleScene::Update()
 		}
 		else {
 			if (!pushedOnce) {
-				m_menus->push_back(new GameOverMenu());
+				IScene::m_spriteobjects->clear();
+				int winner = GetAlivePlayerNumber();
+				m_menus->push_back(new ScoreBoardMenu(m_scoreboard, winner));
+				if (winner != -1)
+					m_scoreboard.points[winner - 1]++;
 				pushedOnce = true;
 			}
 		}
 	}
+}
+
+int BattleScene::GetAlivePlayerNumber()
+{
+	std::list<Entity*> entities = IScene::GetEntiries(Tank::type);
+	int count = 0;
+	for (auto& entity : entities)
+	{
+		Tank *p = (Tank*)entity;
+		if (p->IsAlive())
+		{
+			return p->GetPlayerNumber();
+		}
+	}
+	return -1;
 }
 
 void BattleScene::Draw()
@@ -180,7 +218,7 @@ void BattleScene::Draw()
 		renderTexture(start, Globals::Renderer, Game::WidthHalf - w / 2, Game::HeightHalf - h / 2);
 	}
 
-	if (m_matchend) {
+	if (m_matchend && m_menus->empty()) {
 		SDL_QueryTexture(gameOverTexture, NULL, NULL, &w, &h);
 		renderTexture(gameOverTexture, Globals::Renderer, Game::WidthHalf - w / 2, Game::HeightHalf - h / 2);
 	}
